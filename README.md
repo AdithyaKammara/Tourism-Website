@@ -22,10 +22,3 @@ A **responsive tourism website** allowing users to explore popular destinations 
    ```
 2. Open the project folder and run the `index.html` file in a browser.
 
-## 📸 Screenshots
-*(Add screenshots here to showcase the website!)*
-
----
-🌟 **Future Enhancements:** Planning to add search functionality and interactive maps!
-
-📩 Feel free to contribute or provide feedback!
