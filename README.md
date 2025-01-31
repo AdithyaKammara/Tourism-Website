@@ -15,10 +15,4 @@ A **responsive tourism website** allowing users to explore popular destinations 
 - **CSS3** - Styling with properties like background, flexbox, and box model
 - **Bootstrap** - Responsive design, carousel, and embedded videos
 
-## 🚀 Installation & Usage
-1. Clone the repository:
-   ```bash
-   git clone https://github.com/AdithyaKammara/tourism-website.git
-   ```
-2. Open the project folder and run the `index.html` file in a browser.
 
