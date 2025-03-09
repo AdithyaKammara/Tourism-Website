@@ -1,18 +1,36 @@
-# 🌍 Tourism Website
+# 🌍 Tourism Website  
 
-A **responsive tourism website** allowing users to explore popular destinations through engaging content, videos, and images.
+A **modern and interactive tourism website** that allows users to explore breathtaking travel destinations with stunning images and immersive video tours. Designed to be fully responsive for an optimized experience across all devices.  
 
-🔗 **Live Demo:** [Tourism Website](https://adithyakammara.ccbp.tech)
+🔗 **Live Demo:** [Tourism Website](https://adithyakammara.ccbp.tech)  
 
-## ✨ Features
-- 🏞️ Explore various tourist destinations with stunning images
-- 🎥 Integrated video tours using Bootstrap’s embed component
-- 📱 Mobile-friendly design with a responsive layout
-- 🎠 Image carousel for a seamless browsing experience
+---
 
-## 🛠 Technologies Used
-- **HTML5** - Structuring the content using block and inline elements
-- **CSS3** - Styling with properties like background, flexbox, and box model
-- **Bootstrap** - Responsive design, carousel, and embedded videos
+## ✨ Features  
 
+✅ **Beautiful Destination Pages** – Browse through various tourist attractions with high-quality images.  
+✅ **Embedded Video Tours** – Watch travel guides directly from the website.  
+✅ **Responsive & Mobile-Friendly** – Optimized for all screen sizes using Bootstrap.  
+✅ **Interactive Image Carousel** – A smooth image slider for an engaging user experience.  
+
+---
+
+## 🛠 Technologies Used  
+
+🔹 **HTML5** – Structured web pages using semantic elements.  
+🔹 **CSS3** – Styled the website using flexbox, grid, and animations.  
+🔹 **Bootstrap** – Used pre-built components for responsiveness and interactive features.  
+
+---
+
+## 🚀 Screenshots  
+
+![Homepage](https://github.com/AdithyaKammara/Tourism-Website/blob/main/screenshots/homepage.png)  
+![Destinations Page](https://github.com/AdithyaKammara/Tourism-Website/blob/main/screenshots/destinations.png)  
+
+*(Add real screenshots by uploading images inside a `/screenshots` folder in your repository.)*  
+
+---
+
+## 📂 Folder Structure  
 
