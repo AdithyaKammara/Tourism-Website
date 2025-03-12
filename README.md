@@ -2,7 +2,7 @@
 
 A **modern and interactive tourism website** that allows users to explore breathtaking travel destinations with stunning images and immersive video tours. Designed to be fully responsive for an optimized experience across all devices.  
 
-🔗 **Live Demo:** [Tourism Website](https://adithyakammara.ccbp.tech)  
+🔗 **Live Demo:** [Tourism Website](goadi.ccbp.tech)  
 
 ---
 
