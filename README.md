@@ -1,36 +1,25 @@
-# 🌍 Tourism Website  
+# 🌍 Tourism Website – Explore the World Virtually
 
-A **modern and interactive tourism website** that allows users to explore breathtaking travel destinations with stunning images and immersive video tours. Designed to be fully responsive for an optimized experience across all devices.  
+An interactive, mobile-first tourism website designed to inspire wanderlust. With responsive layouts, immersive video tours, and high-quality visuals, this site delivers a rich travel experience right from your screen.
 
-🔗 **Live Demo:** [Tourism Website](https://goadi.ccbp.tech/)  
-
----
-
-## ✨ Features  
-
-✅ **Beautiful Destination Pages** – Browse through various tourist attractions with high-quality images.  
-✅ **Embedded Video Tours** – Watch travel guides directly from the website.  
-✅ **Responsive & Mobile-Friendly** – Optimized for all screen sizes using Bootstrap.  
-✅ **Interactive Image Carousel** – A smooth image slider for an engaging user experience.  
+🔗 [Live Demo](#) <!-- Replace with your actual link -->
 
 ---
 
-## 🛠 Technologies Used  
+## ✨ Key Features
 
-🔹 **HTML5** – Structured web pages using semantic elements.  
-🔹 **CSS3** – Styled the website using flexbox, grid, and animations.  
-🔹 **Bootstrap** – Used pre-built components for responsiveness and interactive features.  
-
----
-
-## 🚀 Screenshots  
-
-![Homepage](https://github.com/AdithyaKammara/Tourism-Website/blob/main/screenshots/homepage.png)  
-![Destinations Page](https://github.com/AdithyaKammara/Tourism-Website/blob/main/screenshots/destinations.png)  
-
-*(Add real screenshots by uploading images inside a `/screenshots` folder in your repository.)*  
+- 🖼️ **Stunning Destination Galleries** – Explore picturesque travel spots through vivid imagery.
+- 🎥 **Embedded Video Tours** – Virtual travel guides integrated directly into each destination page.
+- 📱 **Fully Responsive Design** – Optimized for mobiles, tablets, and desktops using Bootstrap.
+- 🌀 **Smooth Image Carousel** – Visually engaging sliders to keep users hooked.
+- 💬 **Informative Content Sections** – Easy-to-read details about popular events, landmarks, and travel tips.
 
 ---
 
-## 📂 Folder Structure  
+## 🛠 Tech Stack
 
+- **HTML5** – Semantic markup for clean and accessible structure
+- **CSS3** – Flexbox, grid, animations, and custom styling
+- **Bootstrap** – Responsive layout and pre-built UI components
+
+---
