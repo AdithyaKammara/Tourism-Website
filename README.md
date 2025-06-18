@@ -2,7 +2,7 @@
 
 An interactive, mobile-first tourism website designed to inspire wanderlust. With responsive layouts, immersive video tours, and high-quality visuals, this site delivers a rich travel experience right from your screen.
 
-🔗 [Live Demo](#) <!-- Replace with your actual link -->
+🔗 [Live Demo](goadi.ccbp.tech) <!-- Replace with your actual link -->
 
 ---
 
