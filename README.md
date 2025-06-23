@@ -2,7 +2,7 @@
 
 An interactive, mobile-first tourism website designed to inspire wanderlust. With responsive layouts, immersive video tours, and high-quality visuals, this site delivers a rich travel experience right from your screen.
 
-🔗 [goadi.ccbp.tech]() <!-- Replace with your actual link -->
+🔗 [Live Demo](https://goadi.ccbp.tech)
 
 ---
 
@@ -20,6 +20,25 @@ An interactive, mobile-first tourism website designed to inspire wanderlust. Wit
 
 - **HTML5** – Semantic markup for clean and accessible structure
 - **CSS3** – Flexbox, grid, animations, and custom styling
-- **Bootstrap** – Responsive layout and pre-built UI components
+- **Bootstrap** – Responsive layout and pre-built UI components 
 
 ---
+
+## 📸 Screenshots
+
+> *(Add screenshots later once the code is uploaded)*
+
+---
+
+## 📁 Folder Structure
+
+```bash
+tourism-website/
+├── index.html
+├── destinations.html
+├── assets/
+│   ├── images/
+│   └── videos/
+├── css/
+│   └── style.css
+└── README.md
