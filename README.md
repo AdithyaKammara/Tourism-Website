@@ -27,5 +27,7 @@ An interactive, mobile-first tourism website designed to inspire wanderlust. Fea
 
 *(Add actual screenshots from the Live Demo here once images are uploaded)*
 
-Example placeholder
+Example placeholder:
+
+Currently Refining this project and published very soon
 
