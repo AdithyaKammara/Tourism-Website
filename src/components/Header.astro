@@ -9,6 +9,10 @@ const links = [
 ];
 
 const path = Astro.url.pathname;
+const user = Astro.locals.user;
+const account = user
+  ? { href: '/account', label: 'Account' }
+  : { href: `/login?next=${encodeURIComponent(path)}`, label: 'Log in' };
 ---
 
 <header class="sticky top-0 z-30 border-b border-line bg-paper/90 backdrop-blur-sm">
@@ -38,12 +42,12 @@ const path = Astro.url.pathname;
     <div class="flex items-center gap-3">
       <ThemeToggle client:load />
       <a
-        href="/login"
+        href={account.href}
         class="hidden rounded-full bg-ink px-5 py-2.5 text-sm font-medium text-paper transition-colors hover:bg-accent hover:text-accent-ink md:inline-block"
       >
-        Log in
+        {account.label}
       </a>
-      <MobileMenu client:media="(max-width: 767px)" links={links} />
+      <MobileMenu client:media="(max-width: 767px)" links={links} account={account} />
     </div>
   </div>
 </header>

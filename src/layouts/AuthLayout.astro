@@ -1,0 +1,38 @@
+---
+import Layout from './Layout.astro';
+import { isSupabaseConfigured } from '../lib/supabase';
+
+interface Props {
+  title: string;
+  eyebrow: string;
+  heading: string;
+  intro: string;
+}
+
+const { title, eyebrow, heading, intro } = Astro.props;
+---
+
+<Layout title={`${title} · Goadi`}>
+  <section class="container-page grid gap-12 py-14 md:grid-cols-12 md:py-24">
+    <div class="md:col-span-6 lg:col-span-5">
+      <p class="eyebrow mb-6">{eyebrow}</p>
+      <h1 class="font-display text-5xl leading-[0.95] tracking-tight md:text-7xl" set:html={heading} />
+      <p class="mt-6 max-w-sm text-lg text-ink-soft">{intro}</p>
+    </div>
+
+    <div class="md:col-span-6 md:col-start-7 lg:col-span-5 lg:col-start-8">
+      {
+        !isSupabaseConfigured && (
+          <p class="mb-8 border border-dashed border-line p-4 text-sm text-ink-soft">
+            <strong class="text-ink">Developer note:</strong> Supabase keys are missing. Copy
+            <code>.env.example</code> to <code>.env</code>, add your keys and restart the dev server.
+          </p>
+        )
+      }
+      <slot />
+      <div class="mt-10 border-t border-line pt-6 text-sm text-ink-soft">
+        <slot name="footer" />
+      </div>
+    </div>
+  </section>
+</Layout>

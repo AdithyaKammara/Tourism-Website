@@ -1,0 +1,62 @@
+---
+import Layout from '../layouts/Layout.astro';
+
+// The middleware redirects guests to /login, so the user is always set here.
+const user = Astro.locals.user!;
+const name = (user.user_metadata?.full_name as string | undefined) ?? user.email?.split('@')[0] ?? 'traveller';
+const joined = new Date(user.created_at).toLocaleDateString('en-GB', { month: 'long', year: 'numeric' });
+const provider = user.app_metadata?.provider === 'google' ? 'Google' : 'Email';
+---
+
+<Layout title="Your account · Goadi">
+  <section class="container-page py-14 md:py-24">
+    <p class="eyebrow mb-6">Your account</p>
+    <h1 class="font-display text-5xl tracking-tight md:text-7xl">
+      Hello, <em class="text-accent">{name}</em>.
+    </h1>
+
+    <div class="mt-14 grid gap-12 md:grid-cols-12">
+      <dl class="divide-y divide-line border-y border-line md:col-span-7">
+        <div class="grid grid-cols-[8rem_1fr] gap-4 py-4">
+          <dt class="eyebrow pt-0.5">Email</dt>
+          <dd class="break-all">{user.email}</dd>
+        </div>
+        <div class="grid grid-cols-[8rem_1fr] gap-4 py-4">
+          <dt class="eyebrow pt-0.5">Signs in with</dt>
+          <dd>{provider}</dd>
+        </div>
+        <div class="grid grid-cols-[8rem_1fr] gap-4 py-4">
+          <dt class="eyebrow pt-0.5">Member since</dt>
+          <dd>{joined}</dd>
+        </div>
+      </dl>
+
+      <div class="space-y-4 md:col-span-4 md:col-start-9">
+        <a
+          href="/planner"
+          class="block rounded-full bg-ink px-6 py-3.5 text-center text-sm font-medium text-paper transition-colors hover:bg-accent hover:text-accent-ink"
+        >
+          Open trip planner
+        </a>
+        {
+          provider === 'Email' && (
+            <a
+              href="/reset-password"
+              class="block rounded-full border border-line px-6 py-3.5 text-center text-sm font-medium transition-colors hover:border-ink"
+            >
+              Change password
+            </a>
+          )
+        }
+        <form method="post" action="/auth/logout">
+          <button
+            type="submit"
+            class="w-full rounded-full px-6 py-3.5 text-sm font-medium text-ink-soft underline underline-offset-4 transition-colors hover:text-accent"
+          >
+            Log out
+          </button>
+        </form>
+      </div>
+    </div>
+  </section>
+</Layout>

@@ -3,7 +3,7 @@ import { createPortal } from 'react-dom';
 
 type NavLink = { href: string; label: string };
 
-export default function MobileMenu({ links }: { links: NavLink[] }) {
+export default function MobileMenu({ links, account }: { links: NavLink[]; account: NavLink }) {
   const [open, setOpen] = useState(false);
   const [mounted, setMounted] = useState(false);
   const buttonRef = useRef<HTMLButtonElement>(null);
@@ -45,8 +45,8 @@ export default function MobileMenu({ links }: { links: NavLink[] }) {
           </li>
         ))}
       </ol>
-      <a href="/login" className="mt-8 text-sm font-medium underline underline-offset-4">
-        Log in
+      <a href={account.href} className="mt-8 text-sm font-medium underline underline-offset-4">
+        {account.label}
       </a>
     </nav>
   );
