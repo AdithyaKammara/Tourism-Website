@@ -1,0 +1,55 @@
+---
+import Layout from '../layouts/Layout.astro';
+
+// Placeholder content until the destinations collection lands in phase 3.
+const featured = [
+  { no: '01', name: 'Somewhere high', note: 'Mist, tea estates and a slow toy train.' },
+  { no: '02', name: 'Somewhere wet', note: 'Backwaters at dawn, nothing on the schedule.' },
+  { no: '03', name: 'Somewhere old', note: 'Stone temples older than the maps of them.' },
+];
+---
+
+<Layout>
+  <section class="container-page pt-14 pb-20 md:pt-24">
+    <p class="eyebrow mb-6">Field notes · Issue 01</p>
+    <h1 class="font-display text-display max-w-[14ch]">
+      Places worth the <em class="text-accent">long way</em> round.
+    </h1>
+    <div class="mt-10 grid gap-8 md:grid-cols-12 md:items-end">
+      <p class="max-w-md text-lg text-ink-soft md:col-span-5 md:col-start-8">
+        Honest guides to where to go, when to go, and what it really costs — then a planner that
+        turns it into days you can actually follow.
+      </p>
+    </div>
+
+    <!-- Full-bleed video hero goes here in phase 3. -->
+    <div
+      class="mt-14 aspect-[16/9] w-full rounded-sm bg-paper-deep md:aspect-[21/9]"
+      role="img"
+      aria-label="Hero video placeholder"
+    >
+    </div>
+  </section>
+
+  <section class="container-page" aria-labelledby="featured-heading">
+    <div class="mb-8 flex items-baseline justify-between border-b border-ink pb-3">
+      <h2 id="featured-heading" class="font-display text-3xl">This season</h2>
+      <a href="/destinations" class="text-sm underline underline-offset-4 hover:text-accent">
+        All destinations
+      </a>
+    </div>
+    <ol class="divide-y divide-line">
+      {
+        featured.map((place) => (
+          <li class="group grid grid-cols-[3rem_1fr] gap-4 py-6 md:grid-cols-[6rem_1fr_1fr] md:items-baseline">
+            <span class="eyebrow">{place.no}</span>
+            <h3 class="font-display text-3xl transition-colors group-hover:text-accent md:text-5xl">
+              {place.name}
+            </h3>
+            <p class="col-start-2 text-ink-soft md:col-start-3">{place.note}</p>
+          </li>
+        ))
+      }
+    </ol>
+  </section>
+</Layout>

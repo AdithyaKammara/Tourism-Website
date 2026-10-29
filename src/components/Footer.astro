@@ -1,0 +1,32 @@
+---
+const year = new Date().getFullYear();
+---
+
+<footer class="mt-24 border-t border-line">
+  <div class="container-page grid gap-10 py-14 md:grid-cols-12">
+    <div class="md:col-span-6">
+      <p class="font-display text-4xl leading-tight md:text-5xl">
+        Go slower.<br /><em class="text-accent">See more.</em>
+      </p>
+    </div>
+    <div class="md:col-span-3">
+      <p class="eyebrow mb-4">Explore</p>
+      <ul class="space-y-2 text-sm">
+        <li><a class="hover:text-accent" href="/destinations">Destinations</a></li>
+        <li><a class="hover:text-accent" href="/planner">Trip planner</a></li>
+        <li><a class="hover:text-accent" href="/journal">Journal</a></li>
+      </ul>
+    </div>
+    <div class="md:col-span-3">
+      <p class="eyebrow mb-4">Account</p>
+      <ul class="space-y-2 text-sm">
+        <li><a class="hover:text-accent" href="/login">Log in</a></li>
+        <li><a class="hover:text-accent" href="/signup">Create an account</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="container-page flex flex-wrap justify-between gap-2 border-t border-line py-6 text-xs text-ink-soft">
+    <p>© {year} Goadi. Built by Adithya Kammara.</p>
+    <p>Photos credited on each page.</p>
+  </div>
+</footer>
