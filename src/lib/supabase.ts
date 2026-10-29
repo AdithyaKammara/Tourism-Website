@@ -26,8 +26,16 @@ export function createSupabase(request: Request, cookies: AstroCookies) {
 
 /** Only allow same-site relative redirects, so ?next= can't send people elsewhere. */
 export function safeNext(next: string | null | undefined, fallback = '/account') {
-  if (!next || !next.startsWith('/') || next.startsWith('//') || next.startsWith('/\\')) {
+  // Browsers drop tabs/newlines and treat "\" as "/", so "/\t/evil.com" would become "//evil.com".
+  if (!next || /[\u0000-\u001F\\]/.test(next) || !next.startsWith('/') || next.startsWith('//')) {
     return fallback;
   }
-  return next;
+  try {
+    const base = 'http://local.invalid';
+    const url = new URL(next, base);
+    if (url.origin !== base) return fallback;
+    return url.pathname + url.search + url.hash;
+  } catch {
+    return fallback;
+  }
 }
