@@ -28,5 +28,6 @@ export async function toCard(entry: CollectionEntry<'destinations'>): Promise<De
       height: Number(img.attributes.height ?? 530),
       alt: d.heroAlt,
     },
+    credit: d.credit,
   };
 }

@@ -69,3 +69,12 @@ export function tripDateRange(trip: Trip) {
 
 const inr = new Intl.NumberFormat('en-IN', { style: 'currency', currency: 'INR', maximumFractionDigits: 0 });
 export const formatINR = (n: number) => inr.format(n);
+
+/** Money committed so far: logged expenses plus itinerary item costs (counted as activities). */
+export function tripSpend(trip: Trip) {
+  const byCategory = Object.fromEntries(EXPENSE_CATEGORIES.map((c) => [c, 0])) as Record<ExpenseCategory, number>;
+  trip.expenses.forEach((e) => (byCategory[e.category] += e.amount));
+  byCategory.activities += trip.days.flatMap((d) => d.items).reduce((sum, i) => sum + (i.cost ?? 0), 0);
+  const total = Object.values(byCategory).reduce((a, b) => a + b, 0);
+  return { byCategory, total };
+}

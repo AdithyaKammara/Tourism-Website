@@ -1,12 +1,12 @@
 ---
 import { getImage, Image } from 'astro:assets';
 import { getEntry, render } from 'astro:content';
+import { ArrowRight, BadgeCheck, Bus, CalendarDays, Camera, ChevronRight, Clock, MapPin, Route, Wallet } from 'lucide-react';
 import Layout from '../../layouts/Layout.astro';
-import Card from '../../components/destinations/Card';
 import Gallery, { type GalleryPhoto } from '../../components/destinations/Gallery';
 import MapView from '../../components/destinations/MapView';
-import { getDestinations, toCard } from '../../lib/cards';
-import { distanceKm, formatBudget, formatDays, MONTHS, VIBE_LABELS } from '../../lib/destinations';
+import { getDestinations } from '../../lib/cards';
+import { distanceKm, formatBudget, formatDays, formatSeason, MONTHS, VIBE_LABELS } from '../../lib/destinations';
 
 const entry = await getEntry('destinations', Astro.params.id ?? '');
 if (!entry) return new Response(null, { status: 404, statusText: 'Not found' });
@@ -19,7 +19,6 @@ const nearby = (await getDestinations())
   .map((other) => ({ other, km: distanceKm(d.coordinates, other.data.coordinates) }))
   .sort((a, b) => a.km - b.km)
   .slice(0, 3);
-const nearbyCards = await Promise.all(nearby.map(async ({ other, km }) => ({ card: await toCard(other), km })));
 
 // The hero leads the gallery so the lightbox shows every photo of the place.
 const photos: GalleryPhoto[] = await Promise.all(
@@ -29,136 +28,208 @@ const photos: GalleryPhoto[] = await Promise.all(
     return { thumb: thumb.src, thumbSrcset: thumb.srcSet.attribute, full: full.src, alt: p.alt, credit: p.credit };
   }),
 );
+
+const now = new Date().getMonth() + 1;
+const goodNow = d.bestMonths.includes(now);
+const nowName = new Date(2000, now - 1).toLocaleString('en-GB', { month: 'long' });
+const card = 'rounded-[1.75rem] bg-card p-6 shadow-sm ring-1 ring-line/60';
 ---
 
 <Layout title={`${d.name}, ${d.state}`} description={d.tagline}>
   <article>
-    <header class="container-page pt-14 md:pt-20">
-      <a href="/destinations" class="eyebrow hover:text-accent">← All destinations</a>
-      <p class="eyebrow mt-10">{d.state} · {d.vibes.map((v) => VIBE_LABELS[v]).join(' · ')}</p>
-      <h1 class="mt-4 font-display text-display">{d.name}</h1>
-      <p class="mt-6 max-w-2xl text-xl text-ink-soft">{d.tagline}</p>
+    <!-- Breadcrumb, mood tags and the main action. -->
+    <div class="container-page flex flex-wrap items-center justify-between gap-4 pt-6 pb-4">
+      <nav aria-label="Breadcrumb" class="flex flex-wrap items-center gap-2 text-sm">
+        <a href="/destinations" class="font-semibold text-ink-soft hover:text-accent">Destinations</a>
+        <ChevronRight className="size-4 text-ink-soft" aria-hidden="true" />
+        <span aria-current="page" class="font-semibold">{d.name}</span>
+        <span class="ml-2 hidden gap-1.5 sm:flex">
+          {d.vibes.map((v) => <span class="rounded-full bg-sage-soft px-3 py-0.5 text-xs font-semibold text-moss">{VIBE_LABELS[v]}</span>)}
+        </span>
+      </nav>
+      <a href={`/planner?add=${entry.id}`} class="btn-sage py-2.5 font-semibold">
+        Add to a trip <ArrowRight className="size-4" aria-hidden="true" />
+      </a>
+    </div>
+
+    <!-- Title and hero photo. -->
+    <header class="container-page pb-10">
+      <div class="flex flex-wrap items-end justify-between gap-4">
+        <div>
+          <p class="text-xs font-bold tracking-wider text-accent uppercase">{d.state}</p>
+          <h1 class="mt-1 font-display font-heavy text-5xl tracking-tight md:text-7xl">{d.name}</h1>
+          <p class="mt-3 max-w-2xl text-lg text-ink-soft md:text-xl">{d.tagline}</p>
+        </div>
+        <ul class="flex flex-wrap gap-2 text-xs font-semibold">
+          <li class="inline-flex items-center gap-1.5 rounded-full bg-card px-3 py-1.5 shadow-sm ring-1 ring-line/60">
+            <CalendarDays className="size-4 text-accent" aria-hidden="true" /> Best {formatSeason(d.bestMonths)}
+          </li>
+          <li class="inline-flex items-center gap-1.5 rounded-full bg-card px-3 py-1.5 shadow-sm ring-1 ring-line/60">
+            <Clock className="size-4 text-accent" aria-hidden="true" />
+            {formatDays(d.daysNeeded)}
+          </li>
+        </ul>
+      </div>
+
+      <figure class="relative isolate mt-8 overflow-clip rounded-[28px] shadow-soft">
+        <Image
+          src={d.hero}
+          alt={d.heroAlt}
+          widths={[800, 1280, 1920]}
+          sizes="(min-width: 1408px) 1312px, 100vw"
+          loading="eager"
+          fetchpriority="high"
+          class="aspect-[4/3] w-full object-cover sm:aspect-[16/9] md:aspect-[21/9]"
+          style={`view-transition-name: dest-${entry.id}`}
+        />
+        <div class="absolute inset-0 bg-linear-to-t from-forest/70 via-transparent to-transparent"></div>
+        <figcaption class="absolute inset-x-4 bottom-4 flex flex-wrap items-end justify-between gap-2 md:inset-x-6 md:bottom-6">
+          <a
+            href={d.credit.source}
+            rel="noopener"
+            class="inline-flex max-w-full items-center gap-1.5 truncate rounded-full bg-forest/70 px-3 py-1 text-xs text-cream backdrop-blur-md hover:bg-forest/90"
+          >
+            <Camera className="size-3.5 shrink-0" aria-hidden="true" /> {d.credit.author}, {d.credit.license}, via Wikimedia Commons
+          </a>
+          <span
+            class:list={[
+              'inline-flex items-center gap-1.5 rounded-full px-3 py-1 text-xs font-semibold backdrop-blur-md',
+              goodNow ? 'bg-sage-light/90 text-forest' : 'bg-cream/20 text-cream',
+            ]}
+          >
+            <span class:list={['size-2 rounded-full', goodNow ? 'bg-moss' : 'bg-cream/70']}></span>
+            {goodNow ? `${nowName} is a good time to go` : `${nowName} isn't ideal`}
+          </span>
+        </figcaption>
+      </figure>
     </header>
 
-    <figure class="container-page mt-12">
-      <Image
-        src={d.hero}
-        alt={d.heroAlt}
-        widths={[800, 1280, 1920]}
-        sizes="(min-width: 1408px) 1312px, 100vw"
-        loading="eager"
-        fetchpriority="high"
-        class="aspect-[16/10] w-full rounded-panel object-cover md:aspect-[21/9]"
-        style={`view-transition-name: dest-${entry.id}`}
-      />
-      <figcaption class="mt-3 text-xs text-ink-soft">
-        Photo: <a href={d.credit.source} class="underline underline-offset-2" rel="noopener">{d.credit.author}</a>, {d.credit.license}, via Wikimedia Commons
-      </figcaption>
-    </figure>
+    <!-- Guide on the left, practical facts in a sticky sidebar on the right. -->
+    <div class="container-page grid items-start gap-8 pb-16 lg:grid-cols-12">
+      <div class="min-w-0 space-y-8 lg:col-span-8">
+        <div data-reveal class:list={[card, 'p-6 md:p-10']}>
+          <div class="prose-guide">
+            <Content />
+          </div>
+        </div>
 
-    <div class="container-page mt-16 grid gap-16 md:grid-cols-12">
-      <aside class="md:order-2 md:col-span-4 md:col-start-9" aria-label="Trip facts">
-        <div class="md:sticky md:top-24">
-          <p class="eyebrow mb-3">Best months</p>
-          <ol class="grid grid-cols-12 gap-1" aria-label="Months of the year">
+        <section data-reveal aria-labelledby="photos-heading">
+          <div class="mb-5 flex items-baseline justify-between gap-4">
+            <h2 id="photos-heading" class="font-display font-heavy text-3xl tracking-tight">Photos of {d.name}</h2>
+            <span class="text-sm text-ink-soft">{photos.length} photos · tap to enlarge</span>
+          </div>
+          <Gallery client:idle photos={photos} place={d.name} />
+        </section>
+
+        <section data-reveal class:list={[card, 'p-6 md:p-10']} aria-labelledby="map-heading">
+          <div class="mb-5 flex items-baseline justify-between gap-4">
+            <h2 id="map-heading" class="font-display font-heavy text-3xl tracking-tight">Where it is</h2>
+            <span class="inline-flex items-center gap-1 text-sm text-ink-soft"><MapPin className="size-4" aria-hidden="true" /> {d.state}</span>
+          </div>
+          <div class="h-[380px] overflow-hidden rounded-[1.25rem] md:h-[420px]">
+            <MapView
+              client:visible
+              points={[
+                { id: entry.id, name: d.name, lat: d.coordinates.lat, lng: d.coordinates.lng, active: true },
+                ...nearby.map(({ other }) => ({
+                  id: other.id,
+                  name: other.data.name,
+                  lat: other.data.coordinates.lat,
+                  lng: other.data.coordinates.lng,
+                })),
+              ]}
+              focusId={entry.id}
+            />
+          </div>
+        </section>
+      </div>
+
+      <aside class="min-w-0 space-y-5 lg:sticky lg:top-24 lg:col-span-4" aria-label="Trip facts">
+        <section class={card} aria-labelledby="when-heading">
+          <h3 id="when-heading" class="flex items-center gap-2 font-display text-xl">
+            <CalendarDays className="size-5 text-accent" aria-hidden="true" /> When to go
+          </h3>
+          <ol class="mt-4 grid grid-cols-6 gap-1.5" aria-label="Months of the year">
             {
               MONTHS.map((m, i) => {
                 const good = d.bestMonths.includes(i + 1);
                 return (
-                  <li class="text-center">
-                    <span
-                      class:list={['block h-10 rounded-sm', good ? 'bg-moss' : 'bg-paper-deep']}
-                      title={`${m}: ${good ? 'good time to go' : 'not ideal'}`}
-                    />
-                    <span class="mt-1 block text-[10px] text-ink-soft">
-                      {m[0]}
-                      <span class="sr-only">
-                        {m.slice(1)} {good ? '(good time to go)' : '(not ideal)'}
-                      </span>
-                    </span>
+                  <li
+                    class:list={[
+                      'rounded-xl py-2 text-center text-xs font-semibold',
+                      good ? 'bg-accent text-accent-ink' : 'bg-paper-deep text-ink-soft',
+                      i + 1 === now && 'ring-2 ring-ink ring-offset-2 ring-offset-card',
+                    ]}
+                    title={`${m}: ${good ? 'good time to go' : 'not ideal'}`}
+                  >
+                    {m}
+                    <span class="sr-only">{good ? '(good time to go)' : '(not ideal)'}</span>
                   </li>
                 );
               })
             }
           </ol>
+          <p class="mt-4 rounded-2xl bg-sage-soft p-4 text-sm text-moss">
+            <strong class="font-semibold">Best: {formatSeason(d.bestMonths)}.</strong> The outlined month is this month.
+          </p>
+        </section>
 
-          <dl class="mt-8 divide-y divide-line border-y border-line">
-            <div class="flex justify-between gap-4 py-3">
-              <dt class="eyebrow pt-0.5">Daily spend</dt>
-              <dd>{formatBudget(d.budgetPerDay)}</dd>
-            </div>
-            <div class="flex justify-between gap-4 py-3">
-              <dt class="eyebrow pt-0.5">Time needed</dt>
-              <dd>{formatDays(d.daysNeeded)}</dd>
-            </div>
-            <div class="py-3">
-              <dt class="eyebrow">Getting there</dt>
-              <dd class="mt-2 text-sm text-ink-soft">{d.gettingThere}</dd>
-            </div>
-          </dl>
+        <section class={card} aria-labelledby="spend-heading">
+          <h3 id="spend-heading" class="flex items-center gap-2 font-display text-xl">
+            <Wallet className="size-5 text-accent" aria-hidden="true" /> Daily spend
+          </h3>
+          <p class="mt-3 font-display text-3xl font-heavy text-accent">
+            {formatBudget(d.budgetPerDay)}<span class="ml-1 text-base font-normal text-ink-soft">/day</span>
+          </p>
+          <p class="mt-2 text-sm text-ink-soft">A rough per-person figure for stays, food and local transport, excluding travel to get there.</p>
+        </section>
 
-          <a
-            href={`/planner?add=${entry.id}`}
-            class="btn-dark mt-8 w-full"
-          >
-            Add {d.name} to a trip
+        <section class={card} aria-labelledby="pace-heading">
+          <h3 id="pace-heading" class="flex items-center gap-2 font-display text-xl">
+            <Route className="size-5 text-accent" aria-hidden="true" /> Ideal pace: {formatDays(d.daysNeeded)}
+          </h3>
+          <h4 class="mt-4 flex items-center gap-2 text-sm font-semibold"><Bus className="size-4 text-ink-soft" aria-hidden="true" /> Getting there</h4>
+          <p class="mt-1.5 text-sm leading-relaxed text-ink-soft">{d.gettingThere}</p>
+        </section>
+
+        <section class="relative overflow-clip rounded-[1.75rem] bg-forest p-6 text-cream shadow-soft" aria-labelledby="plan-heading">
+          <div class="pointer-events-none absolute -top-10 -right-10 size-40 rounded-full bg-accent/30 blur-2xl"></div>
+          <h3 id="plan-heading" class="relative font-display text-xl">Plan your {d.name} trip</h3>
+          <p class="relative mt-2 text-sm text-cream/70">Add it to a trip to lay out the days, budget, packing and bookings. No sign-up needed to start.</p>
+          <a href={`/planner?add=${entry.id}`} class="btn relative mt-5 w-full bg-sage-light font-semibold text-forest hover:bg-cream">
+            Add {d.name} to a trip <ArrowRight className="size-4" aria-hidden="true" />
           </a>
-          <p class="mt-3 text-xs text-ink-soft">Budgets are rough per-person figures, excluding travel to get there.</p>
-        </div>
-      </aside>
+        </section>
 
-      <div
-        class="prose-guide md:order-1 md:col-span-7"
-      >
-        <Content />
-      </div>
+        <section class={card} aria-labelledby="nearby-heading">
+          <h3 id="nearby-heading" class="font-display text-xl">Closest to {d.name}</h3>
+          <ul class="mt-4 space-y-3">
+            {
+              nearby.map(({ other, km }) => (
+                <li>
+                  <a href={`/destinations/${other.id}`} class="group flex items-center gap-3 rounded-2xl p-2 -m-2 hover:bg-paper-deep">
+                    <Image src={other.data.hero} alt="" width={112} height={112} class="size-14 shrink-0 rounded-xl object-cover" />
+                    <span class="min-w-0 flex-1">
+                      <span class="block font-semibold group-hover:text-accent">{other.data.name}</span>
+                      <span class="block truncate text-xs text-ink-soft">
+                        {other.data.state} · about {Math.round(km / 10) * 10} km away
+                      </span>
+                    </span>
+                    <ChevronRight className="size-4 shrink-0 text-ink-soft" aria-hidden="true" />
+                  </a>
+                </li>
+              ))
+            }
+          </ul>
+        </section>
+      </aside>
+    </div>
+
+    <div class="container-page pb-8">
+      <p class="flex flex-wrap items-center gap-2 rounded-full bg-sage-soft px-5 py-3 text-sm text-moss">
+        <BadgeCheck className="size-5 shrink-0" aria-hidden="true" />
+        <strong class="font-semibold">No paid placements.</strong> Budgets and seasons are our own estimates; check local conditions before you go.
+      </p>
     </div>
   </article>
-
-  <section data-reveal class="container-page mt-24" aria-labelledby="photos-heading">
-    <div class="mb-8 flex items-baseline justify-between border-b border-ink pb-3">
-      <h2 id="photos-heading" class="font-display text-3xl">Photos of {d.name}</h2>
-      <span class="text-sm text-ink-soft">{photos.length} photos · tap to enlarge</span>
-    </div>
-    <Gallery client:idle photos={photos} place={d.name} />
-  </section>
-
-  <section data-reveal class="container-page mt-24" aria-labelledby="map-heading">
-    <div class="mb-8 flex items-baseline justify-between border-b border-ink pb-3">
-      <h2 id="map-heading" class="font-display text-3xl">Where it is</h2>
-      <span class="text-sm text-ink-soft">{d.state}</span>
-    </div>
-    <div class="h-[420px] overflow-hidden rounded-panel">
-      <MapView
-        client:visible
-        points={[
-          { id: entry.id, name: d.name, lat: d.coordinates.lat, lng: d.coordinates.lng, active: true },
-          ...nearby.map(({ other }) => ({
-            id: other.id,
-            name: other.data.name,
-            lat: other.data.coordinates.lat,
-            lng: other.data.coordinates.lng,
-          })),
-        ]}
-        focusId={entry.id}
-      />
-    </div>
-  </section>
-
-  <section data-reveal class="container-page mt-24" aria-labelledby="nearby-heading">
-    <div class="mb-10 flex items-baseline justify-between border-b border-ink pb-3">
-      <h2 id="nearby-heading" class="font-display text-3xl">Closest to {d.name}</h2>
-      <a href="/destinations" class="text-sm underline underline-offset-4 hover:text-accent">All destinations</a>
-    </div>
-    <div class="grid gap-10 sm:grid-cols-2 lg:grid-cols-3">
-      {
-        nearbyCards.map(({ card, km }) => (
-          <div>
-            <Card d={card} />
-            <p class="mt-2 text-xs text-ink-soft">About {Math.round(km / 10) * 10} km away as the crow flies</p>
-          </div>
-        ))
-      }
-    </div>
-  </section>
 </Layout>

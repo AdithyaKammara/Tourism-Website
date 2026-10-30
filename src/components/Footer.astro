@@ -1,34 +1,46 @@
 ---
 import { PlaneTakeoff } from 'lucide-react';
+import { getDestinations } from '../lib/cards';
 import { SITE } from '../lib/site';
 
 const year = new Date().getFullYear();
+const places = await getDestinations();
+const link = 'text-cream/90 transition-colors hover:text-sage-light';
 ---
 
 <footer class="mt-8 px-3 pb-3 md:px-4 md:pb-4">
-  <div class="rounded-panel bg-forest text-cream">
+  <div class="rounded-[2.5rem] bg-forest text-cream">
     <div class="grid gap-10 px-6 py-14 md:grid-cols-12 md:px-12">
-      <div class="md:col-span-6">
-        <p class="flex items-center gap-2 font-display text-2xl">
-          <PlaneTakeoff className="size-5" strokeWidth={1.8} aria-hidden="true" /> {SITE.name}
+      <div class="md:col-span-5">
+        <p class="flex items-center gap-2.5 font-display text-2xl text-sage-light">
+          <PlaneTakeoff className="size-6" strokeWidth={1.8} aria-hidden="true" />
+          {SITE.name}
         </p>
-        <p class="mt-6 font-display text-4xl leading-tight md:text-5xl">
+        <p class="font-heavy mt-6 font-display text-4xl leading-tight md:text-5xl">
           Go slower. <span class="text-sage-light">See more.</span>
         </p>
       </div>
-      <div class="md:col-span-3">
-        <p class="eyebrow mb-4 text-cream/60">Explore</p>
-        <ul class="space-y-2 text-sm">
-          <li><a class="hover:text-sage-light" href="/destinations">Destinations</a></li>
-          <li><a class="hover:text-sage-light" href="/planner">Trip planner</a></li>
-          <li><a class="hover:text-sage-light" href="/journal">Journal</a></li>
+      <div class="md:col-span-4">
+        <p class="mb-4 text-xs font-semibold tracking-wider text-cream/60 uppercase">Explore</p>
+        <ul class="grid grid-cols-2 gap-x-6 gap-y-2.5">
+          {
+            places.map((d) => (
+              <li>
+                <a class={link} href={`/destinations/${d.id}`}>
+                  {d.data.name}
+                </a>
+              </li>
+            ))
+          }
+          <li><a class={link} href="/destinations">All destinations</a></li>
         </ul>
       </div>
       <div class="md:col-span-3">
-        <p class="eyebrow mb-4 text-cream/60">Account</p>
-        <ul class="space-y-2 text-sm">
-          <li><a class="hover:text-sage-light" href="/login">Log in</a></li>
-          <li><a class="hover:text-sage-light" href="/signup">Create an account</a></li>
+        <p class="mb-4 text-xs font-semibold tracking-wider text-cream/60 uppercase">Account</p>
+        <ul class="space-y-2.5">
+          <li><a class={link} href="/planner">Trip planner</a></li>
+          <li><a class={link} href="/login">Log in</a></li>
+          <li><a class={link} href="/signup">Create an account</a></li>
         </ul>
       </div>
     </div>

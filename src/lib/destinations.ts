@@ -24,12 +24,21 @@ export type DestinationCard = {
   budgetPerDay: { low: number; high: number };
   daysNeeded: { min: number; max: number };
   coordinates: { lat: number; lng: number };
-  image:{ src: string; srcset: string; width: number; height: number; alt: string };
+  image: { src: string; srcset: string; width: number; height: number; alt: string };
+  credit: { author: string; license: string; source: string };
 };
 
-export function matches(d: DestinationCard, month: number | null, vibe: Vibe | null, query = '') {
+/** Daily budget bands, matched against the low end of a place's per-day cost. */
+export const BUDGETS = {
+  easy: { label: 'From ₹2,000 or less', test: (low: number) => low <= 2000 },
+  comfy: { label: 'From over ₹2,000', test: (low: number) => low > 2000 },
+} as const;
+export type Budget = keyof typeof BUDGETS;
+
+export function matches(d: DestinationCard, month: number | null, vibe: Vibe | null, query = '', budget: Budget | null = null) {
   return (
     (month === null || d.bestMonths.includes(month)) &&
+    (budget === null || BUDGETS[budget].test(d.budgetPerDay.low)) &&
     (vibe === null || d.vibes.includes(vibe)) &&
     matchesQuery(d, query)
   );

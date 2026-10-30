@@ -1,0 +1,680 @@
+<!DOCTYPE html>
+
+<html lang="en"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0" name="viewport"/><meta content="web_standard" name="shell-type"/><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/><link href="https://fonts.googleapis.com" rel="preconnect"/><link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/><link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/><style>@layer base { html, body { margin: 0; padding: 0; } body { overscroll-behavior: none; } main > :first-child { margin-top: 0 !important; } main > :last-child { margin-bottom: 0 !important; } } ::-webkit-scrollbar { display: none; }</style><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config = { darkMode: "class", theme: { extend: { "colors": { "on-tertiary": "#ffffff", "on-background": "#031f23", "tertiary-container": "#577a7f", "on-secondary-fixed-variant": "#394a47", "error-container": "#ffdad6", "tertiary-fixed": "#c4e9ee", "on-error-container": "#93000a", "on-primary-fixed": "#00201e", "on-error": "#ffffff", "surface-variant": "#cbe8ed", "on-secondary-container": "#566864", "surface-container-high": "#d1edf2", "on-secondary-fixed": "#0e1e1c", "on-primary": "#ffffff", "primary-fixed-dim": "#73d7ce", "surface-tint": "#006a64", "secondary-container": "#d4e7e2", "primary": "#006761", "surface-container-lowest": "#ffffff", "background": "#edfcff", "primary-container": "#00837b", "surface-dim": "#c3dfe4", "on-tertiary-fixed-variant": "#294c50", "tertiary": "#3e6266", "tertiary-fixed-dim": "#a8cdd2", "error": "#ba1a1a", "on-surface-variant": "#3d4947", "outline": "#6d7978", "surface-container-highest": "#cbe8ed", "surface-container-low": "#dcf9fe", "secondary-fixed-dim": "#b8cac6", "on-tertiary-container": "#f6feff", "on-primary-container": "#f3fffc", "surface-container": "#d7f3f8", "surface-bright": "#edfcff", "inverse-on-surface": "#d9f6fb", "on-tertiary-fixed": "#001f23", "inverse-primary": "#73d7ce", "secondary": "#51625e", "primary-fixed": "#90f4ea", "surface": "#edfcff", "on-surface": "#031f23", "outline-variant": "#bdc9c7", "inverse-surface": "#1a3438", "secondary-fixed": "#d4e7e2", "on-primary-fixed-variant": "#00504b", "on-secondary": "#ffffff" }, "borderRadius": { "DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px" }, "spacing": { "space-xl": "2.5rem", "margin": "3rem", "space-xs": "0.25rem", "space-lg": "1.5rem", "gutter-mobile": "1rem", "space-2xl": "4rem", "space-sm": "0.5rem", "margin-mobile": "1rem", "space-md": "1rem", "gutter": "1.5rem" }, "fontFamily": { "body-sm": [ "Plus Jakarta Sans" ], "headline-lg": [ "Plus Jakarta Sans" ], "body-lg": [ "Plus Jakarta Sans" ], "label-lg": [ "Plus Jakarta Sans" ], "currency-stat": [ "Plus Jakarta Sans" ], "label-md": [ "Plus Jakarta Sans" ], "headline-sm": [ "Plus Jakarta Sans" ], "body-md": [ "Plus Jakarta Sans" ], "headline-md": [ "Plus Jakarta Sans" ], "display-xl-mobile": [ "Plus Jakarta Sans" ], "display-xl": [ "Plus Jakarta Sans" ], "headline-lg-mobile": [ "Plus Jakarta Sans" ] }, "fontSize": { "body-sm": [ "13px", { "lineHeight": "20px", "fontWeight": "400" } ], "headline-lg": [ "36px", { "lineHeight": "44px", "letterSpacing": "-0.02em", "fontWeight": "700" } ], "body-lg": [ "18px", { "lineHeight": "28px", "fontWeight": "400" } ], "label-lg": [ "14px", { "lineHeight": "20px", "letterSpacing": "0.01em", "fontWeight": "600" } ], "currency-stat": [ "28px", { "lineHeight": "32px", "letterSpacing": "-0.02em", "fontWeight": "700" } ], "label-md": [ "12px", { "lineHeight": "16px", "letterSpacing": "0.02em", "fontWeight": "600" } ], "headline-sm": [ "20px", { "lineHeight": "28px", "letterSpacing": "-0.01em", "fontWeight": "600" } ], "body-md": [ "15px", { "lineHeight": "24px", "fontWeight": "400" } ], "headline-md": [ "24px", { "lineHeight": "32px", "letterSpacing": "-0.015em", "fontWeight": "700" } ], "display-xl-mobile": [ "36px", { "lineHeight": "42px", "letterSpacing": "-0.025em", "fontWeight": "800" } ], "display-xl": [ "56px", { "lineHeight": "64px", "letterSpacing": "-0.03em", "fontWeight": "800" } ], "headline-lg-mobile": [ "28px", { "lineHeight": "34px", "letterSpacing": "-0.02em", "fontWeight": "700" } ] } } } };</script></head><body class="bg-surface font-body-md text-on-surface antialiased"><header class="fixed top-0 w-full z-50 bg-surface/85 backdrop-blur-xl shadow-[0_1px_8px_rgba(3,31,35,0.04)]"><div class="h-20 max-w-[1440px] mx-auto px-margin flex items-center justify-between"><div class="flex items-center gap-space-sm"><div class="w-10 h-10 rounded-full bg-secondary-container flex items-center justify-center text-primary"><span class="material-symbols-outlined text-[20px]">send</span></div><span class="font-headline-md text-headline-md tracking-tight text-on-surface">Safarnama</span></div><nav class="hidden md:flex items-center gap-space-lg" data-active-classes="text-primary font-bold"><a aria-current="page" class="transition-colors text-primary font-bold" data-path="home" href="#">Home</a><a class="font-label-lg text-label-lg text-on-surface-variant hover:text-on-surface transition-colors" data-path="destinations" href="#">Destinations</a><a class="font-label-lg text-label-lg text-on-surface-variant hover:text-on-surface transition-colors" data-path="trip-planner" href="#">Trip Planner</a><a class="font-label-lg text-label-lg text-on-surface-variant hover:text-on-surface transition-colors" data-path="journal" href="#">Journal</a></nav><div class="flex items-center gap-space-md"><button aria-label="Toggle theme" class="p-space-sm rounded-full text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors flex items-center justify-center" type="button"><span class="material-symbols-outlined text-[20px]">light_mode</span></button><a class="hidden sm:inline-block font-label-lg text-label-lg text-on-surface-variant hover:text-on-surface px-space-sm py-space-xs transition-colors" data-path="login" href="#">Log in</a><a class="inline-flex items-center justify-center font-label-lg text-label-lg px-space-lg py-space-sm rounded-full bg-primary text-on-primary hover:bg-primary-container transition-colors shadow-sm" data-path="sign-up" href="#">Sign up</a><div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center ml-space-xs"><span class="material-symbols-outlined text-on-primary text-[18px]">person</span></div></div></div></header><main class="w-full pt-20 bg-surface"><div class="flex flex-col w-full">
+<!-- SECTION 1: HERO CONTAINER -->
+<section class="max-w-[1440px] mx-auto w-full px-margin pt-space-lg pb-space-2xl">
+<div class="relative w-full h-[640px] rounded-[28px] overflow-hidden shadow-xl bg-inverse-surface">
+<!-- Background Kerala Backwater Landscape -->
+<div class="absolute inset-0 bg-cover bg-center transition-transform duration-700 hover:scale-105" data-alt="Cinematic wide-angle view of a serene Kerala backwater at tranquil dawn in South India. Calm mirror-like emerald water reflecting towering coconut palms and rustic thatched traditional kettuvallam houseboats. Soft morning mist drifting low over calm ripples, sun rays piercing through lush foliage with teal and amber morning tones, authentic documentary travel editorial style." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuAHjYZ-rASz-vUYnrWN-gv6VzlPM0AYBWGJKigzEaPmE0fCoaRF1a3193a08TNKfTy7eCk0fqwsPC4KUPftDLeclbLQK08wDLw8dDk6lEYQjb3bSKulIveNVBoMIU0UVTVfNLS2Wn1DD8tRVKqauxXjUsv-z4-HTD55X8oJlrnaiT51hmzK7UFlp4E9eF-YGuC6OObiDnDSnP8DKflpjcLNalIRfQd1UNKoj6PwQ_Su')"></div>
+<!-- Atmospheric Gradient & Sea-Glass Tint Scrim -->
+<div class="absolute inset-0 bg-gradient-to-t from-inverse-surface/90 via-inverse-surface/40 to-black/30 backdrop-blur-[0.5px]"></div>
+<div class="absolute inset-0 bg-primary/10 mix-blend-multiply pointer-events-none"></div>
+<!-- Top Overlay: Photographer Attribution & Sub-badge -->
+<div class="absolute top-space-lg left-space-lg right-space-lg flex items-center justify-between z-10">
+<div class="inline-flex items-center gap-space-xs px-space-md py-space-xs rounded-full bg-inverse-surface/60 backdrop-blur-md text-on-primary">
+<span class="material-symbols-outlined text-[16px] text-primary-fixed">photo_camera</span>
+<span class="font-label-md text-label-md tracking-wider uppercase text-inverse-on-surface">Kerala Community • Safarnama</span>
+</div>
+<div class="hidden sm:inline-flex items-center gap-space-xs px-space-md py-space-xs rounded-full bg-surface-container-highest/20 backdrop-blur-md text-inverse-on-surface font-label-md text-label-md">
+<span class="w-2 h-2 rounded-full bg-primary-fixed animate-pulse"></span>
+          Season: Nov – Feb (Prime Calm)
+        </div>
+</div>
+<!-- Main Editorial Headline Content in Hero -->
+<div class="absolute bottom-16 sm:bottom-20 left-space-md md:left-space-xl right-space-md md:right-space-xl max-w-3xl z-10 text-on-primary">
+<div class="inline-flex items-center gap-space-xs px-space-md py-space-xs rounded-full bg-surface-container-lowest/15 backdrop-blur-md mb-space-md">
+<span class="material-symbols-outlined text-primary-fixed text-[18px]">verified</span>
+<span class="font-label-md text-label-md text-primary-fixed uppercase tracking-wider">Honest guides, real costs &amp; mindful planners</span>
+</div>
+<h1 class="font-display-xl text-display-xl text-on-primary tracking-tight mb-space-sm drop-shadow-sm">
+          Explore India with us
+        </h1>
+<p class="font-body-lg text-body-lg text-surface-container-high/90 max-w-2xl mb-space-lg drop-shadow">
+          No sponsored fluff. Curated routes, genuine seasonal truths, and honest daily rupee budgets designed for the slow, independent wanderer.
+        </p>
+<div class="flex items-center gap-space-md">
+<a class="inline-flex items-center gap-space-sm px-7 py-3.5 rounded-full bg-primary-fixed text-on-primary-fixed hover:bg-primary-fixed-dim transition-all font-label-lg text-label-lg shadow-lg hover:shadow-xl hover:translate-y-[-1px]" href="#">
+<span>Plan a trip</span>
+<span class="material-symbols-outlined text-[18px]">arrow_forward</span>
+</a>
+<a class="inline-flex items-center gap-space-xs px-5 py-3.5 rounded-full bg-surface-container-lowest/10 backdrop-blur-md text-on-primary hover:bg-surface-container-lowest/20 transition-colors font-label-lg text-label-lg" href="#itineraries">
+<span>Explore regional field maps</span>
+<span class="material-symbols-outlined text-[18px]">south</span>
+</a>
+</div>
+</div>
+</div>
+<!-- SECTION 2: FLOATING SEARCH BAR (Overlapping bottom edge) -->
+<div class="relative -mt-10 sm:-mt-12 z-20 max-w-4xl mx-auto px-space-md">
+<div class="bg-surface-container-lowest rounded-full p-2.5 shadow-[0px_16px_40px_rgba(3,31,35,0.12)] flex flex-col md:flex-row items-center gap-space-sm">
+<!-- Input Field & Search Icon -->
+<div class="flex items-center gap-space-sm flex-1 pl-space-md w-full">
+<span class="material-symbols-outlined text-outline text-[22px]">search</span>
+<input class="w-full bg-transparent font-body-md text-body-md text-on-surface placeholder:text-outline focus:outline-none" placeholder="Search for your next trip, state or mood..." type="text"/>
+<button aria-label="Voice search" class="p-space-xs rounded-full hover:bg-surface-container-high text-outline transition-colors" type="button">
+<span class="material-symbols-outlined text-[20px]">mic</span>
+</button>
+</div>
+<div class="hidden md:block w-px h-8 bg-surface-variant"></div>
+<!-- Filter Selector & Submit CTA -->
+<div class="flex items-center gap-space-xs w-full md:w-auto justify-between md:justify-end px-space-xs">
+<div class="relative">
+<select aria-label="Trip Mood Filter" class="appearance-none bg-surface-container-low hover:bg-surface-container font-label-md text-label-md text-on-surface px-4 py-2.5 pr-8 rounded-full focus:outline-none transition-colors cursor-pointer">
+<option>All trips</option>
+<option>Cool hills</option>
+<option>On the water</option>
+<option>Old stones</option>
+<option>Desert</option>
+<option>High mountains</option>
+<option>Living culture</option>
+</select>
+<span class="material-symbols-outlined pointer-events-none absolute right-2.5 top-1/2 -translate-y-1/2 text-outline text-[18px]">expand_more</span>
+</div>
+<button aria-label="Submit search" class="w-11 h-11 rounded-full bg-primary text-on-primary flex items-center justify-center hover:bg-primary-container transition-transform hover:scale-105 shrink-0 shadow-md" type="button">
+<span class="material-symbols-outlined text-[22px]">arrow_forward</span>
+</button>
+</div>
+</div>
+<!-- Quick Mood Filter Pill Chips -->
+<div class="flex items-center justify-center flex-wrap gap-2 pt-space-md">
+<span class="font-label-md text-label-md text-outline-variant mr-1">Trending filters:</span>
+<button class="px-3.5 py-1 rounded-full bg-secondary-container text-on-secondary-container font-label-md text-label-md hover:bg-surface-variant transition-colors">Cool hills</button>
+<button class="px-3.5 py-1 rounded-full bg-surface-container-low text-secondary font-label-md text-label-md hover:bg-surface-container-high transition-colors">On the water</button>
+<button class="px-3.5 py-1 rounded-full bg-surface-container-low text-secondary font-label-md text-label-md hover:bg-surface-container-high transition-colors">Old stones</button>
+<button class="px-3.5 py-1 rounded-full bg-surface-container-low text-secondary font-label-md text-label-md hover:bg-surface-container-high transition-colors">Desert silence</button>
+<button class="px-3.5 py-1 rounded-full bg-surface-container-low text-secondary font-label-md text-label-md hover:bg-surface-container-high transition-colors">High passes</button>
+</div>
+</div>
+</section>
+<!-- SECTION 4: FOUR-ITEM PHILOSOPHY / FEATURE STRIP -->
+<section class="max-w-[1440px] mx-auto w-full px-margin py-space-xl">
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-gutter">
+<!-- Feature 1 -->
+<div class="bg-surface-container-lowest p-space-lg rounded-[20px] shadow-sm hover:shadow-md transition-shadow flex flex-col justify-between group">
+<div>
+<div class="w-12 h-12 rounded-full bg-surface-container-low text-primary flex items-center justify-center mb-space-md group-hover:scale-110 transition-transform">
+<span class="material-symbols-outlined text-[24px]">verified_user</span>
+</div>
+<h3 class="font-headline-sm text-headline-sm text-on-surface mb-space-xs">Honest guides</h3>
+<p class="font-body-sm text-body-sm text-secondary">
+            Zero sponsored hotel placements, paid meals, or secret tour operator kickbacks. Written solely by independent field explorers.
+          </p>
+</div>
+<div class="pt-space-md flex items-center gap-1 text-primary font-label-md text-label-md">
+<span>Editorial Code</span>
+<span class="material-symbols-outlined text-[16px]">chevron_right</span>
+</div>
+</div>
+<!-- Feature 2 -->
+<div class="bg-surface-container-lowest p-space-lg rounded-[20px] shadow-sm hover:shadow-md transition-shadow flex flex-col justify-between group">
+<div>
+<div class="w-12 h-12 rounded-full bg-surface-container-low text-primary flex items-center justify-center mb-space-md group-hover:scale-110 transition-transform">
+<span class="material-symbols-outlined text-[24px]">wb_sunny</span>
+</div>
+<h3 class="font-headline-sm text-headline-sm text-on-surface mb-space-xs">The right season</h3>
+<p class="font-body-sm text-body-sm text-secondary">
+            Unvarnished monsoon truths, mountain roadblock windows, and summer heat realities with month-by-month crowd curves.
+          </p>
+</div>
+<div class="pt-space-md flex items-center gap-1 text-primary font-label-md text-label-md">
+<span>Weather Curves</span>
+<span class="material-symbols-outlined text-[16px]">chevron_right</span>
+</div>
+</div>
+<!-- Feature 3 -->
+<div class="bg-surface-container-lowest p-space-lg rounded-[20px] shadow-sm hover:shadow-md transition-shadow flex flex-col justify-between group">
+<div>
+<div class="w-12 h-12 rounded-full bg-surface-container-low text-primary flex items-center justify-center mb-space-md group-hover:scale-110 transition-transform">
+<span class="material-symbols-outlined text-[24px]">payments</span>
+</div>
+<h3 class="font-headline-sm text-headline-sm text-on-surface mb-space-xs">Real budgets</h3>
+<p class="font-body-sm text-body-sm text-secondary">
+            Granular daily rupee estimates divided cleanly into backpacker, mindful homestay, and heritage boutique tiers.
+          </p>
+</div>
+<div class="pt-space-md flex items-center gap-1 text-primary font-label-md text-label-md">
+<span>Cost Breakdowns</span>
+<span class="material-symbols-outlined text-[16px]">chevron_right</span>
+</div>
+</div>
+<!-- Feature 4 -->
+<div class="bg-surface-container-lowest p-space-lg rounded-[20px] shadow-sm hover:shadow-md transition-shadow flex flex-col justify-between group">
+<div>
+<div class="w-12 h-12 rounded-full bg-surface-container-low text-primary flex items-center justify-center mb-space-md group-hover:scale-110 transition-transform">
+<span class="material-symbols-outlined text-[24px]">event_available</span>
+</div>
+<h3 class="font-headline-sm text-headline-sm text-on-surface mb-space-xs">Plan it all</h3>
+<p class="font-body-sm text-body-sm text-secondary">
+            Free day-by-day interactive routes, bus &amp; state transport logistics, and climate-specific offline packing checklists.
+          </p>
+</div>
+<div class="pt-space-md flex items-center gap-1 text-primary font-label-md text-label-md">
+<span>Open Itineraries</span>
+<span class="material-symbols-outlined text-[16px]">chevron_right</span>
+</div>
+</div>
+</div>
+</section>
+<!-- SECTION 3: 'PLAN YOUR TRIP NOW' MINT SECTION -->
+<section class="max-w-[1440px] mx-auto w-full px-margin py-space-lg" id="itineraries">
+<div class="bg-secondary-container rounded-[28px] p-space-lg md:p-space-xl lg:p-space-2xl text-on-secondary-fixed relative overflow-hidden">
+<!-- Top Section Tag & Header -->
+<div class="flex flex-col md:flex-row md:items-end justify-between mb-space-xl gap-space-md">
+<div>
+<div class="inline-flex items-center gap-1.5 font-label-md text-label-md uppercase tracking-wider text-on-secondary-fixed-variant mb-space-xs">
+<span class="w-2 h-2 rounded-full bg-primary"></span>
+            Curated Itineraries
+          </div>
+<h2 class="font-headline-lg text-headline-lg text-on-secondary-fixed tracking-tight">
+            Plan your trip now
+          </h2>
+<p class="font-body-md text-body-md text-on-secondary-container max-w-xl mt-space-xs">
+            Handcrafted slow travel maps curated by native storytellers. Start with an iconic subcontinental region.
+          </p>
+</div>
+<!-- Pill Region Filter Chips -->
+<div class="flex items-center flex-wrap gap-space-xs">
+<button class="px-4 py-2 rounded-full bg-primary text-on-primary font-label-md text-label-md shadow-sm">Munnar</button>
+<button class="px-4 py-2 rounded-full bg-surface-container-lowest text-on-secondary-fixed font-label-md text-label-md hover:bg-surface-container-high transition-colors">Alappuzha</button>
+<button class="px-4 py-2 rounded-full bg-surface-container-lowest text-on-secondary-fixed font-label-md text-label-md hover:bg-surface-container-high transition-colors">Hampi</button>
+<button class="px-4 py-2 rounded-full bg-surface-container-lowest text-on-secondary-fixed font-label-md text-label-md hover:bg-surface-container-high transition-colors">Spiti Valley</button>
+<button class="px-4 py-2 rounded-full bg-surface-container-lowest text-on-secondary-fixed font-label-md text-label-md hover:bg-surface-container-high transition-colors">Jaisalmer</button>
+<button class="px-4 py-2 rounded-full bg-surface-container-lowest text-on-secondary-fixed font-label-md text-label-md hover:bg-surface-container-high transition-colors">Ziro Valley</button>
+</div>
+</div>
+<!-- Grid: Featured Landscape Oval on Left + Stadium Picture Cards on Right -->
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-gutter items-center">
+<!-- Left Featured Hero Card (Munnar Misty Ridges) -->
+<div class="lg:col-span-6 relative h-[440px] rounded-[36px] overflow-hidden shadow-md group">
+<div class="w-full h-full bg-cover bg-center transition-transform duration-700 group-hover:scale-105" data-alt="Sweeping panoramic high-resolution landscape of emerald green rolling tea estate hills in Munnar, Western Ghats, Kerala. Layers of mist floating between mountain ridges under early morning golden hour light. Single winding footpath through lush green tea shrubs, soft atmospheric mountain glow in mint and deep forest green palette." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuB2z3rCM64EWFtQFzEWeYMEr1Gpmi7rR2LmlDQFF4JVSpGq7Umgt4LC0Ecd0Ejw1rcDxcXAMniKg1I1QDPcb3v0jNHm19b4mxE8nCroCK5NhhdKIvMNZQoAckrI6Wup96GF__d67QIwpn32_kw4ZsvqF7B6XI2KwAVrvWt6_2PYdsm6K3c3Rmm5js0-8znN-pcQ-IkdiG4iPwTC1Qa9TkMwa3-z_MzXoEWIESv7l3Q7')"></div>
+<div class="absolute inset-0 bg-gradient-to-t from-inverse-surface/85 via-inverse-surface/20 to-transparent"></div>
+<!-- Badges Overlay -->
+<div class="absolute top-space-md left-space-md flex gap-space-xs">
+<span class="px-3.5 py-1 rounded-full bg-primary text-on-primary font-label-md text-label-md uppercase tracking-wider">
+              Featured Trail
+            </span>
+<span class="px-3 py-1 rounded-full bg-inverse-surface/70 backdrop-blur-md text-primary-fixed font-label-md text-label-md">
+              4 Days • ₹2,400/day
+            </span>
+</div>
+<!-- Bottom Card Content -->
+<div class="absolute bottom-space-lg left-space-lg right-space-lg text-on-primary">
+<span class="font-label-md text-label-md text-primary-fixed uppercase tracking-wider">Western Ghats • High Range</span>
+<h3 class="font-headline-md text-headline-md text-on-primary mt-1 mb-2">Munnar Misty Ridges</h3>
+<p class="font-body-sm text-body-sm text-surface-container-high/90 line-clamp-2 mb-space-md">
+              Escape the tourist viewpoint crowds. A silent walking route connecting colonial tea bungalows, tribal settlements, and peak grassland flora.
+            </p>
+<a class="inline-flex items-center gap-space-xs font-label-lg text-label-lg text-primary-fixed hover:underline" href="#">
+<span>View full 4-day itinerary</span>
+<span class="material-symbols-outlined text-[18px]">arrow_forward</span>
+</a>
+</div>
+</div>
+<!-- Right Side: Architectural Stadium-Shaped Vertical Cards -->
+<div class="lg:col-span-6 grid grid-cols-1 sm:grid-cols-3 gap-space-md">
+<!-- Stadium Card 1: Hampi -->
+<div class="relative h-[440px] rounded-full overflow-hidden shadow-sm group">
+<div class="w-full h-full bg-cover bg-center transition-transform duration-500 group-hover:scale-110" data-alt="Vertical architectural travel photograph of massive ancient Vijayanagara granite boulders and carved temple pillars in Hampi, Karnataka at dusk. Golden sunset casting long shadows across boulder hills and banana groves, warm terracotta and dusty teal twilight sky." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuBcZUg07Cu-EursEeJ0fVzJpu_WlqS3a7eDiCthaP0tSXZlqtLNtJa4Tw3TmQyjo10Jd6NOSDexxYh-JaPwMGPwoe82Y5BAXQ1kPJqjCnXRUqPAZPIFaO8uWUcHxs-Fms0jZHtbkXYdHrlLtuqnOBa6nqW9PD5WTnG4flL-4aag37DgPLQ8_UHtMBLuYGyisf2zsLTxCF-gvCdFKovKH4K4k9zPzfb097RJMSjrOtNO')"></div>
+<div class="absolute inset-0 bg-gradient-to-t from-inverse-surface/90 via-transparent to-black/30"></div>
+<div class="absolute top-6 left-0 right-0 text-center">
+<span class="px-3 py-1 rounded-full bg-inverse-surface/60 backdrop-blur-md text-inverse-on-surface font-label-md text-label-md">
+                Oct – Mar
+              </span>
+</div>
+<div class="absolute bottom-8 left-4 right-4 text-center text-on-primary">
+<h4 class="font-headline-sm text-headline-sm text-on-primary">Hampi</h4>
+<p class="font-label-md text-label-md text-primary-fixed mt-1">Karnataka</p>
+<p class="font-body-sm text-body-sm text-outline-variant text-[11px] mt-0.5">Wikimedia CC</p>
+</div>
+</div>
+<!-- Stadium Card 2: Spiti Valley -->
+<div class="relative h-[440px] rounded-full overflow-hidden shadow-sm group">
+<div class="w-full h-full bg-cover bg-center transition-transform duration-500 group-hover:scale-110" data-alt="Vertical portrait orientation view of Key Monastery perched dramatically on a high arid hill in Spiti Valley, Himachal Pradesh. Stark cold desert mountains with deep blue high altitude sky, prayer flags fluttering, pristine snowy peaks in the far backdrop." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuAT9rWqhL0OP8cTqKmLxkV8aaqk1MRejozPnRwBzleol-ATzpVRmAEcK6AqlMzh-x5P5FcDV1aWkB7Q9BrESt3MGISyLLINfNTsb1Ru8DNA3-myBd1caRUCa6M2m2amD-aTAzeTgX6XGIeKFpuY7_kfyv4QzvJ-FhDfSVeIcCRngKfIqw5shKaMsNd2f-wiKqQvBV0fo2nvlyr8E0JioXvozqP13eX9CKPUmOl0_-3Z')"></div>
+<div class="absolute inset-0 bg-gradient-to-t from-inverse-surface/90 via-transparent to-black/30"></div>
+<div class="absolute top-6 left-0 right-0 text-center">
+<span class="px-3 py-1 rounded-full bg-inverse-surface/60 backdrop-blur-md text-inverse-on-surface font-label-md text-label-md">
+                Jun – Sep
+              </span>
+</div>
+<div class="absolute bottom-8 left-4 right-4 text-center text-on-primary">
+<h4 class="font-headline-sm text-headline-sm text-on-primary">Spiti</h4>
+<p class="font-label-md text-label-md text-primary-fixed mt-1">Himachal</p>
+<p class="font-body-sm text-body-sm text-outline-variant text-[11px] mt-0.5">CC BY-SA</p>
+</div>
+</div>
+<!-- Stadium Card 3: Ziro Valley -->
+<div class="relative h-[440px] rounded-full overflow-hidden shadow-sm group">
+<div class="w-full h-full bg-cover bg-center transition-transform duration-500 group-hover:scale-110" data-alt="Vertical landscape view of lush terraced green rice paddies and pine-clad hills in Ziro Valley, Arunachal Pradesh. Wooden stilt Apatani tribal homes nestled among bamboo groves under soft overcast clouds, verdant green sub-Himalayan scenery." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuA53XRVDKKpgRAPz2sOa3gY5R8RIQ6Mxnzzf8QLl7ZC2NgNBB5MkC8PJiwdNi5O0exbH1Mgt77rO-VK8TxOeizwVf_6-zzdTSJBHTgQOw5DP1m7a16b1yRELrmva9eP_epzGSBDwQrQKF_xOIGaaI9CV_jd3b6pXZMC_b6qev7PyhNAAxU4GBaE-82z-ZL6FQmzmwsrNJSbx-nuStZUh4hfQEXO8ZfNNO_Q8rVzQMMd')"></div>
+<div class="absolute inset-0 bg-gradient-to-t from-inverse-surface/90 via-transparent to-black/30"></div>
+<div class="absolute top-6 left-0 right-0 text-center">
+<span class="px-3 py-1 rounded-full bg-inverse-surface/60 backdrop-blur-md text-inverse-on-surface font-label-md text-label-md">
+                Mar – Oct
+              </span>
+</div>
+<div class="absolute bottom-8 left-4 right-4 text-center text-on-primary">
+<h4 class="font-headline-sm text-headline-sm text-on-primary">Ziro</h4>
+<p class="font-label-md text-label-md text-primary-fixed mt-1">Arunachal</p>
+<p class="font-body-sm text-body-sm text-outline-variant text-[11px] mt-0.5">Field Route</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- SECTION 5: 'WHERE PEOPLE ARE HEADING' DESTINATION CARDS -->
+<section class="max-w-[1440px] mx-auto w-full px-margin py-space-2xl">
+<div class="flex flex-col sm:flex-row sm:items-end justify-between mb-space-xl gap-space-sm">
+<div>
+<span class="font-label-md text-label-md uppercase tracking-wider text-primary">Trending Journeys</span>
+<h2 class="font-headline-lg text-headline-lg text-on-surface tracking-tight mt-1">
+          Where people are heading
+        </h2>
+</div>
+<a class="inline-flex items-center gap-space-xs font-label-lg text-label-lg text-primary hover:text-primary-container transition-colors" href="#">
+<span>View all destination guides</span>
+<span class="material-symbols-outlined text-[18px]">arrow_forward</span>
+</a>
+</div>
+<!-- 4 Desktop Tall Aspect Cards Grid -->
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-gutter">
+<!-- Card 1: Kerala Backwaters -->
+<div class="bg-surface-container-lowest rounded-[20px] overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col group">
+<div class="relative h-64 overflow-hidden">
+<div class="w-full h-full bg-cover bg-center group-hover:scale-105 transition-transform duration-500" data-alt="Horizontal travel photo of an intricate narrow palm-fringed canal in rural Kuttanad, Alappuzha, Kerala. Country wooden canoe moored along emerald green bank, reflection of tropical skies and quiet village life." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuDigla9G4y7UaGiO5b190LJbExhyNdNvhQOYUjwxLBaU5rB-eKyQhPsnNQ5rHRocqWbf7rYV-expRhJDNjGlYkvDYQEn7kpvoUH4DUGF9mg2KWV67z3yYN_sPdzx8ne2fP3Q94Bm0XMh3iMCsE-_6cgMgK0kOzDRLdCVEc97MxNxfjIYZNnw9DdofS8Ctswf2bDWtH6AnvgP9bkRQrmLYL3K8ziWXUHKaU8n16egZB_')"></div>
+<div class="absolute top-3 left-3 px-3 py-1 rounded-full bg-surface-container-lowest/90 backdrop-blur-md font-label-md text-label-md text-on-surface">
+            Kerala
+          </div>
+<div class="absolute bottom-3 right-3 px-3 py-1 rounded-full bg-primary text-on-primary font-label-md text-label-md font-bold">
+            ₹1,800 / day
+          </div>
+</div>
+<div class="p-space-lg flex-1 flex flex-col justify-between">
+<div>
+<div class="flex items-center gap-2 text-secondary font-label-md text-label-md mb-1.5">
+<span class="material-symbols-outlined text-[16px] text-primary">schedule</span>
+<span>Best: Nov – Feb</span>
+</div>
+<h3 class="font-headline-sm text-headline-sm text-on-surface">Kerala Backwaters</h3>
+<p class="font-body-sm text-body-sm text-secondary mt-1.5 line-clamp-2">
+              Explore public state water ferries instead of luxury houseboats for genuine quiet canal interactions.
+            </p>
+</div>
+<div class="pt-space-md mt-space-md border-t-0 flex items-center justify-between">
+<span class="font-label-md text-label-md text-outline">5 Days • Slow Boat</span>
+<a class="font-label-lg text-label-lg text-primary hover:underline inline-flex items-center gap-1" href="#">
+<span>Read guide</span>
+<span class="material-symbols-outlined text-[16px]">arrow_forward</span>
+</a>
+</div>
+</div>
+</div>
+<!-- Card 2: Munnar Tea Valleys -->
+<div class="bg-surface-container-lowest rounded-[20px] overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col group">
+<div class="relative h-64 overflow-hidden">
+<div class="w-full h-full bg-cover bg-center group-hover:scale-105 transition-transform duration-500" data-alt="Horizontal photographic view of undulating high-altitude tea plantations in Munnar shrouded in soft white valley fog at sunrise. Crisp cool atmosphere with deep mountain contours in Western Ghats." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuCNdB2tb-42Mjhh1sBx2Ae9qJek45wtl6ngdRhuO1npDV0YO4QL4By4sIskLywSjDk-RjO0cgTDKyld5Qagj_7oJjUXh4nqDTFWDaPabcRM_11eo4yNO7Hw5oBdySkw4OvXQbH8zOlBMWxYDclZvYTKRxTBJNnYoLqr7WHxHFvpn1rLfsNMP7JdSTSvi6NAU9xnEehFFqYJDmfYvuf-ASc6eQAmGNJxScZHUm4IO-u-')"></div>
+<div class="absolute top-3 left-3 px-3 py-1 rounded-full bg-surface-container-lowest/90 backdrop-blur-md font-label-md text-label-md text-on-surface">
+            Kerala
+          </div>
+<div class="absolute bottom-3 right-3 px-3 py-1 rounded-full bg-primary text-on-primary font-label-md text-label-md font-bold">
+            ₹2,200 / day
+          </div>
+</div>
+<div class="p-space-lg flex-1 flex flex-col justify-between">
+<div>
+<div class="flex items-center gap-2 text-secondary font-label-md text-label-md mb-1.5">
+<span class="material-symbols-outlined text-[16px] text-primary">schedule</span>
+<span>Best: Sep – Mar</span>
+</div>
+<h3 class="font-headline-sm text-headline-sm text-on-surface">Munnar Tea Valleys</h3>
+<p class="font-body-sm text-body-sm text-secondary mt-1.5 line-clamp-2">
+              High mountain ridges, wild cardamom groves, and quiet homestays away from highway bus congestion.
+            </p>
+</div>
+<div class="pt-space-md mt-space-md border-t-0 flex items-center justify-between">
+<span class="font-label-md text-label-md text-outline">4 Days • Highlands</span>
+<a class="font-label-lg text-label-lg text-primary hover:underline inline-flex items-center gap-1" href="#">
+<span>Read guide</span>
+<span class="material-symbols-outlined text-[16px]">arrow_forward</span>
+</a>
+</div>
+</div>
+</div>
+<!-- Card 3: Hampi Ruins -->
+<div class="bg-surface-container-lowest rounded-[20px] overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col group">
+<div class="relative h-64 overflow-hidden">
+<div class="w-full h-full bg-cover bg-center group-hover:scale-105 transition-transform duration-500" data-alt="Editorial landscape photo of the Tungabhadra River winding between granite boulder formations and ancient stone stone temple ruins in Hampi, Karnataka. Monolithic structures standing under a clear sunset sky." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuAR0EX05LmYMqW5d-3tLSYl0pAx5nmRG9tUVTS-DP8bKlQHtPguhK2McPolYjJzpcnUURXyv2PQhODuO1H3-wYzprhtD1MqxfXCW806lNlE213jwDxAlNvHqCuUM27dXAeVl0WLz9PrREqzApK7syndpHWHENVEs9xHuvLaLCmRDn41iD4g9y5CWTkZKMs6L5f_ylU3BKnj2i-5eFCkxU0yu_tavgtlLNU-oR9BVcb2')"></div>
+<div class="absolute top-3 left-3 px-3 py-1 rounded-full bg-surface-container-lowest/90 backdrop-blur-md font-label-md text-label-md text-on-surface">
+            Karnataka
+          </div>
+<div class="absolute bottom-3 right-3 px-3 py-1 rounded-full bg-primary text-on-primary font-label-md text-label-md font-bold">
+            ₹1,800 / day
+          </div>
+</div>
+<div class="p-space-lg flex-1 flex flex-col justify-between">
+<div>
+<div class="flex items-center gap-2 text-secondary font-label-md text-label-md mb-1.5">
+<span class="material-symbols-outlined text-[16px] text-primary">schedule</span>
+<span>Best: Oct – Feb</span>
+</div>
+<h3 class="font-headline-sm text-headline-sm text-on-surface">Hampi Ruins</h3>
+<p class="font-body-sm text-body-sm text-secondary mt-1.5 line-clamp-2">
+              Medieval capitals, coracle river rides, and boulder scrambling trails navigated at sunrise and late twilight.
+            </p>
+</div>
+<div class="pt-space-md mt-space-md border-t-0 flex items-center justify-between">
+<span class="font-label-md text-label-md text-outline">3 Days • Heritage</span>
+<a class="font-label-lg text-label-lg text-primary hover:underline inline-flex items-center gap-1" href="#">
+<span>Read guide</span>
+<span class="material-symbols-outlined text-[16px]">arrow_forward</span>
+</a>
+</div>
+</div>
+</div>
+<!-- Card 4: Spiti Valley -->
+<div class="bg-surface-container-lowest rounded-[20px] overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col group">
+<div class="relative h-64 overflow-hidden">
+<div class="w-full h-full bg-cover bg-center group-hover:scale-105 transition-transform duration-500" data-alt="Rugged mountain landscape of Spiti Valley in Trans-Himalayas showing high barren peaks, crystal-clear turquoise Spiti river cutting through canyon, and white Tibetan Buddhist chorten along dirt mountain road." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuBTU0ntcmbGwepXOvSBUy2RQg0QrNPvuTfelTiComG_fIO0x8pJVGLbOxfPo7pGGCMK6ft5HeDR-UGeBJe01GUSHjnW_V7r_oMX6HMhJVpO2B9hTN0TciDKVJ0Mnc_CdBkGLK2R0C93SF1HtvEY4FuzlyTfB-zcsDvjbrSwmENDnWiAlvyLg7kpFR2tkT5rxh_CLb7d_ILhProFyRQ5Zam1mdW_ZmKD81Epc11z2qzB')"></div>
+<div class="absolute top-3 left-3 px-3 py-1 rounded-full bg-surface-container-lowest/90 backdrop-blur-md font-label-md text-label-md text-on-surface">
+            Himachal
+          </div>
+<div class="absolute bottom-3 right-3 px-3 py-1 rounded-full bg-primary text-on-primary font-label-md text-label-md font-bold">
+            ₹2,500 / day
+          </div>
+</div>
+<div class="p-space-lg flex-1 flex flex-col justify-between">
+<div>
+<div class="flex items-center gap-2 text-secondary font-label-md text-label-md mb-1.5">
+<span class="material-symbols-outlined text-[16px] text-primary">schedule</span>
+<span>Best: Jun – Sep</span>
+</div>
+<h3 class="font-headline-sm text-headline-sm text-on-surface">Spiti Valley</h3>
+<p class="font-body-sm text-body-sm text-secondary mt-1.5 line-clamp-2">
+              High mountain passes, 1,000-year-old cliffside monasteries, and fossil villages high above tree-line altitude.
+            </p>
+</div>
+<div class="pt-space-md mt-space-md border-t-0 flex items-center justify-between">
+<span class="font-label-md text-label-md text-outline">7 Days • Mountain</span>
+<a class="font-label-lg text-label-lg text-primary hover:underline inline-flex items-center gap-1" href="#">
+<span>Read guide</span>
+<span class="material-symbols-outlined text-[16px]">arrow_forward</span>
+</a>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- SECTION 6: TRIP PLANNER PROMO SHOWCASE (Deep Lagoon Panel) -->
+<section class="max-w-[1440px] mx-auto w-full px-margin py-space-xl">
+<div class="bg-inverse-surface text-inverse-on-surface rounded-[28px] p-space-lg md:p-space-xl lg:p-space-2xl relative overflow-hidden shadow-2xl">
+<!-- Ambient decorative gradient wash -->
+<div class="absolute top-0 right-0 w-96 h-96 bg-primary/20 rounded-full blur-3xl pointer-events-none"></div>
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-gutter items-center relative z-10">
+<!-- Left Column: Copy & Actions -->
+<div class="lg:col-span-7">
+<div class="inline-flex items-center gap-space-xs px-space-md py-space-xs rounded-full bg-surface-container-highest/20 text-primary-fixed mb-space-md">
+<span class="material-symbols-outlined text-[16px]">check_circle</span>
+<span class="font-label-md text-label-md uppercase tracking-wider">Minimal • Focused • Offline Ready</span>
+</div>
+<h2 class="font-headline-lg text-headline-lg text-inverse-on-surface tracking-tight mb-space-sm">
+            Every detail, in one place
+          </h2>
+<p class="font-body-lg text-body-lg text-outline-variant max-w-xl mb-space-xl">
+            No endless browser tabs, spammy booking popups, or paid affiliate traps. Build your route step-by-step with real local transit logic, reliable rupee averages, and verified elevation profiles.
+          </p>
+<div class="flex flex-col sm:flex-row items-start sm:items-center gap-space-md">
+<a class="px-7 py-3.5 rounded-full bg-primary-fixed text-on-primary-fixed hover:bg-primary-fixed-dim transition-transform hover:scale-105 font-label-lg text-label-lg shadow-md inline-flex items-center gap-space-xs" href="#">
+<span>Open the planner</span>
+<span class="material-symbols-outlined text-[18px]">launch</span>
+</a>
+<span class="font-body-sm text-body-sm text-outline-variant">Free for all independent travelers. No sign up required to start.</span>
+</div>
+</div>
+<!-- Right Column: Frosted Sea-Glass Feature Checklist Card -->
+<div class="lg:col-span-5">
+<div class="bg-surface-container-highest/10 backdrop-blur-xl rounded-[24px] p-space-lg shadow-inner">
+<div class="flex items-center justify-between pb-space-md mb-space-md border-b-0">
+<span class="font-headline-sm text-headline-sm text-inverse-on-surface">Interactive Canvas</span>
+<span class="px-3 py-0.5 rounded-full bg-primary-fixed/20 text-primary-fixed font-label-md text-label-md">v2.4 Live</span>
+</div>
+<ul class="space-y-space-md">
+<li class="flex items-start gap-space-sm">
+<div class="w-6 h-6 rounded-full bg-primary-fixed/20 text-primary-fixed flex items-center justify-center shrink-0 mt-0.5">
+<span class="material-symbols-outlined text-[16px]">check</span>
+</div>
+<div>
+<span class="font-label-lg text-label-lg text-inverse-on-surface block">Day-by-day mindful itinerary builder</span>
+<span class="font-body-sm text-body-sm text-outline-variant">Visual daytime segments with reasonable travel tempos.</span>
+</div>
+</li>
+<li class="flex items-start gap-space-sm">
+<div class="w-6 h-6 rounded-full bg-primary-fixed/20 text-primary-fixed flex items-center justify-center shrink-0 mt-0.5">
+<span class="material-symbols-outlined text-[16px]">check</span>
+</div>
+<div>
+<span class="font-label-lg text-label-lg text-inverse-on-surface block">Live daily &amp; rupee budget calculator</span>
+<span class="font-body-sm text-body-sm text-outline-variant">Tailored estimates for homestay, transit, food, and entry fees.</span>
+</div>
+</li>
+<li class="flex items-start gap-space-sm">
+<div class="w-6 h-6 rounded-full bg-primary-fixed/20 text-primary-fixed flex items-center justify-center shrink-0 mt-0.5">
+<span class="material-symbols-outlined text-[16px]">check</span>
+</div>
+<div>
+<span class="font-label-lg text-label-lg text-inverse-on-surface block">Historical weather curves for exact dates</span>
+<span class="font-body-sm text-body-sm text-outline-variant">Monsoon patterns, temperature swings, and humidity levels.</span>
+</div>
+</li>
+<li class="flex items-start gap-space-sm">
+<div class="w-6 h-6 rounded-full bg-primary-fixed/20 text-primary-fixed flex items-center justify-center shrink-0 mt-0.5">
+<span class="material-symbols-outlined text-[16px]">check</span>
+</div>
+<div>
+<span class="font-label-lg text-label-lg text-inverse-on-surface block">Climate-specific packing checklist</span>
+<span class="font-body-sm text-body-sm text-outline-variant">Automated checklists for high altitude, tropical backwaters, or desert sand.</span>
+</div>
+</li>
+<li class="flex items-start gap-space-sm">
+<div class="w-6 h-6 rounded-full bg-primary-fixed/20 text-primary-fixed flex items-center justify-center shrink-0 mt-0.5">
+<span class="material-symbols-outlined text-[16px]">check</span>
+</div>
+<div>
+<span class="font-label-lg text-label-lg text-inverse-on-surface block">Clean offline itinerary storage</span>
+<span class="font-body-sm text-body-sm text-outline-variant">Download as markdown or printable PDF ready without phone network.</span>
+</div>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- SECTION 7: 'KNOW BEFORE YOU GO' FIELD NOTES -->
+<section class="max-w-[1440px] mx-auto w-full px-margin py-space-xl">
+<div class="mb-space-xl">
+<span class="font-label-md text-label-md uppercase tracking-wider text-primary">Field Intelligence</span>
+<h2 class="font-headline-lg text-headline-lg text-on-surface tracking-tight mt-1">
+        Know before you go
+      </h2>
+<p class="font-body-md text-body-md text-secondary max-w-xl mt-space-xs">
+        Nuanced notes directly from native residents and slow travelers who walked these trails last week.
+      </p>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-gutter">
+<!-- Field Note 1: Hampi Boulders -->
+<div class="bg-surface-container-low p-space-xl rounded-[24px] shadow-sm flex flex-col justify-between hover:bg-surface-container transition-colors">
+<div>
+<div class="flex items-center justify-between mb-space-md">
+<span class="px-3.5 py-1 rounded-full bg-surface-container-highest text-on-surface-variant font-label-md text-label-md">
+              Hampi • Micro-Climate
+            </span>
+<span class="text-outline font-label-md text-label-md flex items-center gap-1">
+<span class="material-symbols-outlined text-[16px]">pin_drop</span>
+              Karnataka
+            </span>
+</div>
+<h3 class="font-headline-sm text-headline-sm text-on-surface mb-space-sm">
+            Hampi Boulders &amp; Sunset Ferry Logistics
+          </h3>
+<p class="font-body-lg text-body-lg text-secondary italic mb-space-md">
+            “Rent a bicycle at sunrise in Hampi before the granite boulders absorb the noon heat. Cross the river on the public passenger boat before 5:30 PM — after dusk, prices quadruple for private coracles.”
+          </p>
+</div>
+<div class="flex items-center gap-space-sm pt-space-md">
+<div class="w-10 h-10 rounded-full bg-primary text-on-primary flex items-center justify-center font-bold text-label-md">
+            SG
+          </div>
+<div>
+<span class="font-label-lg text-label-lg text-on-surface block">Sharath Gowda</span>
+<span class="font-body-sm text-body-sm text-secondary">Local Field Guide • Hospet &amp; Anegundi</span>
+</div>
+</div>
+</div>
+<!-- Field Note 2: Munnar Mist -->
+<div class="bg-surface-container-low p-space-xl rounded-[24px] shadow-sm flex flex-col justify-between hover:bg-surface-container transition-colors">
+<div>
+<div class="flex items-center justify-between mb-space-md">
+<span class="px-3.5 py-1 rounded-full bg-surface-container-highest text-on-surface-variant font-label-md text-label-md">
+              Munnar • Secret Trail
+            </span>
+<span class="text-outline font-label-md text-label-md flex items-center gap-1">
+<span class="material-symbols-outlined text-[16px]">pin_drop</span>
+              Kerala
+            </span>
+</div>
+<h3 class="font-headline-sm text-headline-sm text-on-surface mb-space-sm">
+            Cloud Inversions at Dawn
+          </h3>
+<p class="font-body-lg text-body-lg text-secondary italic mb-space-md">
+            “Bypass the commercial Lockhart viewpoint; take the quiet trail behind Silent Valley tea factory at dawn for dramatic cloud inversions. Carry a light windbreaker even in April.”
+          </p>
+</div>
+<div class="flex items-center gap-space-sm pt-space-md">
+<div class="w-10 h-10 rounded-full bg-secondary-container text-on-secondary-container flex items-center justify-center font-bold text-label-md">
+            AM
+          </div>
+<div>
+<span class="font-label-lg text-label-lg text-on-surface block">Ananya Menon</span>
+<span class="font-body-sm text-body-sm text-secondary">Botanical Resident • Devikulam</span>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- SECTION 8: 'MOMENTS FROM THE ROAD' (Traveler Archive Mosaic) -->
+<section class="max-w-[1440px] mx-auto w-full px-margin py-space-xl pb-space-2xl">
+<div class="mb-space-xl">
+<div class="inline-flex items-center gap-1.5 font-label-md text-label-md uppercase tracking-wider text-primary mb-1">
+<span class="material-symbols-outlined text-[16px]">collections</span>
+        Traveler Archive
+      </div>
+<h2 class="font-headline-lg text-headline-lg text-on-surface tracking-tight">
+        Moments from the road
+      </h2>
+<p class="font-body-md text-body-md text-secondary max-w-2xl mt-space-xs">
+        Uncurated perspectives submitted by travelers taking the quiet roads across the subcontinent under Creative Commons licenses.
+      </p>
+</div>
+<!-- Gallery Layout: 1 Wide Hero Tile + 4-Tile Grid Alongside -->
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-gutter">
+<!-- Big Featured Picture (Kuttanad Canal Dawn) -->
+<div class="lg:col-span-6 relative h-[500px] rounded-[24px] overflow-hidden group shadow-md">
+<div class="w-full h-full bg-cover bg-center transition-transform duration-700 group-hover:scale-105" data-alt="Photographic moment showing dawn sunlight piercing through mist along Kuttanad Canal in Alappuzha, Kerala. A solo wooden country canoe gliding through blooming pink water lilies, lush riverbank coconut trees, quiet serene documentary atmosphere." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuC0kJm6k5amPx9JLajU-3ryiPshWN-dvExjGM1eXIMBVGuLRvo9mqDE8J8lUg0q6k7DyJe_-8cI1rJ8Q1wMdUijuO6Ht3GclHBD5fNArAjBltrcinZKx4LnT5Up4eHXIk9UxZQdmjqYcU8nueOmFs65VmPu_0bAX1w_4TG8b2oALBiPIB7LZ2aKw6LL5TPGOEmTJHRiK5F2jWrPRHjWDyvI0e9AQMnktc-yU9IxxBsl')"></div>
+<div class="absolute inset-0 bg-gradient-to-t from-inverse-surface/80 via-transparent to-transparent"></div>
+<!-- Attribution Chip -->
+<div class="absolute bottom-space-lg left-space-lg right-space-lg flex items-end justify-between text-on-primary">
+<div>
+<div class="inline-flex items-center gap-1 px-3 py-1 rounded-full bg-inverse-surface/60 backdrop-blur-md text-primary-fixed font-label-md text-label-md mb-1.5">
+<span class="material-symbols-outlined text-[14px]">photo_camera</span>
+<span>Kuttanad Canal Dawn • Alappuzha</span>
+</div>
+<p class="font-body-sm text-body-sm text-surface-container-high/90">Photo by Rohit Varma • Safarnama Community Archive</p>
+</div>
+<span class="px-2.5 py-1 rounded bg-surface-container-lowest/20 backdrop-blur-md text-[11px] font-label-md text-on-primary">CC BY 4.0</span>
+</div>
+</div>
+<!-- 4-Tile Grid on Right -->
+<div class="lg:col-span-6 grid grid-cols-1 sm:grid-cols-2 gap-space-md">
+<!-- Tile 1: Vitthala Pillars Hampi -->
+<div class="relative h-[238px] rounded-[20px] overflow-hidden group shadow-sm">
+<div class="w-full h-full bg-cover bg-center transition-transform duration-500 group-hover:scale-105" data-alt="Close up architectural detail of carved granite pillars at Vitthala Temple complex in Hampi, Karnataka. Intricate mythical carvings in golden late-afternoon sunlight, warm stone textures and ancient craftsmanship." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuDf7x9lUZtGIMm7u7vvsK3DbRZ4-xv_LkC1GPSVNaRWp_b87nwD_fM4gC-K1na6_yTlyZia3QNDwHsC0LlJB_D1VoPwHrZDWT08QtRrdoKvCR8wulyF_63RtmQX0thIHNbFDuOfBaMkM1UaC4Ggeb9QrPq-5Fuo8T26gY0HRq8P9eRX_60KbeJ0_nHqr7xZcSUorTrtEBqcM5GuJ68FodMG1bSsjrWGDvS7nbD_nQYS')"></div>
+<div class="absolute inset-0 bg-gradient-to-t from-inverse-surface/80 via-transparent to-transparent"></div>
+<div class="absolute bottom-3 left-3 right-3 text-on-primary flex items-center justify-between">
+<div>
+<p class="font-label-md text-label-md text-primary-fixed">Vitthala Pillars, Hampi</p>
+<p class="font-body-sm text-body-sm text-[11px] text-surface-container-high/80">Karthik R. • CC BY</p>
+</div>
+<span class="material-symbols-outlined text-[16px] text-surface-container-high">zoom_in</span>
+</div>
+</div>
+<!-- Tile 2: Kunzum Pass Spiti -->
+<div class="relative h-[238px] rounded-[20px] overflow-hidden group shadow-sm">
+<div class="w-full h-full bg-cover bg-center transition-transform duration-500 group-hover:scale-105" data-alt="Vibrant Tibetan Buddhist prayer flags snapping in fierce mountain wind at Kunzum Pass high altitude gap at 4,590 meters in Spiti, Himachal Pradesh. Rugged snow-covered Himalayan peaks in distance." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuDbP7FGnyJKk80tMZECHAML5jhMMoyOwTbNflSFvYWHXrY1C7GC44eogqhHxkmbrFj-7g333zfVdl0dSeZgFUxw3MbgjdhE3JWMrY_vor73IvmGJg_-S5TaBLu7YLSMun6oQqLXBv0-9apAlnlhvwJJ_BBu8zeBWLPHQx4UmOS70ixWzV46iOuGcyu8qfluH9JVydB-83J2Oe5G5rqK_YbGY-wubydWLfmkIunx6TnO')"></div>
+<div class="absolute inset-0 bg-gradient-to-t from-inverse-surface/80 via-transparent to-transparent"></div>
+<div class="absolute bottom-3 left-3 right-3 text-on-primary flex items-center justify-between">
+<div>
+<p class="font-label-md text-label-md text-primary-fixed">Kunzum Pass, Spiti</p>
+<p class="font-body-sm text-body-sm text-[11px] text-surface-container-high/80">Tenzin D. • CC BY-SA</p>
+</div>
+<span class="material-symbols-outlined text-[16px] text-surface-container-high">zoom_in</span>
+</div>
+</div>
+<!-- Tile 3: Thar Dunes Jaisalmer -->
+<div class="relative h-[238px] rounded-[20px] overflow-hidden group shadow-sm">
+<div class="w-full h-full bg-cover bg-center transition-transform duration-500 group-hover:scale-105" data-alt="Golden ripple textures across vast sand dunes in the Thar Desert near Jaisalmer, Rajasthan during golden hour. Soft wind-blown patterns in pristine sand under a dusk pastel sky." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuBmK5uCYqHpyJ44T50zj4Im1R8UKf9GXj9UvxcSCLGa-Y20rodzdkl7ZNBiLWYfDN_5otz0JQ1wiZ4zPlTJU4pHTX1NA9iGsIaMnGCBX3wEzhGNhZQTMmG3y-E-mTawb6TsfjSt4czpYT_u2QeTifQm2gkpu97PP2ZL7GsVpsD1yF8Fx3b0ssCXPhCWOYsjpcujAvOqHHTR9Ti1OxTs8ADY2a_HuSMvJsolF9lXZK7Y')"></div>
+<div class="absolute inset-0 bg-gradient-to-t from-inverse-surface/80 via-transparent to-transparent"></div>
+<div class="absolute bottom-3 left-3 right-3 text-on-primary flex items-center justify-between">
+<div>
+<p class="font-label-md text-label-md text-primary-fixed">Thar Dunes, Jaisalmer</p>
+<p class="font-body-sm text-body-sm text-[11px] text-surface-container-high/80">Maya Sen • CC BY</p>
+</div>
+<span class="material-symbols-outlined text-[16px] text-surface-container-high">zoom_in</span>
+</div>
+</div>
+<!-- Tile 4: Apatani Village Ziro -->
+<div class="relative h-[238px] rounded-[20px] overflow-hidden group shadow-sm">
+<div class="w-full h-full bg-cover bg-center transition-transform duration-500 group-hover:scale-105" data-alt="Quiet village lane between traditional bamboo and timber stilt houses of Apatani people in Ziro Valley, Arunachal Pradesh. Pine-clad misty hills in the background with traditional organic farming paddies." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuBC-AeJHsy3w8pIjnQSi8FAGssLVun2uB8vmKYEvXQfUZS6r32PpuBh9RD0Jqyu78M-rdg2pkshScBUIc2WH9vvw__kBK0YzIPSDmzh31hKBWhvKTO-GQP_F56O4eF1JsE99D1Kp5WJ9Iii-HI-2WfuJH-iENEvwlbh3ywyIBA4ntSZ5mgRBPNXaY6D_YFXplbMIDh0yDHqGu_gzko2huCd49m3vRSMfTgxBWDPgKF2')"></div>
+<div class="absolute inset-0 bg-gradient-to-t from-inverse-surface/80 via-transparent to-transparent"></div>
+<div class="absolute bottom-3 left-3 right-3 text-on-primary flex items-center justify-between">
+<div>
+<p class="font-label-md text-label-md text-primary-fixed">Apatani Village, Ziro</p>
+<p class="font-body-sm text-body-sm text-[11px] text-surface-container-high/80">Nadir K. • CC BY-SA</p>
+</div>
+<span class="material-symbols-outlined text-[16px] text-surface-container-high">zoom_in</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Community Submission Callout Bar -->
+<div class="mt-space-lg bg-surface-container-low p-space-md sm:p-space-lg rounded-[20px] flex flex-col sm:flex-row items-center justify-between gap-space-md">
+<div class="flex items-center gap-space-sm text-center sm:text-left">
+<div class="w-10 h-10 rounded-full bg-primary/10 text-primary flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-[20px]">add_a_photo</span>
+</div>
+<div>
+<span class="font-label-lg text-label-lg text-on-surface block">Have a field photo to share?</span>
+<span class="font-body-sm text-body-sm text-secondary">Submit via CC license to Safarnama Community Archive to support slow travel documentation.</span>
+</div>
+</div>
+<button class="px-5 py-2.5 rounded-full bg-primary text-on-primary hover:bg-primary-container font-label-lg text-label-lg shadow-sm transition-all whitespace-nowrap" type="button">
+        Submit photo
+      </button>
+</div>
+</section>
+</div>
+<script>
+  // Simple micro-interaction for regional chip switching and feedback
+  document.addEventListener('DOMContentLoaded', () => {
+    const chips = document.querySelectorAll('#itineraries button');
+    chips.forEach(chip => {
+      chip.addEventListener('click', () => {
+        chips.forEach(c => {
+          c.classList.remove('bg-primary', 'text-on-primary');
+          c.classList.add('bg-surface-container-lowest', 'text-on-secondary-fixed');
+        });
+        chip.classList.add('bg-primary', 'text-on-primary');
+        chip.classList.remove('bg-surface-container-lowest', 'text-on-secondary-fixed');
+      });
+    });
+  });
+</script></main><footer class="w-full bg-surface pb-space-xl pt-space-lg"><div class="max-w-[1440px] mx-auto px-margin"><div class="bg-inverse-surface text-inverse-on-surface rounded-[2.5rem] p-space-xl md:p-space-2xl"><div class="grid grid-cols-1 md:grid-cols-12 gap-gutter mb-space-2xl"><div class="md:col-span-5 flex flex-col justify-between pr-space-md"><div class="space-y-space-sm"><div class="flex items-center gap-space-sm text-primary-fixed"><span class="material-symbols-outlined text-[24px]">send</span><span class="font-headline-md text-headline-md tracking-tight">Safarnama</span></div><p class="font-body-lg text-body-lg text-outline-variant max-w-sm">Go slower. See more.</p></div><div class="flex items-center gap-space-sm pt-space-lg"><a aria-label="Travel Feed" class="w-10 h-10 rounded-full bg-surface-container-highest/20 flex items-center justify-center text-primary-fixed hover:bg-surface-container-highest/40 transition-colors" href="#"><span class="material-symbols-outlined text-[20px]">rss_feed</span></a><a aria-label="Community" class="w-10 h-10 rounded-full bg-surface-container-highest/20 flex items-center justify-center text-primary-fixed hover:bg-surface-container-highest/40 transition-colors" href="#"><span class="material-symbols-outlined text-[20px]">group</span></a><a aria-label="Explore Map" class="w-10 h-10 rounded-full bg-surface-container-highest/20 flex items-center justify-center text-primary-fixed hover:bg-surface-container-highest/40 transition-colors" href="#"><span class="material-symbols-outlined text-[20px]">explore</span></a></div></div><div class="md:col-span-4"><h4 class="font-label-md text-label-md uppercase tracking-wider text-outline-variant mb-space-md">Explore</h4><ul class="grid grid-cols-2 gap-y-space-sm gap-x-space-md"><li><a class="font-body-md text-body-md text-inverse-on-surface hover:text-primary-fixed transition-colors" data-path="kerala" href="#">Kerala</a></li><li><a class="font-body-md text-body-md text-inverse-on-surface hover:text-primary-fixed transition-colors" data-path="munnar" href="#">Munnar</a></li><li><a class="font-body-md text-body-md text-inverse-on-surface hover:text-primary-fixed transition-colors" data-path="hampi" href="#">Hampi</a></li><li><a class="font-body-md text-body-md text-inverse-on-surface hover:text-primary-fixed transition-colors" data-path="spiti" href="#">Spiti</a></li><li><a class="font-body-md text-body-md text-inverse-on-surface hover:text-primary-fixed transition-colors" data-path="jaisalmer" href="#">Jaisalmer</a></li><li><a class="font-body-md text-body-md text-inverse-on-surface hover:text-primary-fixed transition-colors" data-path="ziro" href="#">Ziro</a></li></ul></div><div class="md:col-span-3"><h4 class="font-label-md text-label-md uppercase tracking-wider text-outline-variant mb-space-md">Account</h4><ul class="space-y-space-sm"><li><a class="font-body-md text-body-md text-inverse-on-surface hover:text-primary-fixed transition-colors" data-path="trip-planner" href="#">Trip planner</a></li><li><a class="font-body-md text-body-md text-inverse-on-surface hover:text-primary-fixed transition-colors" data-path="saved-places" href="#">Saved places</a></li><li><a class="font-body-md text-body-md text-inverse-on-surface hover:text-primary-fixed transition-colors" data-path="login" href="#">Log in</a></li><li><a class="font-body-md text-body-md text-inverse-on-surface hover:text-primary-fixed transition-colors" data-path="sign-up" href="#">Sign up</a></li></ul></div></div><div class="pt-space-lg flex flex-col md:flex-row items-start md:items-center justify-between gap-space-sm font-body-sm text-body-sm text-outline-variant"><p>© 2024 Safarnama Travelogue. All rights reserved.</p><p>Photos from Wikimedia Commons, credited where they appear.</p></div></div></div></footer></body></html>

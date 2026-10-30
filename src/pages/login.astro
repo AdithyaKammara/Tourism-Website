@@ -15,12 +15,13 @@ const notice = notices[Astro.url.searchParams.get('error') ?? ''];
 
 <AuthLayout
   title="Log in"
-  eyebrow="Welcome back"
-  heading="Pick up where you <em class='text-accent'>left off</em>."
-  intro="Your saved trips, packing lists and bookings are waiting."
+  eyebrow="Log in"
+  heading="Welcome <em class='text-accent'>back</em>."
+  intro="Log in to sync your trips, packing lists and bookings across devices."
+  guestNote
 >
   <LoginForm client:load next={next} notice={notice} />
   <p slot="footer">
-    New here? <a href="/signup" class="text-ink underline underline-offset-4 hover:text-accent">Create an account</a>
+    New here? <a href="/signup" class="font-semibold text-accent hover:underline">Create an account</a>
   </p>
 </AuthLayout>

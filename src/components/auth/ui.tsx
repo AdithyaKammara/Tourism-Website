@@ -51,7 +51,7 @@ export function Field({ label, name, errors, aside, ...input }: FieldProps) {
   return (
     <div>
       <div className="flex items-baseline justify-between">
-        <label htmlFor={id} className="eyebrow">
+        <label htmlFor={id} className="text-sm font-semibold">
           {label}
         </label>
         {aside}
@@ -61,11 +61,11 @@ export function Field({ label, name, errors, aside, ...input }: FieldProps) {
         name={name}
         aria-invalid={hasError || undefined}
         aria-describedby={hasError ? errorId : undefined}
-        className="mt-1 w-full border-0 border-b border-line bg-transparent py-3 text-lg text-ink transition-colors placeholder:text-ink-soft/60 focus:border-ink focus:outline-none aria-invalid:border-accent"
+        className="mt-1.5 w-full rounded-full bg-paper-deep px-5 py-3 text-ink ring-1 ring-transparent transition placeholder:text-ink-soft/60 focus:bg-card focus:ring-2 focus:ring-accent focus:outline-none aria-invalid:ring-2 aria-invalid:ring-red-600 dark:aria-invalid:ring-red-400"
         {...input}
       />
       {hasError && (
-        <p id={errorId} className="mt-2 text-sm text-accent">
+        <p id={errorId} className="mt-2 pl-5 text-sm text-red-700 dark:text-red-400">
           {errors![0]}
         </p>
       )}
@@ -78,7 +78,7 @@ export function PrimaryButton({ busy, children }: { busy: boolean; children: Rea
     <button
       type="submit"
       disabled={busy}
-      className="btn-dark w-full py-3.5 disabled:cursor-wait disabled:opacity-60"
+      className="btn-sage w-full py-3.5 font-semibold shadow-sm disabled:cursor-wait disabled:opacity-60"
     >
       {children}
     </button>
@@ -99,7 +99,7 @@ export function SecondaryButton({
       type="button"
       disabled={busy}
       onClick={onClick}
-      className="flex w-full items-center justify-center gap-3 rounded-full border border-line px-6 py-3.5 text-sm font-medium transition-colors hover:border-ink disabled:cursor-wait disabled:opacity-60"
+      className="flex w-full items-center justify-center gap-3 rounded-full bg-paper-deep px-6 py-3.5 text-sm font-semibold transition-colors hover:bg-sage-soft disabled:cursor-wait disabled:opacity-60"
     >
       {children}
     </button>
@@ -112,8 +112,8 @@ export function FormAlert({ tone = 'error', children }: { tone?: 'error' | 'succ
       role={tone === 'error' ? 'alert' : 'status'}
       className={
         tone === 'error'
-          ? 'border-l-2 border-accent py-1 pl-4 text-sm text-accent'
-          : 'border-l-2 border-moss py-1 pl-4 text-sm text-moss'
+          ? 'rounded-2xl bg-red-50 px-4 py-3 text-sm text-red-800 dark:bg-red-950/40 dark:text-red-300'
+          : 'rounded-2xl bg-sage-soft px-4 py-3 text-sm text-moss'
       }
     >
       {children}

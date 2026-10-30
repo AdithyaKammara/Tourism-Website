@@ -74,7 +74,7 @@ export default function Bookings({ trip }: { trip: Trip }) {
           <label htmlFor="booking-note" className="mb-1.5 block text-xs font-medium text-ink-soft">
             Notes
           </label>
-          <textarea id="booking-note" rows={2} maxLength={500} value={note} onChange={(e) => setNote(e.target.value)} className={inputClass} placeholder="Check-in after 2pm, pay balance on arrival" />
+          <textarea id="booking-note" rows={2} maxLength={500} value={note} onChange={(e) => setNote(e.target.value)} className={inputClass.replace('rounded-full', 'rounded-2xl')} placeholder="Check-in after 2pm, pay balance on arrival" />
         </div>
         <button type="submit" className="btn-dark w-full" disabled={!title.trim()}>
           <Plus className="size-4" aria-hidden="true" /> Save booking

@@ -37,8 +37,10 @@ const account = user
   ]}
 >
   <div class:list={['flex h-18 items-center justify-between gap-6', overlay ? 'px-5 md:px-8' : 'container-page']}>
-    <a href="/" class="flex items-center gap-2 font-display text-xl tracking-tight" aria-label={`${SITE.name}, home`}>
-      <PlaneTakeoff className="size-5" strokeWidth={1.8} aria-hidden="true" />
+    <a href="/" class="flex items-center gap-2.5 font-display text-xl tracking-tight" aria-label={`${SITE.name}, home`}>
+      <span class:list={['grid size-10 place-items-center rounded-full', overlay ? 'bg-cream/15' : 'bg-sage-soft text-accent']}>
+        <PlaneTakeoff className="size-5" strokeWidth={1.8} aria-hidden="true" />
+      </span>
       {SITE.name}
     </a>
 

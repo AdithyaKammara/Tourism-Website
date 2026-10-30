@@ -73,6 +73,9 @@
   html {
     @apply bg-paper text-ink font-sans antialiased;
     text-rendering: optimizeLegibility;
+    /* Above ~1800px wide, grow the root size with the window so the whole rem-based layout
+       scales up on big monitors instead of sitting in a narrow column. Capped at 1.75x. */
+    font-size: clamp(100%, 100vw / 112.5, 175%);
   }
 
   ::selection {
@@ -111,7 +114,8 @@
   @apply mx-auto w-full max-w-[88rem] px-4 sm:px-8 lg:px-12;
 }
 
-/* Long-form copy rendered from Markdown. */
+/* Long-form copy rendered from Markdown. Bulleted lists become a grid of soft cards,
+   with each item's bold lead-in set larger. */
 @utility prose-guide {
   @apply text-lg leading-relaxed;
 
@@ -123,17 +127,17 @@
     @apply mt-5;
   }
   & h2 {
-    @apply mt-14 mb-5 border-t border-line pt-6 font-display text-3xl;
+    @apply mt-14 mb-5 font-display text-3xl tracking-tight;
+    font-variation-settings: "wght" 800;
   }
   & ul {
-    @apply mt-5 space-y-4;
+    @apply mt-6 grid gap-4 sm:grid-cols-2;
   }
   & li {
-    @apply relative pl-6 text-ink-soft;
+    @apply rounded-[1.25rem] bg-paper-deep p-5 text-base leading-relaxed text-ink-soft;
   }
-  & li::before {
-    content: '';
-    @apply absolute top-[0.7em] left-0 h-px w-3 bg-accent;
+  & li strong:first-child {
+    @apply font-display text-lg leading-snug text-ink;
   }
   & strong {
     @apply font-semibold text-ink;
@@ -141,6 +145,11 @@
   & > p:not(:first-child) {
     @apply mt-5 text-ink-soft;
   }
+}
+
+/* Extra-bold display weight. The display font pins "wght" to 700, so font-weight alone has no effect. */
+@utility font-heavy {
+  font-variation-settings: "wght" 800;
 }
 
 @utility eyebrow {

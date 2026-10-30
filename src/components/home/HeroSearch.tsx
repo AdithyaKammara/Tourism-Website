@@ -45,7 +45,7 @@ export default function HeroSearch() {
     <form
       action="/destinations"
       role="search"
-      className="flex items-center gap-2 rounded-full bg-card p-2 pl-5 text-ink shadow-soft ring-1 ring-line"
+      className="flex items-center gap-2 rounded-full bg-card p-2.5 pl-5 text-ink shadow-[0_16px_40px_rgb(3_31_35/0.12)] ring-1 ring-line/60"
       onSubmit={(e) => {
         e.preventDefault();
         const params = new URLSearchParams();
@@ -64,7 +64,7 @@ export default function HeroSearch() {
         type="search"
         value={query}
         onChange={(e) => setQuery(e.target.value)}
-        placeholder="Search for your next trip"
+        placeholder="Search for your next trip, state or mood"
         className="min-w-0 flex-1 bg-transparent py-2 text-sm placeholder:text-ink-soft/80 focus:outline-none sm:text-base"
       />
       {speech && (
@@ -87,7 +87,7 @@ export default function HeroSearch() {
           name="vibe"
           value={vibe}
           onChange={(e) => setVibe(e.target.value as Vibe | '')}
-          className="appearance-none rounded-full border border-ink/20 bg-transparent py-2 pr-9 pl-4 text-sm font-medium hover:border-ink focus:border-ink focus:outline-none"
+          className="cursor-pointer appearance-none rounded-full bg-paper-deep py-2.5 pr-9 pl-4 text-sm font-semibold transition-colors hover:bg-sage-soft focus:outline-none focus-visible:ring-2 focus-visible:ring-accent"
         >
           <option value="">All trips</option>
           {(Object.keys(VIBE_LABELS) as Vibe[]).map((v) => (
@@ -98,7 +98,7 @@ export default function HeroSearch() {
         </select>
         <ChevronDown className="pointer-events-none absolute top-1/2 right-3 size-4 -translate-y-1/2" aria-hidden="true" />
       </div>
-      <button type="submit" aria-label="Search" className="grid size-10 shrink-0 place-items-center rounded-full bg-accent text-accent-ink transition-colors hover:bg-moss">
+      <button type="submit" aria-label="Search" className="grid size-11 shrink-0 place-items-center rounded-full bg-accent text-accent-ink shadow-md transition-[background-color,transform] hover:scale-105 hover:bg-moss">
         <ArrowRight className="size-4" aria-hidden="true" />
       </button>
     </form>

@@ -1,4 +1,5 @@
 ---
+import { ArrowRight, CalendarDays, KeyRound, LogOut, Mail, Map } from 'lucide-react';
 import Layout from '../layouts/Layout.astro';
 
 // The middleware redirects guests to /login, so the user is always set here.
@@ -6,56 +7,64 @@ const user = Astro.locals.user!;
 const name = (user.user_metadata?.full_name as string | undefined) ?? user.email?.split('@')[0] ?? 'traveller';
 const joined = new Date(user.created_at).toLocaleDateString('en-GB', { month: 'long', year: 'numeric' });
 const provider = user.app_metadata?.provider === 'google' ? 'Google' : 'Email';
+
+const facts = [
+  { icon: Mail, label: 'Email', value: user.email },
+  { icon: KeyRound, label: 'Signs in with', value: provider },
+  { icon: CalendarDays, label: 'Member since', value: joined },
+];
 ---
 
 <Layout title="Your account">
-  <section class="container-page py-14 md:py-24">
-    <p class="eyebrow mb-6">Your account</p>
-    <h1 class="font-display text-5xl tracking-tight md:text-7xl">
-      Hello, <em class="text-accent">{name}</em>.
-    </h1>
+  <section class="container-page py-8 md:py-12">
+    <div class="grid items-start gap-6 lg:grid-cols-12">
+      <div class="rounded-[28px] bg-card p-6 shadow-sm ring-1 ring-line/60 md:p-10 lg:col-span-8">
+        <p class="inline-flex items-center gap-1.5 rounded-full bg-sage-soft px-3 py-1 text-xs font-semibold tracking-wider text-moss uppercase">
+          <span class="size-1.5 rounded-full bg-accent"></span> Your account
+        </p>
+        <h1 class="font-heavy mt-4 font-display text-4xl tracking-tight break-words md:text-6xl">
+          Hello, <em class="text-accent">{name}</em>.
+        </h1>
 
-    <div class="mt-14 grid gap-12 md:grid-cols-12">
-      <dl class="divide-y divide-line border-y border-line md:col-span-7">
-        <div class="grid grid-cols-[8rem_1fr] gap-4 py-4">
-          <dt class="eyebrow pt-0.5">Email</dt>
-          <dd class="break-all">{user.email}</dd>
-        </div>
-        <div class="grid grid-cols-[8rem_1fr] gap-4 py-4">
-          <dt class="eyebrow pt-0.5">Signs in with</dt>
-          <dd>{provider}</dd>
-        </div>
-        <div class="grid grid-cols-[8rem_1fr] gap-4 py-4">
-          <dt class="eyebrow pt-0.5">Member since</dt>
-          <dd>{joined}</dd>
-        </div>
-      </dl>
+        <dl class="mt-8 grid gap-3 sm:grid-cols-3">
+          {
+            facts.map(({ icon: Icon, label, value }) => (
+              <div class="rounded-2xl bg-paper-deep p-4">
+                <dt class="flex items-center gap-2 text-xs font-semibold text-ink-soft">
+                  <Icon className="size-4 text-accent" aria-hidden="true" /> {label}
+                </dt>
+                <dd class="mt-1 font-semibold break-all">{value}</dd>
+              </div>
+            ))
+          }
+        </dl>
 
-      <div class="space-y-4 md:col-span-4 md:col-start-9">
-        <a
-          href="/planner"
-          class="block rounded-full bg-ink px-6 py-3.5 text-center text-sm font-medium text-paper transition-colors hover:bg-accent hover:text-accent-ink"
-        >
-          Open trip planner
+        <div class="mt-8 flex flex-wrap gap-2 border-t border-line pt-6">
+          {
+            provider === 'Email' && (
+              <a href="/reset-password" class="btn bg-paper-deep font-semibold hover:bg-sage-soft">
+                <KeyRound className="size-4" aria-hidden="true" /> Change password
+              </a>
+            )
+          }
+          <form method="post" action="/auth/logout">
+            <button type="submit" class="btn font-semibold text-ink-soft hover:bg-paper-deep hover:text-ink">
+              <LogOut className="size-4" aria-hidden="true" /> Log out
+            </button>
+          </form>
+        </div>
+      </div>
+
+      <div class="relative overflow-clip rounded-[28px] bg-forest p-6 text-cream shadow-soft md:p-8 lg:col-span-4">
+        <div class="pointer-events-none absolute -top-10 -right-10 size-48 rounded-full bg-accent/30 blur-3xl"></div>
+        <span class="relative grid size-11 place-items-center rounded-full bg-cream/10 text-sage-light">
+          <Map className="size-5" aria-hidden="true" />
+        </span>
+        <h2 class="relative mt-5 font-display text-2xl">Your trips are synced</h2>
+        <p class="relative mt-2 text-sm text-cream/70">Trips you plan while signed in are saved to your account, so they follow you to any device.</p>
+        <a href="/planner" class="btn relative mt-6 w-full bg-sage-light font-semibold text-forest hover:bg-cream">
+          Open trip planner <ArrowRight className="size-4" aria-hidden="true" />
         </a>
-        {
-          provider === 'Email' && (
-            <a
-              href="/reset-password"
-              class="block rounded-full border border-line px-6 py-3.5 text-center text-sm font-medium transition-colors hover:border-ink"
-            >
-              Change password
-            </a>
-          )
-        }
-        <form method="post" action="/auth/logout">
-          <button
-            type="submit"
-            class="w-full rounded-full px-6 py-3.5 text-sm font-medium text-ink-soft underline underline-offset-4 transition-colors hover:text-accent"
-          >
-            Log out
-          </button>
-        </form>
       </div>
     </div>
   </section>

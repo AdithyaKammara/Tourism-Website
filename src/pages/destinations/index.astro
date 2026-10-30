@@ -1,8 +1,10 @@
 ---
+import { BadgeCheck, CalendarDays, CloudSun, Footprints, ShieldCheck } from 'lucide-react';
 import Layout from '../../layouts/Layout.astro';
 import Browser from '../../components/destinations/Browser';
 import { getDestinations, toCard } from '../../lib/cards';
-import { VIBE_LABELS, type Vibe } from '../../lib/destinations';
+import { SITE } from '../../lib/site';
+import { BUDGETS, VIBE_LABELS, type Budget, type Vibe } from '../../lib/destinations';
 
 const cards = await Promise.all((await getDestinations()).map(toCard));
 
@@ -10,23 +12,100 @@ const monthParam = Number(Astro.url.searchParams.get('month'));
 const initialMonth = monthParam >= 1 && monthParam <= 12 ? monthParam : null;
 const vibeParam = Astro.url.searchParams.get('vibe');
 const initialVibe = vibeParam && vibeParam in VIBE_LABELS ? (vibeParam as Vibe) : null;
+const budgetParam = Astro.url.searchParams.get('budget');
+const initialBudget = budgetParam && budgetParam in BUDGETS ? (budgetParam as Budget) : null;
 const initialView = Astro.url.searchParams.get('view') === 'map' ? 'map' : 'grid';
 const initialQuery = (Astro.url.searchParams.get('q') ?? '').slice(0, 80);
+
+// The "this month" pill: how many places are in season right now.
+const now = new Date().getMonth() + 1;
+const inSeasonNow = cards.filter((d) => d.bestMonths.includes(now)).length;
+const nowName = new Date(2000, now - 1).toLocaleString('en-GB', { month: 'long' });
+
+const promises = [
+  { icon: ShieldCheck, label: 'No paid placements' },
+  { icon: CloudSun, label: 'Monsoon and season checked' },
+  { icon: Footprints, label: 'Written for slow travel' },
+];
 ---
 
 <Layout
   title="Destinations"
   description="Every place we've written up, filterable by when you can go and what you're in the mood for."
 >
-  <section class="container-page pt-14 pb-24 md:pt-24">
-    <p class="eyebrow mb-6">Destinations</p>
-    <h1 class="max-w-[16ch] font-display text-5xl leading-[0.95] tracking-tight md:text-8xl">
-      Somewhere for <em class="text-accent">every</em> month.
-    </h1>
-    <p class="mt-6 mb-16 max-w-lg text-lg text-ink-soft">
-      Pick when you can travel and what you're after. We only list a place in the months it's genuinely
-      good to visit.
-    </p>
-    <Browser client:load destinations={cards} initialMonth={initialMonth} initialVibe={initialVibe} initialView={initialView} initialQuery={initialQuery} />
-  </section>
+  <div class="relative isolate overflow-clip">
+    <div class="pointer-events-none absolute -top-32 left-1/4 -z-10 size-[30rem] rounded-full bg-sage-light/20 blur-3xl"></div>
+    <div class="pointer-events-none absolute top-48 right-12 -z-10 size-96 rounded-full bg-sage-soft/50 blur-3xl"></div>
+
+    <section class="container-page pt-10 pb-20 md:pt-14">
+      <p class="mb-5 inline-flex items-center gap-1.5 rounded-full bg-sage-soft px-3 py-1 text-xs font-semibold tracking-wider text-moss uppercase shadow-sm">
+        <span class="size-1.5 animate-pulse rounded-full bg-accent"></span> Destinations
+      </p>
+      <div class="grid items-end gap-6 lg:grid-cols-12">
+        <div class="lg:col-span-8">
+          <h1 class="font-display font-heavy text-5xl leading-[1.05] tracking-tight md:text-6xl">
+            Somewhere for <em class="font-display text-accent">every month.</em>
+          </h1>
+          <p class="mt-4 max-w-2xl text-lg text-ink-soft">
+            A short list of places across India. Filter by month, mood and what a day really costs. We only show a place in the months
+            it's genuinely good to visit.
+          </p>
+        </div>
+        <div class="flex lg:col-span-4 lg:justify-end">
+          <a
+            href={`/destinations?month=${now}`}
+            class="inline-flex items-center gap-4 rounded-full bg-card px-4 py-2.5 text-xs font-semibold shadow-sm ring-1 ring-line/60 hover:ring-accent"
+          >
+            <span class="flex items-center gap-2"><CalendarDays className="size-4 text-accent" aria-hidden="true" /> {nowName}</span>
+            <span class="h-3.5 w-px bg-line"></span>
+            <span class="flex items-center gap-1.5 text-accent">
+              <span class="size-2 rounded-full bg-accent"></span>
+              {inSeasonNow} {inSeasonNow === 1 ? 'place' : 'places'} in season
+            </span>
+          </a>
+        </div>
+      </div>
+
+      <div class="mt-10">
+        <Browser
+          client:load
+          destinations={cards}
+          initialMonth={initialMonth}
+          initialVibe={initialVibe}
+          initialBudget={initialBudget}
+          initialView={initialView}
+          initialQuery={initialQuery}
+        />
+      </div>
+
+      <section data-reveal class="relative mt-16 overflow-clip rounded-[2.5rem] bg-sage-soft p-8 md:p-12 lg:p-16" aria-labelledby="promise-heading">
+        <svg aria-hidden="true" viewBox="0 0 200 200" class="pointer-events-none absolute -right-16 -bottom-16 size-80 text-accent opacity-15">
+          <path
+            fill="currentColor"
+            transform="translate(100 100)"
+            d="M45.7,-68.9C58.6,-59.5,68.3,-46.8,74.8,-32.4C81.3,-18,84.6,-1.8,80.7,12.7C76.9,27.2,65.9,40,53.2,50.1C40.5,60.2,26.2,67.6,10.6,71.2C-5,74.7,-21.9,74.4,-37.1,68.4C-52.2,62.3,-65.7,50.4,-73.4,35.6C-81.1,20.8,-83,3.1,-79.8,-13.4C-76.6,-29.9,-68.2,-45.3,-55.8,-55C-43.4,-64.7,-26.9,-68.8,-10.8,-69.5C5.4,-70.2,32.8,-78.3,45.7,-68.9Z"
+          ></path>
+        </svg>
+        <div class="relative max-w-3xl">
+          <p class="mb-3 flex items-center gap-2 text-xs font-bold tracking-wider text-accent uppercase">
+            <BadgeCheck className="size-5" aria-hidden="true" /> The {SITE.name} promise
+          </p>
+          <h2 id="promise-heading" class="font-display font-heavy text-3xl tracking-tight md:text-4xl">A short list, not an endless one.</h2>
+          <p class="mt-3 mb-6 text-lg leading-relaxed text-ink-soft">
+            Every place here has a full guide: when to go, what a day costs in rupees, how long to stay and how to get there. No
+            algorithmic lists, no sponsored picks.
+          </p>
+          <ul class="flex flex-wrap gap-2">
+            {
+              promises.map(({ icon: Icon, label }) => (
+                <li class="inline-flex items-center gap-2 rounded-full bg-card px-4 py-2 text-sm font-semibold shadow-sm">
+                  <Icon className="size-4 text-accent" aria-hidden="true" /> {label}
+                </li>
+              ))
+            }
+          </ul>
+        </div>
+      </section>
+    </section>
+  </div>
 </Layout>

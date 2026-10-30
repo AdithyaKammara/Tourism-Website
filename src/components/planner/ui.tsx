@@ -7,7 +7,7 @@ export const DestinationsContext = createContext<Map<string, DestinationCard>>(n
 export const useDestinations = () => useContext(DestinationsContext);
 
 export const inputClass =
-  'w-full rounded-xl border border-line bg-card px-3 py-2.5 text-sm text-ink placeholder:text-ink-soft/70 focus:border-ink focus:outline-none';
+  'w-full rounded-full bg-paper-deep px-4 py-2.5 text-sm text-ink placeholder:text-ink-soft/70 focus:bg-card focus:outline-none focus:ring-2 focus:ring-accent';
 
 export function Field({ label, hint, ...input }: InputHTMLAttributes<HTMLInputElement> & { label: string; hint?: string }) {
   const id = useId();

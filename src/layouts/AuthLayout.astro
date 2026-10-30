@@ -1,4 +1,7 @@
 ---
+import { Image } from 'astro:assets';
+import { getEntry } from 'astro:content';
+import { Camera, Compass } from 'lucide-react';
 import Layout from './Layout.astro';
 import { isSupabaseConfigured } from '../lib/supabase';
 
@@ -7,32 +10,86 @@ interface Props {
   eyebrow: string;
   heading: string;
   intro: string;
+  /** Show the "plan as a guest" note under the form. */
+  guestNote?: boolean;
 }
 
-const { title, eyebrow, heading, intro } = Astro.props;
+const { title, eyebrow, heading, intro, guestNote = false } = Astro.props;
+
+// A quiet backwater photo for the left-hand panel.
+const place = await getEntry('destinations', 'alleppey');
+const photo = place?.data.gallery[1] ?? (place && { src: place.data.hero, alt: place.data.heroAlt, credit: place.data.credit });
 ---
 
 <Layout title={title}>
-  <section class="container-page grid gap-12 py-14 md:grid-cols-12 md:py-24">
-    <div class="md:col-span-6 lg:col-span-5">
-      <p class="eyebrow mb-6">{eyebrow}</p>
-      <h1 class="font-display text-5xl leading-[0.95] tracking-tight md:text-7xl" set:html={heading} />
-      <p class="mt-6 max-w-sm text-lg text-ink-soft">{intro}</p>
-    </div>
+  <section class="container-page py-6 md:py-10">
+    <div class="grid overflow-clip rounded-[28px] bg-card shadow-soft ring-1 ring-line/60 lg:grid-cols-12">
+      <!-- Photo panel: a short banner on phones, a tall column on wide screens. -->
+      <div class="relative isolate flex min-h-52 flex-col justify-between p-5 text-cream md:p-8 lg:col-span-5 lg:min-h-[40rem]">
+        {
+          photo && (
+            <Image
+              src={photo.src}
+              alt={photo.alt}
+              widths={[640, 960, 1280]}
+              sizes="(min-width: 1024px) 40vw, 100vw"
+              loading="eager"
+              class="absolute inset-0 -z-10 size-full object-cover"
+            />
+          )
+        }
+        <div class="absolute inset-0 -z-10 bg-linear-to-t from-forest/90 via-forest/40 to-forest/20"></div>
+        {
+          photo && (
+            <a
+              href={photo.credit.source}
+              rel="noopener"
+              class="inline-flex max-w-full items-center gap-1.5 self-start truncate rounded-full bg-forest/60 px-3 py-1 text-[11px] font-semibold backdrop-blur-md hover:bg-forest/80"
+            >
+              <Camera className="size-3.5 shrink-0" aria-hidden="true" /> {place?.data.name} · {photo.credit.author}, {photo.credit.license}
+            </a>
+          )
+        }
+        <p class="font-heavy mt-10 max-w-sm font-display text-3xl leading-tight tracking-tight md:text-4xl">
+          Your trips, <span class="text-sage-light">on every device.</span>
+        </p>
+      </div>
 
-    <div class="md:col-span-6 md:col-start-7 lg:col-span-5 lg:col-start-8">
-      {
-        !isSupabaseConfigured && (
-          <p class="mb-8 border border-dashed border-line p-4 text-sm text-ink-soft">
-            <strong class="text-ink">Developer note:</strong> Supabase keys are missing. Copy
-            <code>.env.example</code> to <code>.env</code>, add your keys and restart the dev server.
+      <!-- Form card. -->
+      <div class="flex items-center p-6 sm:p-10 lg:col-span-7 lg:p-16">
+        <div class="mx-auto w-full max-w-md">
+          {
+            !isSupabaseConfigured && (
+              <p class="mb-8 rounded-2xl border border-dashed border-line p-4 text-sm text-ink-soft">
+                <strong class="text-ink">Developer note:</strong> Supabase keys are missing. Copy
+                <code>.env.example</code> to <code>.env</code>, add your keys and restart the dev server.
+              </p>
+            )
+          }
+          <p class="inline-flex items-center gap-1.5 rounded-full bg-sage-soft px-3 py-1 text-xs font-semibold tracking-wider text-moss uppercase">
+            <span class="size-1.5 rounded-full bg-accent"></span>
+            {eyebrow}
           </p>
-        )
-      }
-      <div class="rounded-3xl bg-card p-6 shadow-soft md:p-10">
-        <slot />
-        <div class="mt-10 border-t border-line pt-6 text-sm text-ink-soft">
-          <slot name="footer" />
+          <h1 class="font-heavy mt-4 font-display text-4xl leading-tight tracking-tight md:text-5xl" set:html={heading} />
+          <p class="mt-3 text-ink-soft">{intro}</p>
+          <div class="mt-8">
+            <slot />
+          </div>
+          {
+            guestNote && (
+              <p class="mt-6 flex items-center gap-2 rounded-full bg-paper-deep px-4 py-2.5 text-sm text-ink-soft">
+                <Compass className="size-4 shrink-0 text-accent" aria-hidden="true" />
+                You can also <a href="/planner" class="font-semibold text-accent hover:underline">plan as a guest</a> without an account.
+              </p>
+            )
+          }
+          {
+            Astro.slots.has('footer') && (
+              <div class="mt-8 border-t border-line pt-6 text-sm text-ink-soft">
+                <slot name="footer" />
+              </div>
+            )
+          }
         </div>
       </div>
     </div>

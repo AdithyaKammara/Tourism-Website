@@ -1,10 +1,10 @@
 import { useId, useState } from 'react';
 import { Plus, Trash2 } from 'lucide-react';
 import { usePlanner } from '../../lib/planner/store';
-import { EXPENSE_CATEGORIES, formatINR, uid, type ExpenseCategory, type Trip } from '../../lib/planner/types';
+import { EXPENSE_CATEGORIES, formatINR, tripSpend, uid, type ExpenseCategory, type Trip } from '../../lib/planner/types';
 import { EmptyNote, inputClass, useDestinations } from './ui';
 
-const LABELS: Record<ExpenseCategory, string> = {
+export const LABELS: Record<ExpenseCategory, string> = {
   stay: 'Stay',
   transport: 'Transport',
   food: 'Food',
@@ -17,11 +17,8 @@ export default function Budget({ trip }: { trip: Trip }) {
   const destinations = useDestinations();
   const id = useId();
 
+  const { byCategory, total } = tripSpend(trip);
   const itineraryCost = trip.days.flatMap((d) => d.items).reduce((sum, i) => sum + (i.cost ?? 0), 0);
-  const byCategory = Object.fromEntries(EXPENSE_CATEGORIES.map((c) => [c, 0])) as Record<ExpenseCategory, number>;
-  trip.expenses.forEach((e) => (byCategory[e.category] += e.amount));
-  byCategory.activities += itineraryCost;
-  const total = Object.values(byCategory).reduce((a, b) => a + b, 0);
   const largest = Math.max(1, ...Object.values(byCategory));
 
   // Our estimate: each day's base destination's daily range, per traveller.

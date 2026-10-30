@@ -9,6 +9,9 @@ export type GalleryPhoto = {
   credit: { author: string; license: string; source: string };
 };
 
+// Alternating wide and narrow tiles (7/5, then 5/7) on wider screens; the first photo spans two rows on phones.
+const SPANS = ['col-span-2 row-span-2 sm:col-span-7 sm:row-span-1', 'sm:col-span-5', 'sm:col-span-5', 'sm:col-span-7'];
+
 /** Photo grid that opens a full-screen lightbox with keyboard and swipe navigation. */
 export default function Gallery({ photos, place }: { photos: GalleryPhoto[]; place: string }) {
   const [open, setOpen] = useState<number | null>(null);
@@ -28,13 +31,13 @@ export default function Gallery({ photos, place }: { photos: GalleryPhoto[]; pla
 
   return (
     <>
-      <ul className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+      <ul className="grid auto-rows-[11rem] grid-cols-2 gap-3 sm:auto-rows-[15rem] sm:grid-cols-12 sm:gap-4">
         {photos.map((p, i) => (
-          <li key={p.full} className={i === 0 ? 'sm:col-span-2 sm:row-span-2' : ''}>
+          <li key={p.full} className={SPANS[i % SPANS.length]}>
             <button
               type="button"
               onClick={() => setOpen(i)}
-              className="group relative block size-full overflow-hidden rounded-2xl"
+              className="group relative block size-full overflow-hidden rounded-[1.25rem]"
               aria-label={`Open photo ${i + 1} of ${photos.length}: ${p.alt}`}
             >
               <img
@@ -44,7 +47,7 @@ export default function Gallery({ photos, place }: { photos: GalleryPhoto[]; pla
                 alt=""
                 loading="lazy"
                 decoding="async"
-                className="aspect-[4/3] size-full object-cover transition-transform duration-400 ease-out-quint group-hover:scale-[1.04]"
+                className="size-full object-cover transition-transform duration-400 ease-out-quint group-hover:scale-[1.04]"
               />
               <span className="absolute right-3 bottom-3 grid size-9 place-items-center rounded-full bg-cream/90 text-forest opacity-0 transition-opacity group-hover:opacity-100 group-focus-visible:opacity-100">
                 <Expand className="size-4" aria-hidden="true" />
