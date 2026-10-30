@@ -13,6 +13,8 @@ export default function MobileMenu({ links, account }: { links: NavLink[]; accou
   useEffect(() => {
     if (!open) return;
     document.body.style.overflow = 'hidden';
+    // Lets the header switch to dark text while the cream menu covers the hero photo.
+    document.documentElement.dataset.menu = 'open';
     const onKey = (e: KeyboardEvent) => {
       if (e.key === 'Escape') {
         setOpen(false);
@@ -22,6 +24,7 @@ export default function MobileMenu({ links, account }: { links: NavLink[]; accou
     window.addEventListener('keydown', onKey);
     return () => {
       document.body.style.overflow = '';
+      delete document.documentElement.dataset.menu;
       window.removeEventListener('keydown', onKey);
     };
   }, [open]);
@@ -33,7 +36,7 @@ export default function MobileMenu({ links, account }: { links: NavLink[]; accou
       id="mobile-nav"
       aria-label="Mobile"
       hidden={!open}
-      className="fixed inset-0 z-20 flex flex-col justify-end bg-paper px-4 pt-24 pb-10 md:hidden"
+      className="fixed inset-0 z-20 flex flex-col justify-end bg-paper px-4 pt-24 pb-10 lg:hidden"
     >
       <ol className="space-y-2">
         {links.map((link, i) => (
@@ -52,7 +55,7 @@ export default function MobileMenu({ links, account }: { links: NavLink[]; accou
   );
 
   return (
-    <div className="md:hidden">
+    <div className="lg:hidden">
       <button
         ref={buttonRef}
         type="button"

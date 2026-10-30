@@ -3,7 +3,7 @@ import { formatBudget, formatSeason, type DestinationCard } from '../../lib/dest
 export default function Card({ d, eager = false }: { d: DestinationCard; eager?: boolean }) {
   return (
     <article className="group relative">
-      <div className="aspect-[4/3] overflow-hidden bg-paper-deep">
+      <div className="aspect-[4/3] overflow-hidden rounded-2xl bg-paper-deep">
         <img
           src={d.image.src}
           srcSet={d.image.srcset}

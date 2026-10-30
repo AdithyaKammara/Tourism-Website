@@ -78,7 +78,7 @@ export function PrimaryButton({ busy, children }: { busy: boolean; children: Rea
     <button
       type="submit"
       disabled={busy}
-      className="w-full rounded-full bg-ink px-6 py-3.5 text-sm font-medium text-paper transition-colors hover:bg-accent hover:text-accent-ink disabled:cursor-wait disabled:opacity-60"
+      className="btn-dark w-full py-3.5 disabled:cursor-wait disabled:opacity-60"
     >
       {children}
     </button>

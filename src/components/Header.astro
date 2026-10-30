@@ -1,35 +1,60 @@
 ---
+import { Sprout } from 'lucide-react';
 import ThemeToggle from './ThemeToggle';
 import MobileMenu from './MobileMenu';
 
+interface Props {
+  /** Float the header over a full-bleed hero (light text, no background). */
+  overlay?: boolean;
+}
+
+const { overlay = false } = Astro.props;
+
 const links = [
+  { href: '/', label: 'Home' },
   { href: '/destinations', label: 'Destinations' },
   { href: '/planner', label: 'Trip planner' },
   { href: '/journal', label: 'Journal' },
 ];
 
 const path = Astro.url.pathname;
+const isActive = (href: string) => (href === '/' ? path === '/' : path.startsWith(href));
 const user = Astro.locals.user;
 const account = user
   ? { href: '/account', label: 'Account' }
   : { href: `/login?next=${encodeURIComponent(path)}`, label: 'Log in' };
 ---
 
-<header class="sticky top-0 z-30 border-b border-line bg-paper/90 backdrop-blur-sm">
-  <div class="container-page flex h-16 items-center justify-between gap-6">
-    <a href="/" class="font-display text-2xl italic tracking-tight" aria-label="Goadi, home">
-      Goadi<span class="text-accent">.</span>
+<header
+  data-overlay={overlay || undefined}
+  class:list={[
+    'z-30',
+    overlay
+      ? // Sits inside the hero card's inset; turns dark when the mobile menu covers the photo.
+        'absolute inset-x-0 top-0 px-3 pt-3 text-cream md:px-4 md:pt-4 [html[data-menu=open]_&]:text-ink'
+      : 'sticky top-0 border-b border-line bg-paper/90 backdrop-blur-sm',
+  ]}
+>
+  <div class:list={['flex h-18 items-center justify-between gap-6', overlay ? 'px-5 md:px-8' : 'container-page']}>
+    <a href="/" class="flex items-center gap-2 font-display text-2xl tracking-tight" aria-label="Goadi, home">
+      <Sprout className="size-6" strokeWidth={1.4} aria-hidden="true" />
+      Goadi
     </a>
 
-    <nav aria-label="Main" class="hidden md:block">
-      <ul class="flex items-center gap-8 text-sm">
+    <nav aria-label="Main" class="hidden lg:block">
+      <ul class="flex items-center gap-1 text-sm">
         {
           links.map((link) => (
             <li>
               <a
                 href={link.href}
-                aria-current={path.startsWith(link.href) ? 'page' : undefined}
-                class="relative py-1 text-ink-soft transition-colors hover:text-ink aria-[current=page]:text-ink after:absolute after:inset-x-0 after:-bottom-0.5 after:h-px after:origin-left after:scale-x-0 after:bg-accent after:transition-transform after:duration-500 after:ease-out-quint hover:after:scale-x-100 aria-[current=page]:after:scale-x-100"
+                aria-current={isActive(link.href) ? 'page' : undefined}
+                class:list={[
+                  'block rounded-full px-4 py-2 transition-colors',
+                  overlay
+                    ? 'text-cream/85 hover:text-cream aria-[current=page]:bg-cream aria-[current=page]:text-forest'
+                    : 'text-ink-soft hover:text-ink aria-[current=page]:bg-card aria-[current=page]:text-ink aria-[current=page]:shadow-soft',
+                ]}
               >
                 {link.label}
               </a>
@@ -39,15 +64,15 @@ const account = user
       </ul>
     </nav>
 
-    <div class="flex items-center gap-3">
-      <ThemeToggle client:load />
-      <a
-        href={account.href}
-        class="hidden rounded-full bg-ink px-5 py-2.5 text-sm font-medium text-paper transition-colors hover:bg-accent hover:text-accent-ink md:inline-block"
-      >
+    <div class="flex items-center gap-2 sm:gap-3">
+      <a href={account.href} class="hidden px-2 text-sm hover:underline hover:underline-offset-4 md:inline">
         {account.label}
       </a>
-      <MobileMenu client:media="(max-width: 767px)" links={links} account={account} />
+      <a href="/planner" class:list={['hidden md:inline-flex', overlay ? 'btn bg-forest text-cream hover:bg-accent' : 'btn-dark']}>
+        Plan a trip
+      </a>
+      <ThemeToggle client:load />
+      <MobileMenu client:media="(max-width: 1023px)" links={links} account={account} />
     </div>
   </div>
 </header>

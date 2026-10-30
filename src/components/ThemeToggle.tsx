@@ -28,7 +28,7 @@ export default function ThemeToggle() {
       onClick={toggle}
       aria-label={label}
       title={label}
-      className="grid size-10 place-items-center rounded-full border border-line text-ink transition-colors hover:border-ink"
+      className="grid size-10 place-items-center rounded-full border border-current/25 transition-colors hover:border-current"
     >
       <svg viewBox="0 0 24 24" className="size-4" aria-hidden="true">
         <circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" strokeWidth="1.5" />

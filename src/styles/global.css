@@ -1,54 +1,69 @@
 @import "@fontsource-variable/fraunces/opsz.css";
 @import "@fontsource-variable/fraunces/opsz-italic.css";
 @import "@fontsource-variable/instrument-sans/index.css";
+@import "@fontsource/caveat/500.css";
 @import "tailwindcss";
 
 /* Dark mode follows the data-theme attribute set by ThemeToggle (or the OS default). */
 @custom-variant dark (&:where([data-theme="dark"], [data-theme="dark"] *));
 
-/* Raw palette: warm paper, ink, terracotta and moss. */
+/* Raw palette: cream paper, forest ink and sage. */
 :root {
-  --paper: #f4efe6;
-  --paper-deep: #e9e1d3;
-  --ink: #1c1b18;
-  --ink-soft: #5b574e;
-  --line: #d6cdbd;
-  --accent: #b5532c;
-  --accent-ink: #fdf8f1;
-  --moss: #3e5a45;
+  --paper: #f6f3eb;
+  --paper-deep: #ece7da;
+  --card: #fffdf8;
+  --ink: #232c25;
+  --ink-soft: #626b5c;
+  --line: #ddd7c8;
+  --accent: #6f8248;
+  --accent-ink: #ffffff;
+  --moss: #4a5d3a;
+  --sage-soft: #e4e9d6;
   color-scheme: light;
 }
 
 :root[data-theme="dark"] {
-  --paper: #161512;
-  --paper-deep: #211f1b;
-  --ink: #efe8dc;
-  --ink-soft: #a59e90;
-  --line: #3a362f;
-  --accent: #e07a4f;
-  --accent-ink: #1c1b18;
-  --moss: #8fb39a;
+  --paper: #121813;
+  --paper-deep: #1a221b;
+  --card: #1d261e;
+  --ink: #ebe7dc;
+  --ink-soft: #a5ad9a;
+  --line: #2e3a2f;
+  --accent: #a7bc78;
+  --accent-ink: #121813;
+  --moss: #a7bc78;
+  --sage-soft: #222c22;
   color-scheme: dark;
 }
 
 @theme inline {
   --color-paper: var(--paper);
   --color-paper-deep: var(--paper-deep);
+  --color-card: var(--card);
   --color-ink: var(--ink);
   --color-ink-soft: var(--ink-soft);
   --color-line: var(--line);
   --color-accent: var(--accent);
   --color-accent-ink: var(--accent-ink);
   --color-moss: var(--moss);
+  --color-sage-soft: var(--sage-soft);
 
   --font-display: "Fraunces Variable", Georgia, serif;
   --font-sans: "Instrument Sans Variable", system-ui, sans-serif;
+  --font-hand: "Caveat", "Segoe Print", cursive;
 }
 
 @theme {
-  --text-display: clamp(3rem, 9vw, 8.5rem);
-  --text-display--line-height: 0.92;
-  --text-display--letter-spacing: -0.035em;
+  /* Fixed colours that stay the same in light and dark mode (text on photos, the forest panel). */
+  --color-forest: #1e2820;
+  --color-cream: #fbf8f1;
+  --color-sage-light: #c9d6a6;
+
+  --text-display: clamp(2.75rem, 6.4vw, 5.75rem);
+  --text-display--line-height: 1.02;
+  --text-display--letter-spacing: -0.015em;
+  --radius-panel: 1.75rem;
+  --shadow-soft: 0 1px 2px rgb(30 40 32 / 0.06), 0 12px 32px -8px rgb(30 40 32 / 0.18);
   --ease-out-quint: cubic-bezier(0.22, 1, 0.36, 1);
 }
 
@@ -114,5 +129,24 @@
 }
 
 @utility eyebrow {
-  @apply font-sans text-xs font-medium uppercase tracking-[0.18em] text-ink-soft;
+  @apply font-sans text-[11px] font-medium uppercase tracking-[0.2em] text-ink-soft;
+}
+
+/* Pill buttons. */
+@utility btn {
+  @apply inline-flex items-center justify-center gap-2 rounded-full px-6 py-3 text-sm font-medium transition-colors duration-300;
+}
+@utility btn-dark {
+  @apply btn bg-forest text-cream hover:bg-accent dark:bg-cream dark:text-forest dark:hover:bg-sage-light;
+}
+@utility btn-sage {
+  @apply btn bg-accent text-accent-ink hover:bg-moss dark:hover:bg-sage-light;
+}
+@utility btn-outline {
+  @apply btn border border-ink/25 text-ink hover:border-ink hover:bg-ink hover:text-paper;
+}
+
+/* Organic pebble shape used to frame photos. */
+@utility blob {
+  border-radius: 58% 42% 46% 54% / 52% 44% 56% 48%;
 }

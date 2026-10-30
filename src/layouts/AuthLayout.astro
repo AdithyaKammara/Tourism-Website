@@ -29,9 +29,11 @@ const { title, eyebrow, heading, intro } = Astro.props;
           </p>
         )
       }
-      <slot />
-      <div class="mt-10 border-t border-line pt-6 text-sm text-ink-soft">
-        <slot name="footer" />
+      <div class="rounded-3xl bg-card p-6 shadow-soft md:p-10">
+        <slot />
+        <div class="mt-10 border-t border-line pt-6 text-sm text-ink-soft">
+          <slot name="footer" />
+        </div>
       </div>
     </div>
   </section>

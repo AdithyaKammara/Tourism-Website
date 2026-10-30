@@ -1,130 +1,346 @@
 ---
-import { Image } from 'astro:assets';
+import { getImage, Image } from 'astro:assets';
+import {
+  ArrowRight,
+  CalendarDays,
+  CloudSun,
+  Landmark,
+  Leaf,
+  ListChecks,
+  MapPin,
+  Mountain,
+  NotebookPen,
+  Route,
+  Sun,
+  Ticket,
+  TreePine,
+  Users,
+  Wallet,
+  Waves,
+} from 'lucide-react';
 import Layout from '../layouts/Layout.astro';
-import WhereToNext from '../components/destinations/WhereToNext';
+import Sprig from '../components/home/Sprig.astro';
+import TripFinder from '../components/home/TripFinder';
+import TipsCarousel, { type Tip } from '../components/home/TipsCarousel';
 import { getDestinations, toCard } from '../lib/cards';
-import { formatBudget, formatDays, formatSeason } from '../lib/destinations';
+import type { Vibe } from '../lib/destinations';
 
 const all = await getDestinations();
-const featured = all.filter((d) => d.data.featured);
+const byId = Object.fromEntries(all.map((d) => [d.id, d]));
 const cards = await Promise.all(all.map(toCard));
+const featured = all.filter((d) => d.data.featured).slice(0, 3);
 
-// Until we have a hero video, lead with a full-bleed photo from a non-featured place.
-const hero = all.find((d) => d.id === 'jaisalmer') ?? all[0];
+const hero = byId.munnar ?? all[0];
+const about = byId.ziro ?? all[0];
+const planner = byId.alleppey ?? all[0];
+
+// Pull the first paragraph under "## Good to know" from each guide.
+const tips: Tip[] = await Promise.all(
+  all.map(async (d) => {
+    const section = d.body?.split(/^## Good to know\s*$/m)[1] ?? '';
+    const paragraph = section.trim().split(/\n\s*\n/)[0] ?? '';
+    const thumb = await getImage({ src: d.data.hero, width: 112, height: 112, format: 'webp' });
+    return { id: d.id, place: d.data.name, state: d.data.state, text: paragraph, thumb: thumb.src };
+  }),
+).then((list) => list.filter((t) => t.text));
+
+const vibeIcon: Record<Vibe, typeof Mountain> = {
+  hills: TreePine,
+  water: Waves,
+  heritage: Landmark,
+  desert: Sun,
+  mountains: Mountain,
+  culture: Users,
+};
+
+const promises = [
+  { icon: NotebookPen, title: 'Honest guides', text: 'Written from real trips' },
+  { icon: CalendarDays, title: 'The right season', text: 'Only months worth going' },
+  { icon: Wallet, title: 'Real budgets', text: 'Daily costs in rupees' },
+  { icon: Route, title: 'Plan it all', text: 'Days, lists and bookings' },
+];
+
+const plannerFeatures = [
+  { icon: Route, label: 'Day-by-day itinerary' },
+  { icon: Wallet, label: 'Budget tracker' },
+  { icon: CloudSun, label: 'Weather for your dates' },
+  { icon: ListChecks, label: 'Packing checklist' },
+  { icon: Ticket, label: 'Bookings in one place' },
+];
+
+// Gallery tiles: [id, grid classes] arranged as a 4-column mosaic on desktop.
+const gallery: [string, string][] = [
+  ['munnar', 'md:col-span-2 md:row-span-2'],
+  ['hampi', ''],
+  ['alleppey', ''],
+  ['spiti', 'md:col-span-2'],
+  ['jaisalmer', 'md:col-span-2'],
+  ['ziro', 'md:col-span-2'],
+];
 ---
 
-<Layout>
-  <section class="relative isolate flex min-h-[88svh] items-end overflow-hidden text-[#fdf8f1]">
-    <Image
-      src={hero.data.hero}
-      alt={hero.data.heroAlt}
-      widths={[800, 1280, 1920]}
-      sizes="100vw"
-      loading="eager"
-      fetchpriority="high"
-      class="absolute inset-0 -z-10 size-full object-cover"
-    />
-    <div class="absolute inset-0 -z-10 bg-linear-to-t from-black/75 via-black/25 to-transparent"></div>
+<Layout headerOverlay>
+  <!-- Hero: a framed photo card with the header floating inside it. -->
+  <section class="p-3 md:p-4">
+    <div class="relative isolate flex min-h-[calc(100svh-1.5rem)] overflow-hidden rounded-panel text-cream md:min-h-[calc(100svh-2rem)]">
+      <Image
+        src={hero.data.hero}
+        alt={hero.data.heroAlt}
+        widths={[800, 1280, 1920]}
+        sizes="100vw"
+        loading="eager"
+        fetchpriority="high"
+        class="absolute inset-0 -z-10 size-full object-cover"
+      />
+      <div class="absolute inset-0 -z-10 bg-linear-to-r from-forest/80 via-forest/35 to-transparent"></div>
+      <div class="absolute inset-x-0 top-0 -z-10 h-40 bg-linear-to-b from-forest/50 to-transparent"></div>
 
-    <div class="container-page pt-32 pb-12 md:pb-16">
-      <p class="eyebrow mb-6 text-[#fdf8f1]/80">Field notes · India</p>
-      <h1 class="font-display text-display max-w-[13ch]">
-        Places worth the <em class="text-[#f0a37f]">long way</em> round.
-      </h1>
-      <div class="mt-10 flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
-        <p class="max-w-md text-lg text-[#fdf8f1]/85">
-          Honest guides to where to go, when to go and what it really costs. Then a planner that turns it
-          into days you can actually follow.
+      <div class="flex w-full flex-col justify-end gap-10 px-5 pt-32 pb-8 md:px-10 md:pb-10 lg:flex-row lg:items-end lg:justify-between">
+        <div class="max-w-xl">
+          <p class="eyebrow text-cream/80">Slow travel · Real places</p>
+          <h1 class="mt-5 font-display text-display">
+            Places Worth the <em class="text-sage-light">Long Way</em> Round
+          </h1>
+          <p class="mt-6 max-w-md text-cream/85">
+            Honest guides to where to go in India, when to go and what it really costs. Then a planner that
+            turns it into days you can follow.
+          </p>
+          <a href="/destinations" class="btn-sage mt-8">
+            Explore destinations <ArrowRight className="size-4" aria-hidden="true" />
+          </a>
+          <p class="mt-10 text-[11px] text-cream/60">
+            {hero.data.name}, {hero.data.state}. Photo:{' '}
+            <a href={hero.data.credit.source} class="underline underline-offset-2" rel="noopener">{hero.data.credit.author}</a>,
+            {hero.data.credit.license}
+          </p>
+        </div>
+
+        <div class="relative shrink-0">
+          <p class="mb-3 hidden -rotate-6 font-hand text-2xl leading-tight text-cream lg:absolute lg:-top-32 lg:right-10 lg:block">
+            Only the months<br />that are worth it
+            <svg viewBox="0 0 60 50" class="mt-1 ml-auto h-10 w-12" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" aria-hidden="true">
+              <path d="M50 4C52 24 36 40 12 42" />
+              <path d="M20 34 11 42l10 5" />
+            </svg>
+          </p>
+          <TripFinder client:load destinations={cards} />
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- What we promise -->
+  <section class="container-page py-10" aria-label="What Goadi offers">
+    <ul class="grid grid-cols-2 gap-y-8 lg:grid-cols-4 lg:divide-x lg:divide-line">
+      {
+        promises.map(({ icon: Icon, title, text }) => (
+          <li class="flex items-center gap-4 lg:justify-center lg:px-6">
+            <Icon className="size-7 shrink-0 text-ink-soft" strokeWidth={1.3} aria-hidden="true" />
+            <span>
+              <span class="block text-sm font-medium">{title}</span>
+              <span class="block text-xs text-ink-soft">{text}</span>
+            </span>
+          </li>
+        ))
+      }
+    </ul>
+  </section>
+
+  <!-- About -->
+  <section class="container-page py-16 md:py-24" aria-labelledby="about-heading">
+    <div class="grid items-center gap-12 lg:grid-cols-12">
+      <div class="relative lg:col-span-5">
+        <Sprig class="absolute -top-6 -left-4 z-10 h-28 w-auto -rotate-12 text-accent/70" />
+        <Image
+          src={about.data.hero}
+          alt={about.data.heroAlt}
+          widths={[480, 800, 1100]}
+          sizes="(min-width: 1024px) 40vw, 100vw"
+          class="blob aspect-[5/4] w-full object-cover"
+        />
+        <Sprig class="absolute -right-2 -bottom-8 h-24 w-auto rotate-[150deg] text-accent/60" />
+      </div>
+
+      <div class="lg:col-span-4">
+        <p class="eyebrow">About Goadi</p>
+        <h2 id="about-heading" class="mt-4 font-display text-4xl leading-tight md:text-5xl">
+          A Slower Way <em class="text-accent">to See India</em>
+        </h2>
+        <p class="mt-5 text-ink-soft">
+          We write about a handful of places properly instead of hundreds of them badly: when they're
+          genuinely at their best, how long to stay and what a day there actually costs. Then you can plan
+          the trip right here.
         </p>
-        <a
-          href="#where-to-next"
-          class="self-start rounded-full bg-[#fdf8f1] px-6 py-3 text-sm font-medium text-[#1c1b18] transition-colors hover:bg-[#f0a37f] md:self-auto"
-        >
-          Find a place for your dates
+        <a href="/destinations" class="btn-outline mt-8">
+          Browse destinations <ArrowRight className="size-4" aria-hidden="true" />
         </a>
       </div>
-      <p class="mt-10 text-xs text-[#fdf8f1]/60">
-        {hero.data.name}. Photo:{' '}
-        <a href={hero.data.credit.source} class="underline underline-offset-2" rel="noopener">
-          {hero.data.credit.author}
-        </a>
-        , {hero.data.credit.license}
+
+      <ul class="space-y-8 border-line lg:col-span-3 lg:border-l lg:pl-10">
+        {
+          [
+            { icon: Leaf, text: 'Off the usual circuit' },
+            { icon: MapPin, text: 'Local know-how, not listicles' },
+            { icon: Mountain, text: 'Landscapes worth the journey' },
+          ].map(({ icon: Icon, text }) => (
+            <li class="flex items-center gap-4">
+              <Icon className="size-6 shrink-0 text-accent" strokeWidth={1.4} aria-hidden="true" />
+              <span class="text-sm">{text}</span>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </section>
+
+  <!-- Planner panel -->
+  <section class="px-3 md:px-4" aria-labelledby="planner-heading">
+    <div class="relative isolate overflow-hidden rounded-panel bg-forest text-cream">
+      <Image
+        src={planner.data.hero}
+        alt=""
+        widths={[800, 1280, 1920]}
+        sizes="100vw"
+        class="absolute inset-0 -z-10 size-full object-cover opacity-70"
+      />
+      <div class="absolute inset-0 -z-10 bg-linear-to-r from-forest via-forest/70 to-forest/20"></div>
+
+      <div class="grid gap-10 px-6 py-14 md:px-12 md:py-20 lg:grid-cols-12 lg:items-center">
+        <div class="lg:col-span-5">
+          <p class="eyebrow text-cream/70">Trip planner</p>
+          <h2 id="planner-heading" class="mt-4 font-display text-4xl leading-tight md:text-5xl">
+            Every Detail, <em class="text-sage-light">in One Place</em>
+          </h2>
+          <p class="mt-5 max-w-md text-cream/80">
+            Turn a destination into a real plan: days, budget, weather, packing and bookings. Start as a guest
+            and save it to your account whenever you like.
+          </p>
+          <a href="/planner" class="btn mt-8 bg-sage-light text-forest hover:bg-cream">
+            Open the planner <ArrowRight className="size-4" aria-hidden="true" />
+          </a>
+        </div>
+
+        <ul class="rounded-3xl border border-cream/15 bg-forest/40 p-6 backdrop-blur-md lg:col-span-4 lg:col-start-9">
+          {
+            plannerFeatures.map(({ icon: Icon, label }) => (
+              <li class="flex items-center gap-4 border-b border-cream/10 py-3.5 text-sm last:border-0">
+                <Icon className="size-5 shrink-0 text-sage-light" strokeWidth={1.4} aria-hidden="true" />
+                {label}
+              </li>
+            ))
+          }
+        </ul>
+      </div>
+      <p class="absolute right-6 bottom-4 text-[11px] text-cream/50">
+        {planner.data.name}. Photo: {planner.data.credit.author}, {planner.data.credit.license}
       </p>
     </div>
   </section>
 
-  <section class="container-page py-24 md:py-32" aria-labelledby="season-heading">
-    <div class="mb-16 grid gap-6 md:grid-cols-12">
-      <p class="eyebrow md:col-span-3">This season</p>
-      <h2 id="season-heading" class="font-display text-4xl leading-tight md:col-span-8 md:text-6xl">
-        {featured.length} places we keep going back to, and when they're at their best.
-      </h2>
-    </div>
+  <!-- Places -->
+  <section class="container-page py-20 md:py-28" aria-labelledby="places-heading">
+    <div class="grid gap-12 lg:grid-cols-12 lg:items-center">
+      <div class="lg:col-span-3">
+        <p class="eyebrow">More than a checklist</p>
+        <h2 id="places-heading" class="mt-4 font-display text-4xl leading-tight md:text-5xl">
+          Places <em class="text-accent">You'll Love</em>
+        </h2>
+        <p class="mt-5 text-ink-soft">From misty tea hills to an empire's ruins, each one written up properly.</p>
+        <a href="/destinations" class="btn-outline mt-8">
+          All destinations <ArrowRight className="size-4" aria-hidden="true" />
+        </a>
+      </div>
 
-    <ol class="space-y-24 md:space-y-36">
-      {
-        featured.map((d, i) => (
-          <li class="grid items-center gap-8 md:grid-cols-12 md:gap-12">
-            <a
-              href={`/destinations/${d.id}`}
-              class:list={[
-                'group block overflow-hidden md:col-span-7',
-                i % 2 === 1 && 'md:order-2 md:col-start-6',
-              ]}
-              tabindex="-1"
-              aria-hidden="true"
-            >
-              <Image
-                src={d.data.hero}
-                alt=""
-                widths={[640, 960, 1280]}
-                sizes="(min-width: 768px) 58vw, 100vw"
-                class="aspect-[4/3] w-full object-cover transition-transform duration-700 ease-out-quint group-hover:scale-[1.03]"
-              />
-            </a>
-            <div class:list={['md:col-span-4', i % 2 === 1 ? 'md:order-1 md:col-start-1' : 'md:col-start-9']}>
-              <p class="eyebrow">
-                {String(i + 1).padStart(2, '0')} · {d.data.state}
-              </p>
-              <h3 class="mt-4 font-display text-5xl md:text-6xl">
-                <a href={`/destinations/${d.id}`} class="hover:text-accent">
-                  {d.data.name}
-                </a>
-              </h3>
-              <p class="mt-4 text-lg text-ink-soft">{d.data.tagline}</p>
-              <dl class="mt-8 grid grid-cols-3 gap-4 border-t border-line pt-4 text-sm">
-                <div>
-                  <dt class="eyebrow">Go</dt>
-                  <dd class="mt-1">{formatSeason(d.data.bestMonths)}</dd>
+      <ul class="grid gap-6 sm:grid-cols-3 lg:col-span-9">
+        {
+          featured.map((d) => {
+            const Icon = vibeIcon[d.data.vibes[0]];
+            return (
+              <li class="group relative">
+                <div class="overflow-hidden rounded-2xl">
+                  <Image
+                    src={d.data.hero}
+                    alt={d.data.heroAlt}
+                    widths={[400, 640, 900]}
+                    sizes="(min-width: 1024px) 24vw, (min-width: 640px) 32vw, 100vw"
+                    class="aspect-[4/3] w-full object-cover transition-transform duration-700 ease-out-quint group-hover:scale-[1.04]"
+                  />
                 </div>
-                <div>
-                  <dt class="eyebrow">Stay</dt>
-                  <dd class="mt-1">{formatDays(d.data.daysNeeded)}</dd>
+                <div class="mt-4 flex gap-3">
+                  <Icon className="mt-0.5 size-5 shrink-0 text-ink-soft" strokeWidth={1.4} aria-hidden="true" />
+                  <div>
+                    <h3 class="font-medium">
+                      <a href={`/destinations/${d.id}`} class="after:absolute after:inset-0 group-hover:text-accent">
+                        {d.data.name}
+                      </a>
+                    </h3>
+                    <p class="mt-1 text-sm text-ink-soft">{d.data.tagline}</p>
+                  </div>
                 </div>
-                <div>
-                  <dt class="eyebrow">Spend</dt>
-                  <dd class="mt-1">{formatBudget(d.data.budgetPerDay)}</dd>
-                </div>
-              </dl>
-              <p class="mt-6 text-xs text-ink-soft">
-                Photo: <a href={d.data.credit.source} class="underline underline-offset-2" rel="noopener">{d.data.credit.author}</a>, {d.data.credit.license}
-              </p>
-            </div>
-          </li>
-        ))
-      }
-    </ol>
+              </li>
+            );
+          })
+        }
+      </ul>
+    </div>
   </section>
 
-  <section id="where-to-next" class="scroll-mt-16 bg-paper-deep py-24 md:py-32" aria-labelledby="next-heading">
-    <div class="container-page">
-      <div class="mb-12 grid gap-6 md:grid-cols-12">
-        <p class="eyebrow md:col-span-3">Where to next?</p>
-        <h2 id="next-heading" class="font-display text-4xl leading-tight md:col-span-8 md:text-6xl">
-          Tell us when you can travel. We'll tell you <em class="text-accent">where</em>.
-        </h2>
+  <!-- Tips -->
+  <section class="px-3 md:px-4" aria-labelledby="tips-heading">
+    <div class="relative overflow-hidden rounded-panel bg-sage-soft px-6 py-14 md:px-12 md:py-16">
+      <Sprig class="absolute -bottom-6 left-[38%] hidden h-32 w-auto rotate-12 text-accent/40 md:block" />
+      <Sprig class="absolute top-6 right-4 hidden h-28 w-auto -rotate-12 text-accent/40 md:block" />
+      <div class="relative grid gap-10 lg:grid-cols-12 lg:items-center">
+        <div class="lg:col-span-4">
+          <p class="eyebrow">Good to know</p>
+          <h2 id="tips-heading" class="mt-4 font-display text-4xl leading-tight md:text-5xl">
+            Know Before <em class="text-accent">You Go</em>
+          </h2>
+          <p class="mt-5 text-ink-soft">The small things that make a big difference, straight from our guides.</p>
+        </div>
+        <div class="lg:col-span-7 lg:col-start-6">
+          <TipsCarousel client:visible tips={tips} />
+        </div>
       </div>
-      <WhereToNext client:visible destinations={cards} />
     </div>
+  </section>
+
+  <!-- Gallery -->
+  <section class="container-page py-20 md:py-28" aria-labelledby="gallery-heading">
+    <div class="mx-auto max-w-xl text-center">
+      <p class="eyebrow">Gallery</p>
+      <h2 id="gallery-heading" class="mt-4 font-display text-4xl leading-tight md:text-5xl">
+        Moments from <em class="text-accent">the Road</em>
+      </h2>
+      <p class="mt-4 text-ink-soft">A first look at the places in our guides.</p>
+    </div>
+
+    <ul class="mt-12 grid auto-rows-[180px] grid-cols-2 gap-3 md:auto-rows-[220px] md:grid-cols-4 md:gap-4">
+      {
+        gallery.map(([id, span]) => {
+          const d = byId[id];
+          if (!d) return null;
+          return (
+            <li class:list={['group relative overflow-hidden rounded-2xl', span]}>
+              <Image
+                src={d.data.hero}
+                alt={d.data.heroAlt}
+                widths={[400, 800, 1200]}
+                sizes="(min-width: 768px) 50vw, 50vw"
+                class="size-full object-cover transition-transform duration-700 ease-out-quint group-hover:scale-[1.04]"
+              />
+              <div class="absolute inset-x-0 bottom-0 bg-linear-to-t from-forest/80 to-transparent p-4 pt-10 text-cream">
+                <a href={`/destinations/${d.id}`} class="font-display text-lg after:absolute after:inset-0">
+                  {d.data.name}
+                </a>
+                <p class="text-[10px] text-cream/70">
+                  Photo: {d.data.credit.author}, {d.data.credit.license}
+                </p>
+              </div>
+            </li>
+          );
+        })
+      }
+    </ul>
   </section>
 </Layout>
