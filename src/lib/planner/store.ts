@@ -94,6 +94,7 @@ export const usePlanner = create<PlannerState>()(
         }),
     })),
     {
+      // Storage key kept from the site's first name so existing guest trips aren't lost.
       name: 'goadi-planner',
       version: 1,
       storage: createJSONStorage(() => localStorage),

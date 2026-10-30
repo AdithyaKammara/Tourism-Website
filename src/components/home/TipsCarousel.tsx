@@ -20,7 +20,7 @@ export default function TipsCarousel({ tips }: { tips: Tip[] }) {
           <img src={tip.thumb} alt="" width={56} height={56} className="size-14 shrink-0 rounded-full object-cover" />
           <div>
             <Quote className="size-6 text-accent/50" aria-hidden="true" />
-            <blockquote className="mt-2 font-display text-lg leading-snug italic md:text-xl" aria-live="polite">
+            <blockquote className="mt-2 text-lg leading-snug font-medium md:text-xl" aria-live="polite">
               {tip.text}
             </blockquote>
           </div>

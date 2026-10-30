@@ -12,7 +12,7 @@ interface Props {
 const { title, eyebrow, heading, intro } = Astro.props;
 ---
 
-<Layout title={`${title} · Goadi`}>
+<Layout title={title}>
   <section class="container-page grid gap-12 py-14 md:grid-cols-12 md:py-24">
     <div class="md:col-span-6 lg:col-span-5">
       <p class="eyebrow mb-6">{eyebrow}</p>

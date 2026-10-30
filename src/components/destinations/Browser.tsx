@@ -1,5 +1,5 @@
 import { lazy, Suspense, useEffect, useMemo, useState } from 'react';
-import { LayoutGrid, Map as MapIcon } from 'lucide-react';
+import { LayoutGrid, Map as MapIcon, Search } from 'lucide-react';
 import { formatSeason, matches, type DestinationCard, type Vibe } from '../../lib/destinations';
 import Card from './Card';
 import Filters from './Filters';
@@ -14,24 +14,27 @@ type Props = {
   initialMonth: number | null;
   initialVibe: Vibe | null;
   initialView: View;
+  initialQuery: string;
 };
 
 /** Full destinations grid or map. Filters and view are mirrored into the URL so they can be shared. */
-export default function Browser({ destinations, initialMonth, initialVibe, initialView }: Props) {
+export default function Browser({ destinations, initialMonth, initialVibe, initialView, initialQuery }: Props) {
+  const [query, setQuery] = useState(initialQuery);
   const [month, setMonth] = useState(initialMonth);
   const [vibe, setVibe] = useState(initialVibe);
   const [view, setView] = useState<View>(initialView);
 
   useEffect(() => {
     const params = new URLSearchParams();
+    if (query.trim()) params.set('q', query.trim());
     if (month) params.set('month', String(month));
     if (vibe) params.set('vibe', vibe);
     if (view === 'map') params.set('view', 'map');
-    const query = params.toString();
-    history.replaceState(null, '', query ? `?${query}` : location.pathname);
-  }, [month, vibe, view]);
+    const search = params.toString();
+    history.replaceState(null, '', search ? `?${search}` : location.pathname);
+  }, [query, month, vibe, view]);
 
-  const results = destinations.filter((d) => matches(d, month, vibe));
+  const results = destinations.filter((d) => matches(d, month, vibe, query));
   const points = useMemo(
     () =>
       results.map((d) => ({
@@ -48,6 +51,20 @@ export default function Browser({ destinations, initialMonth, initialVibe, initi
 
   return (
     <div>
+      <div className="mb-8 flex max-w-xl items-center gap-3 rounded-full border border-line bg-card px-5 py-1 focus-within:border-ink">
+        <Search className="size-5 shrink-0 text-ink-soft" aria-hidden="true" />
+        <label htmlFor="destination-search" className="sr-only">
+          Search destinations
+        </label>
+        <input
+          id="destination-search"
+          type="search"
+          value={query}
+          onChange={(e) => setQuery(e.target.value)}
+          placeholder="Search by place, state or mood"
+          className="min-w-0 flex-1 bg-transparent py-2.5 focus:outline-none"
+        />
+      </div>
       <Filters month={month} vibe={vibe} onMonth={setMonth} onVibe={setVibe} />
 
       <div className="mt-10 flex items-center justify-between gap-4 border-b border-ink pb-3">
@@ -55,10 +72,11 @@ export default function Browser({ destinations, initialMonth, initialVibe, initi
           <p aria-live="polite">
             {results.length} of {destinations.length} places
           </p>
-          {(month || vibe) && (
+          {(month || vibe || query) && (
             <button
               type="button"
               onClick={() => {
+                setQuery('');
                 setMonth(null);
                 setVibe(null);
               }}

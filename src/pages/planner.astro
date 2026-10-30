@@ -6,7 +6,7 @@ import { getDestinations, toCard } from '../lib/cards';
 const destinations = await Promise.all((await getDestinations()).map(toCard));
 ---
 
-<Layout title="Trip planner · Goadi" description="Plan your days, budget, packing and bookings in one place.">
+<Layout title="Trip planner" description="Plan your days, budget, packing and bookings in one place.">
   <section class="container-page pt-12 pb-24 md:pt-16">
     <!-- Trips live in localStorage (and Supabase when signed in), so this renders only in the browser. -->
     <PlannerApp client:only="react" userId={Astro.locals.user?.id ?? null} destinations={destinations}>

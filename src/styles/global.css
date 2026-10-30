@@ -1,38 +1,40 @@
-@import "@fontsource-variable/fraunces/opsz.css";
-@import "@fontsource-variable/fraunces/opsz-italic.css";
+@import "@fontsource-variable/plus-jakarta-sans/wght.css";
+@import "@fontsource-variable/plus-jakarta-sans/wght-italic.css";
 @import "@fontsource-variable/instrument-sans/index.css";
-@import "@fontsource/caveat/500.css";
 @import "tailwindcss";
 
 /* Dark mode follows the data-theme attribute set by ThemeToggle (or the OS default). */
 @custom-variant dark (&:where([data-theme="dark"], [data-theme="dark"] *));
 
-/* Raw palette: cream paper, forest ink and sage. */
+/*
+ * Raw palette: sea-glass paper, deep-lagoon ink and teal.
+ * (Token names like "sage" and "moss" are kept from the earlier palette; they now hold mint and teal.)
+ */
 :root {
-  --paper: #f6f3eb;
-  --paper-deep: #ece7da;
-  --card: #fffdf8;
-  --ink: #232c25;
-  --ink-soft: #626b5c;
-  --line: #ddd7c8;
-  --accent: #6f8248;
+  --paper: #f5faf9;
+  --paper-deep: #e4f1ee;
+  --card: #ffffff;
+  --ink: #0f2a2e;
+  --ink-soft: #4e6a6d;
+  --line: #d2e4e0;
+  --accent: #23938b;
   --accent-ink: #ffffff;
-  --moss: #4a5d3a;
-  --sage-soft: #e4e9d6;
+  --moss: #16706a;
+  --sage-soft: #dcefea;
   color-scheme: light;
 }
 
 :root[data-theme="dark"] {
-  --paper: #121813;
-  --paper-deep: #1a221b;
-  --card: #1d261e;
-  --ink: #ebe7dc;
-  --ink-soft: #a5ad9a;
-  --line: #2e3a2f;
-  --accent: #a7bc78;
-  --accent-ink: #121813;
-  --moss: #a7bc78;
-  --sage-soft: #222c22;
+  --paper: #0b1a1c;
+  --paper-deep: #102528;
+  --card: #13292c;
+  --ink: #e4f2f0;
+  --ink-soft: #98b5b2;
+  --line: #20393c;
+  --accent: #4cc3b7;
+  --accent-ink: #0b1a1c;
+  --moss: #4cc3b7;
+  --sage-soft: #12302f;
   color-scheme: dark;
 }
 
@@ -48,22 +50,22 @@
   --color-moss: var(--moss);
   --color-sage-soft: var(--sage-soft);
 
-  --font-display: "Fraunces Variable", Georgia, serif;
+  --font-display: "Plus Jakarta Sans Variable", system-ui, sans-serif;
+  --font-display--font-variation-settings: "wght" 700;
   --font-sans: "Instrument Sans Variable", system-ui, sans-serif;
-  --font-hand: "Caveat", "Segoe Print", cursive;
 }
 
 @theme {
-  /* Fixed colours that stay the same in light and dark mode (text on photos, the forest panel). */
-  --color-forest: #1e2820;
-  --color-cream: #fbf8f1;
-  --color-sage-light: #c9d6a6;
+  /* Fixed colours that stay the same in light and dark mode (text on photos, the dark lagoon panel). */
+  --color-forest: #0c3337;
+  --color-cream: #f7fcfb;
+  --color-sage-light: #9be3d8;
 
-  --text-display: clamp(2.75rem, 6.4vw, 5.75rem);
-  --text-display--line-height: 1.02;
-  --text-display--letter-spacing: -0.015em;
+  --text-display: clamp(2.6rem, 6vw, 5.25rem);
+  --text-display--line-height: 1.05;
+  --text-display--letter-spacing: -0.03em;
   --radius-panel: 1.75rem;
-  --shadow-soft: 0 1px 2px rgb(30 40 32 / 0.06), 0 12px 32px -8px rgb(30 40 32 / 0.18);
+  --shadow-soft: 0 1px 2px rgb(12 51 55 / 0.06), 0 12px 32px -8px rgb(12 51 55 / 0.18);
   --ease-out-quint: cubic-bezier(0.22, 1, 0.36, 1);
 }
 
@@ -110,11 +112,11 @@
 }
 
 /* Long-form copy rendered from Markdown. */
-@utility prose-goadi {
+@utility prose-guide {
   @apply text-lg leading-relaxed;
 
   & > p:first-child {
-    @apply font-display text-2xl leading-snug md:text-3xl;
+    @apply text-2xl leading-snug font-medium md:text-3xl;
   }
   & p + p,
   & ul + p {

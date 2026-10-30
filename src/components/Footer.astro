@@ -1,5 +1,6 @@
 ---
-import { Sprout } from 'lucide-react';
+import { PlaneTakeoff } from 'lucide-react';
+import { SITE } from '../lib/site';
 
 const year = new Date().getFullYear();
 ---
@@ -9,10 +10,10 @@ const year = new Date().getFullYear();
     <div class="grid gap-10 px-6 py-14 md:grid-cols-12 md:px-12">
       <div class="md:col-span-6">
         <p class="flex items-center gap-2 font-display text-2xl">
-          <Sprout className="size-6" strokeWidth={1.4} aria-hidden="true" /> Goadi
+          <PlaneTakeoff className="size-5" strokeWidth={1.8} aria-hidden="true" /> {SITE.name}
         </p>
         <p class="mt-6 font-display text-4xl leading-tight md:text-5xl">
-          Go slower. <em class="text-sage-light">See more.</em>
+          Go slower. <span class="text-sage-light">See more.</span>
         </p>
       </div>
       <div class="md:col-span-3">
@@ -32,7 +33,7 @@ const year = new Date().getFullYear();
       </div>
     </div>
     <div class="flex flex-wrap justify-between gap-2 border-t border-cream/10 px-6 py-5 text-xs text-cream/60 md:px-12">
-      <p>© {year} Goadi. Built by Adithya Kammara.</p>
+      <p>© {year} {SITE.name}. Built by Adithya Kammara.</p>
       <p>Photos from Wikimedia Commons, credited where they appear.</p>
     </div>
   </div>

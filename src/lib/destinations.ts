@@ -27,8 +27,20 @@ export type DestinationCard = {
   image:{ src: string; srcset: string; width: number; height: number; alt: string };
 };
 
-export function matches(d: DestinationCard, month: number | null, vibe: Vibe | null) {
-  return (month === null || d.bestMonths.includes(month)) && (vibe === null || d.vibes.includes(vibe));
+export function matches(d: DestinationCard, month: number | null, vibe: Vibe | null, query = '') {
+  return (
+    (month === null || d.bestMonths.includes(month)) &&
+    (vibe === null || d.vibes.includes(vibe)) &&
+    matchesQuery(d, query)
+  );
+}
+
+/** Every word of the query must appear in the name, state, tagline or mood (so "kerala hills" finds Munnar). */
+export function matchesQuery(d: DestinationCard, query: string) {
+  const words = query.toLowerCase().split(/\s+/).filter(Boolean);
+  if (!words.length) return true;
+  const haystack = [d.name, d.state, d.tagline, ...d.vibes, ...d.vibes.map((v) => VIBE_LABELS[v])].join(' ').toLowerCase();
+  return words.every((w) => haystack.includes(w) || haystack.includes(w.replace(/s$/, '')));
 }
 
 const inr = new Intl.NumberFormat('en-IN', { style: 'currency', currency: 'INR', maximumFractionDigits: 0 });

@@ -1,4 +1,5 @@
 import { dayLabel, formatINR, tripDateRange, type Trip } from '../../lib/planner/types';
+import { SITE } from '../../lib/site';
 import { useDestinations } from './ui';
 
 /** A plain, ink-friendly version of the trip. Hidden on screen, shown only when printing. */
@@ -67,7 +68,7 @@ export default function PrintView({ trip }: { trip: Trip }) {
         </section>
       )}
 
-      <p className="mt-10 text-xs">Planned with Goadi. Budgets are rough estimates.</p>
+      <p className="mt-10 text-xs">Planned with {SITE.name}. Budgets are rough estimates.</p>
     </div>
   );
 }

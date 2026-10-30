@@ -31,7 +31,7 @@ const photos: GalleryPhoto[] = await Promise.all(
 );
 ---
 
-<Layout title={`${d.name}, ${d.state} · Goadi`} description={d.tagline}>
+<Layout title={`${d.name}, ${d.state}`} description={d.tagline}>
   <article>
     <header class="container-page pt-14 md:pt-20">
       <a href="/destinations" class="eyebrow hover:text-accent">← All destinations</a>
@@ -107,7 +107,7 @@ const photos: GalleryPhoto[] = await Promise.all(
       </aside>
 
       <div
-        class="prose-goadi md:order-1 md:col-span-7"
+        class="prose-guide md:order-1 md:col-span-7"
       >
         <Content />
       </div>

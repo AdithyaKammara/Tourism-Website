@@ -1,4 +1,4 @@
-# Goadi — tourism site rebuild
+# Safarnama: tourism site rebuild
 
 A rebuild of my 2023 HTML/Bootstrap tourism site with Astro, React and Supabase.
 

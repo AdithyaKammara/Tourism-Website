@@ -1,4 +1,5 @@
 import type { DestinationCard } from '../destinations';
+import { SITE } from '../site';
 import type { Trip } from './types';
 
 // RFC 5545 text escaping and 75-octet line folding.
@@ -34,8 +35,8 @@ function stamp() {
  */
 export function tripToICS(trip: Trip, destinations: Map<string, DestinationCard>) {
   if (!trip.startDate) throw new Error('A start date is needed to export to a calendar.');
-  const lines = ['BEGIN:VCALENDAR', 'VERSION:2.0', 'PRODID:-//Goadi//Trip planner//EN', 'CALSCALE:GREGORIAN', `X-WR-CALNAME:${esc(trip.title)}`];
-  const event = (uid: string, fields: string[]) => lines.push('BEGIN:VEVENT', `UID:${uid}@goadi`, `DTSTAMP:${stamp()}`, ...fields, 'END:VEVENT');
+  const lines = ['BEGIN:VCALENDAR', 'VERSION:2.0', `PRODID:-//${SITE.name}//Trip planner//EN`, 'CALSCALE:GREGORIAN', `X-WR-CALNAME:${esc(trip.title)}`];
+  const event = (uid: string, fields: string[]) => lines.push('BEGIN:VEVENT', `UID:${uid}@${SITE.slug}`, `DTSTAMP:${stamp()}`, ...fields, 'END:VEVENT');
 
   trip.days.forEach((day, i) => {
     const date = addDays(trip.startDate!, i);

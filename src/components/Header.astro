@@ -1,7 +1,8 @@
 ---
-import { Sprout } from 'lucide-react';
+import { PlaneTakeoff } from 'lucide-react';
 import ThemeToggle from './ThemeToggle';
 import MobileMenu from './MobileMenu';
+import { SITE } from '../lib/site';
 
 interface Props {
   /** Float the header over a full-bleed hero (light text, no background). */
@@ -36,13 +37,13 @@ const account = user
   ]}
 >
   <div class:list={['flex h-18 items-center justify-between gap-6', overlay ? 'px-5 md:px-8' : 'container-page']}>
-    <a href="/" class="flex items-center gap-2 font-display text-2xl tracking-tight" aria-label="Goadi, home">
-      <Sprout className="size-6" strokeWidth={1.4} aria-hidden="true" />
-      Goadi
+    <a href="/" class="flex items-center gap-2 font-display text-xl tracking-tight" aria-label={`${SITE.name}, home`}>
+      <PlaneTakeoff className="size-5" strokeWidth={1.8} aria-hidden="true" />
+      {SITE.name}
     </a>
 
     <nav aria-label="Main" class="hidden lg:block">
-      <ul class="flex items-center gap-1 text-sm">
+      <ul class="flex items-center gap-1 text-sm font-medium">
         {
           links.map((link) => (
             <li>
@@ -52,8 +53,8 @@ const account = user
                 class:list={[
                   'block rounded-full px-4 py-2 transition-colors',
                   overlay
-                    ? 'text-cream/85 hover:text-cream aria-[current=page]:bg-cream aria-[current=page]:text-forest'
-                    : 'text-ink-soft hover:text-ink aria-[current=page]:bg-card aria-[current=page]:text-ink aria-[current=page]:shadow-soft',
+                    ? 'text-cream/80 hover:text-cream aria-[current=page]:text-cream aria-[current=page]:underline aria-[current=page]:decoration-2 aria-[current=page]:underline-offset-8'
+                    : 'text-ink-soft hover:text-ink aria-[current=page]:text-accent',
                 ]}
               >
                 {link.label}
@@ -65,12 +66,22 @@ const account = user
     </nav>
 
     <div class="flex items-center gap-2 sm:gap-3">
-      <a href={account.href} class="hidden px-2 text-sm hover:underline hover:underline-offset-4 md:inline">
-        {account.label}
-      </a>
-      <a href="/planner" class:list={['hidden md:inline-flex', overlay ? 'btn bg-forest text-cream hover:bg-accent' : 'btn-dark']}>
-        Plan a trip
-      </a>
+      {
+        user ? (
+          <a href="/account" class="btn-sage hidden py-2.5 md:inline-flex">
+            Account
+          </a>
+        ) : (
+          <>
+            <a href={account.href} class="hidden px-2 text-sm font-medium hover:underline hover:underline-offset-4 md:inline">
+              Log in
+            </a>
+            <a href="/signup" class="btn-sage hidden py-2.5 md:inline-flex">
+              Sign up
+            </a>
+          </>
+        )
+      }
       <ThemeToggle client:load />
       <MobileMenu client:media="(max-width: 1023px)" links={links} account={account} />
     </div>
