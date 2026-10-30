@@ -59,7 +59,7 @@ const gallery: [string, string][] = [
 <Layout headerOverlay>
   <!-- Hero: a framed photo with the header floating inside and the search bar overlapping its bottom edge. -->
   <section class="px-3 pt-3 md:px-4 md:pt-4" aria-labelledby="hero-heading">
-    <div class="relative isolate flex min-h-[78svh] items-center justify-center overflow-hidden rounded-panel text-center text-cream md:min-h-[86svh]">
+    <div class="relative isolate flex min-h-[78svh] items-center justify-center overflow-clip rounded-panel text-center text-cream md:min-h-[86svh]">
       <Image
         src={hero.src}
         alt={hero.alt}
@@ -186,7 +186,7 @@ const gallery: [string, string][] = [
 
   <!-- Planner panel -->
   <section class="px-3 md:px-4" aria-labelledby="planner-heading">
-    <div class="relative isolate overflow-hidden rounded-panel bg-forest text-cream">
+    <div class="relative isolate overflow-clip rounded-panel bg-forest text-cream">
       <Image
         src={heroPlace.data.hero}
         alt=""

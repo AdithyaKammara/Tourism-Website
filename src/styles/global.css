@@ -219,7 +219,8 @@ html.reveal-ready [data-reveal].is-revealed {
 
 @media (prefers-reduced-motion: no-preference) {
   /* Parallax: the photo drifts a little slower than the page. CSS scroll timelines only,
-     so browsers without support just show a still image. */
+     so browsers without support just show a still image. The photo's frame must use
+     overflow: clip, not hidden, or it becomes the scroll container and the timeline stalls. */
   @supports (animation-timeline: view()) {
     @keyframes drift {
       from {
