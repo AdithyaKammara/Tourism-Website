@@ -49,6 +49,7 @@ const photos: GalleryPhoto[] = await Promise.all(
         loading="eager"
         fetchpriority="high"
         class="aspect-[16/10] w-full rounded-panel object-cover md:aspect-[21/9]"
+        style={`view-transition-name: dest-${entry.id}`}
       />
       <figcaption class="mt-3 text-xs text-ink-soft">
         Photo: <a href={d.credit.source} class="underline underline-offset-2" rel="noopener">{d.credit.author}</a>, {d.credit.license}, via Wikimedia Commons
@@ -114,7 +115,7 @@ const photos: GalleryPhoto[] = await Promise.all(
     </div>
   </article>
 
-  <section class="container-page mt-24" aria-labelledby="photos-heading">
+  <section data-reveal class="container-page mt-24" aria-labelledby="photos-heading">
     <div class="mb-8 flex items-baseline justify-between border-b border-ink pb-3">
       <h2 id="photos-heading" class="font-display text-3xl">Photos of {d.name}</h2>
       <span class="text-sm text-ink-soft">{photos.length} photos · tap to enlarge</span>
@@ -122,7 +123,7 @@ const photos: GalleryPhoto[] = await Promise.all(
     <Gallery client:idle photos={photos} place={d.name} />
   </section>
 
-  <section class="container-page mt-24" aria-labelledby="map-heading">
+  <section data-reveal class="container-page mt-24" aria-labelledby="map-heading">
     <div class="mb-8 flex items-baseline justify-between border-b border-ink pb-3">
       <h2 id="map-heading" class="font-display text-3xl">Where it is</h2>
       <span class="text-sm text-ink-soft">{d.state}</span>
@@ -144,7 +145,7 @@ const photos: GalleryPhoto[] = await Promise.all(
     </div>
   </section>
 
-  <section class="container-page mt-24" aria-labelledby="nearby-heading">
+  <section data-reveal class="container-page mt-24" aria-labelledby="nearby-heading">
     <div class="mb-10 flex items-baseline justify-between border-b border-ink pb-3">
       <h2 id="nearby-heading" class="font-display text-3xl">Closest to {d.name}</h2>
       <a href="/destinations" class="text-sm underline underline-offset-4 hover:text-accent">All destinations</a>

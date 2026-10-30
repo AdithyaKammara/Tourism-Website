@@ -149,7 +149,7 @@
 
 /* Pill buttons. */
 @utility btn {
-  @apply inline-flex items-center justify-center gap-2 rounded-full px-6 py-3 text-sm font-medium transition-colors duration-300;
+  @apply inline-flex items-center justify-center gap-2 rounded-full px-6 py-3 text-sm font-medium transition-[color,background-color,border-color,transform] duration-200 active:scale-[0.98];
 }
 @utility btn-dark {
   @apply btn bg-forest text-cream hover:bg-accent dark:bg-cream dark:text-forest dark:hover:bg-sage-light;
@@ -164,4 +164,90 @@
 /* Organic pebble shape used to frame photos. */
 @utility blob {
   border-radius: 58% 42% 46% 54% / 52% 44% 56% 48%;
+}
+
+/* ---------- Motion ----------
+ * Everything here is either CSS-only or progressive: with JavaScript off, or with
+ * "reduce motion" set, content simply appears in place.
+ */
+
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translateY(18px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes pop-in {
+  from {
+    opacity: 0;
+    transform: translateY(-10px) scale(0.6);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* Staggered entrance for the hero copy: set --delay per element. */
+@utility animate-rise {
+  animation: rise 700ms var(--ease-out-quint) var(--delay, 0ms) both;
+}
+
+/* Map markers drop in one after another; set --delay per marker. */
+@utility animate-pop {
+  animation: pop-in 450ms var(--ease-out-quint) var(--delay, 0ms) both;
+}
+
+/* Scroll reveal: elements start hidden only once the reveal script has opted the page in. */
+html.reveal-ready [data-reveal] {
+  opacity: 0;
+  transform: translateY(28px);
+  transition:
+    opacity 600ms var(--ease-out-quint),
+    transform 600ms var(--ease-out-quint);
+  transition-delay: var(--delay, 0ms);
+}
+html.reveal-ready [data-reveal].is-revealed {
+  opacity: 1;
+  transform: none;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  /* Parallax: the photo drifts a little slower than the page. CSS scroll timelines only,
+     so browsers without support just show a still image. */
+  @supports (animation-timeline: view()) {
+    @keyframes drift {
+      from {
+        transform: translateY(-6%) scale(1.12);
+      }
+      to {
+        transform: translateY(6%) scale(1.12);
+      }
+    }
+    [data-parallax] {
+      animation: drift linear both;
+      animation-timeline: view();
+    }
+  }
+
+  /* Cross-page transitions (Chrome, Edge and Safari 18.2+; other browsers navigate normally). */
+  @view-transition {
+    navigation: auto;
+  }
+  ::view-transition-group(*) {
+    animation-duration: 400ms;
+    animation-timing-function: var(--ease-out-quint);
+  }
+}
+
+@media print {
+  html.reveal-ready [data-reveal] {
+    opacity: 1;
+    transform: none;
+  }
 }

@@ -75,16 +75,22 @@ export default function MapView({ points, route = false, focusId, ariaLabel = 'M
     loadMaplibre().then((maplibre) => {
       if (cancelled) return;
       markers.current.forEach((m) => m.remove());
-      markers.current = points.map((p) => {
+      const reduceMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
+      markers.current = points.map((p, i) => {
+        // MapLibre positions the outer element with a transform, so the drop-in animation lives on an inner dot.
         const el = document.createElement('a');
         el.href = `/destinations/${p.id}`;
         el.setAttribute('aria-label', `${p.label ? `Stop ${p.label}: ` : ''}${p.name}`);
-        el.className = [
-          'grid place-items-center rounded-full border-2 border-white text-[11px] font-semibold text-white shadow-md transition-transform hover:scale-110',
+        const dot = document.createElement('span');
+        dot.className = [
+          'grid place-items-center rounded-full border-2 border-white text-[11px] font-semibold text-white shadow-md transition-transform duration-200 hover:scale-110',
           p.label ? 'size-7' : p.active ? 'size-5' : 'size-4',
-          p.active || p.label ? 'bg-[#4a5d3a]' : 'bg-[#6f8248]',
+          p.active || p.label ? 'bg-[#16706a]' : 'bg-[#23938b]',
+          reduceMotion ? '' : 'animate-pop',
         ].join(' ');
-        if (p.label) el.textContent = p.label;
+        dot.style.setProperty('--delay', `${i * 140}ms`);
+        if (p.label) dot.textContent = p.label;
+        el.append(dot);
         const popup = new maplibre.Popup({ offset: 14, closeButton: false }).setHTML(
           `<strong>${escapeHtml(p.name)}</strong>${p.note ? `<br><span>${escapeHtml(p.note)}</span>` : ''}`,
         );
@@ -95,22 +101,28 @@ export default function MapView({ points, route = false, focusId, ariaLabel = 'M
         return new maplibre.Marker({ element: el }).setLngLat([p.lng, p.lat]).addTo(map);
       });
 
-      const line = {
+      const full: [number, number][] = route ? points.map((p) => [p.lng, p.lat]) : [];
+      const lineOf = (coordinates: [number, number][]) => ({
         type: 'Feature' as const,
         properties: {},
-        geometry: { type: 'LineString' as const, coordinates: route ? points.map((p) => [p.lng, p.lat]) : [] },
-      };
+        geometry: { type: 'LineString' as const, coordinates },
+      });
       const drawRoute = () => {
         if (cancelled) return;
-        const source = map.getSource('route') as GeoJSONSource | undefined;
-        if (source) return source.setData(line);
-        map.addSource('route', { type: 'geojson', data: line });
-        map.addLayer({
-          id: 'route',
-          type: 'line',
-          source: 'route',
-          paint: { 'line-color': '#4a5d3a', 'line-width': 2.5, 'line-dasharray': [2, 1.5] },
-        });
+        let source = map.getSource('route') as GeoJSONSource | undefined;
+        if (!source) {
+          map.addSource('route', { type: 'geojson', data: lineOf([]) });
+          map.addLayer({
+            id: 'route',
+            type: 'line',
+            source: 'route',
+            layout: { 'line-cap': 'round', 'line-join': 'round' },
+            paint: { 'line-color': '#16706a', 'line-width': 3 },
+          });
+          source = map.getSource('route') as GeoJSONSource;
+        }
+        if (reduceMotion || full.length < 2) return source.setData(lineOf(full));
+        drawLine(source, full, lineOf, points.length * 140, () => cancelled);
       };
       if (map.isStyleLoaded()) drawRoute();
       else map.once('load', drawRoute);
@@ -142,6 +154,38 @@ export default function MapView({ points, route = false, focusId, ariaLabel = 'M
       )}
     </div>
   );
+}
+
+/** Grows the route from the first stop to the last over about a second, after the markers have landed. */
+function drawLine(
+  source: GeoJSONSource,
+  coords: [number, number][],
+  lineOf: (c: [number, number][]) => Parameters<GeoJSONSource['setData']>[0],
+  delay: number,
+  isCancelled: () => boolean,
+) {
+  const lengths = coords.slice(1).map((c, i) => Math.hypot(c[0] - coords[i][0], c[1] - coords[i][1]));
+  const total = lengths.reduce((a, b) => a + b, 0);
+  const duration = 1100;
+  let startTime: number | null = null;
+  const frame = (now: number) => {
+    if (isCancelled()) return;
+    startTime ??= now + delay;
+    const t = Math.min(1, Math.max(0, (now - startTime) / duration));
+    const eased = 1 - Math.pow(1 - t, 3);
+    let remaining = eased * total;
+    const partial: [number, number][] = [coords[0]];
+    for (let i = 0; i < lengths.length && remaining > 0; i++) {
+      const [a, b] = [coords[i], coords[i + 1]];
+      const f = Math.min(1, remaining / (lengths[i] || 1));
+      partial.push([a[0] + (b[0] - a[0]) * f, a[1] + (b[1] - a[1]) * f]);
+      remaining -= lengths[i];
+    }
+    source.setData(lineOf(partial));
+    if (t < 1) requestAnimationFrame(frame);
+  };
+  source.setData(lineOf([]));
+  requestAnimationFrame(frame);
 }
 
 function escapeHtml(s: string) {

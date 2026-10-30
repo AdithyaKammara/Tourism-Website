@@ -44,7 +44,7 @@ export default function Gallery({ photos, place }: { photos: GalleryPhoto[]; pla
                 alt=""
                 loading="lazy"
                 decoding="async"
-                className="aspect-[4/3] size-full object-cover transition-transform duration-700 ease-out-quint group-hover:scale-[1.04]"
+                className="aspect-[4/3] size-full object-cover transition-transform duration-400 ease-out-quint group-hover:scale-[1.04]"
               />
               <span className="absolute right-3 bottom-3 grid size-9 place-items-center rounded-full bg-cream/90 text-forest opacity-0 transition-opacity group-hover:opacity-100 group-focus-visible:opacity-100">
                 <Expand className="size-4" aria-hidden="true" />
