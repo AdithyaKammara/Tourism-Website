@@ -16,6 +16,16 @@ credit:
   author: Clément Bardot
   license: CC BY-SA 4.0
   source: https://commons.wikimedia.org/wiki/File:Jaisalmer_Fort,_India.jpg
+gallery:
+  - src: ../../assets/destinations/gallery/jaisalmer-1.jpg
+    alt: "The carved sandstone facade of Patwon ki Haveli"
+    credit: { author: "Gerd Eichmann", license: "CC BY-SA 4.0", source: "https://commons.wikimedia.org/wiki/File:Jaisalmer-Patwon_Ki_Haveli-06-2018-gje.jpg" }
+  - src: ../../assets/destinations/gallery/jaisalmer-2.jpg
+    alt: "Rippled sand dunes outside Jaisalmer at sunset"
+    credit: { author: "Timothy A. Gonsalves", license: "CC BY-SA 4.0", source: "https://commons.wikimedia.org/wiki/File:Sunset_Sand_Dunes_Jaisalmer_Dec14_DSC_6540.jpg" }
+  - src: ../../assets/destinations/gallery/jaisalmer-3.jpg
+    alt: "A line of camels carrying visitors across the Sam sand dunes"
+    credit: { author: "Dinesh Valke", license: "CC BY-SA 2.0", source: "https://commons.wikimedia.org/wiki/File:Camels_at_Sam_sand_dunes,_Jaisalmer_(44753465845).jpg" }
 ---
 
 Jaisalmer is called the Golden City because almost everything, from the fort to the merchants' mansions, is built from the same honey-coloured sandstone. The fort dates from the twelfth century, and a few thousand people still live and run shops inside its walls. It's part of the Hill Forts of Rajasthan UNESCO World Heritage Site.

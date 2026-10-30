@@ -16,6 +16,16 @@ credit:
   author: Paul Arps
   license: CC BY 2.0
   source: https://commons.wikimedia.org/wiki/File:Houseboat_on_Alleppey_backwaters_(Kerala,_India_2023)_(52704809623).jpg
+gallery:
+  - src: ../../assets/destinations/gallery/alleppey-1.jpg
+    alt: "A narrow canal lined with leaning coconut palms near Chambakulam"
+    credit: { author: "Ingo Mehling", license: "CC BY-SA 4.0", source: "https://commons.wikimedia.org/wiki/File:Kerala_Backwaters_-_Canal_near_Chamabakulam.jpg" }
+  - src: ../../assets/destinations/gallery/alleppey-2.jpg
+    alt: "A boy punting a wooden canoe along the backwaters"
+    credit: { author: "Liji Jinaraj", license: "CC BY-SA 2.0", source: "https://commons.wikimedia.org/wiki/File:Rowing_a_backwater_canoe_(4232215825).jpg" }
+  - src: ../../assets/destinations/gallery/alleppey-3.jpg
+    alt: "Wide, calm backwaters fringed with palms near Alappuzha"
+    credit: { author: "Liji Jinaraj", license: "CC BY-SA 2.0", source: "https://commons.wikimedia.org/wiki/File:Alappuzha_Backwaters_(4225092026).jpg" }
 ---
 
 Alappuzha (most people still say Alleppey) is the gateway to Kerala's backwaters: a maze of lakes, canals and rivers lined with paddy fields and coconut palms. Life here happens on the water. Kids go to school by boat and the post office has a jetty.

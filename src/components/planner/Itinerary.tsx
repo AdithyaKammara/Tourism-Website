@@ -15,10 +15,13 @@ import { CSS } from '@dnd-kit/utilities';
 import { GripVertical, Plus, Trash2 } from 'lucide-react';
 import { usePlanner } from '../../lib/planner/store';
 import { dayLabel, formatINR, newDay, uid, type Day, type ItineraryItem, type Trip } from '../../lib/planner/types';
+import { useTripWeather, type DayWeather } from '../../lib/planner/weather';
 import { inputClass, useDestinations } from './ui';
+import WeatherChip from './WeatherChip';
 
 export default function Itinerary({ trip }: { trip: Trip }) {
   const update = usePlanner((s) => s.updateTrip);
+  const { weather, failed: weatherFailed } = useTripWeather(trip, useDestinations());
   const sensors = useSensors(
     useSensor(PointerSensor, { activationConstraint: { distance: 6 } }),
     useSensor(KeyboardSensor, { coordinateGetter: sortableKeyboardCoordinates }),
@@ -53,11 +56,15 @@ export default function Itinerary({ trip }: { trip: Trip }) {
 
   return (
     <div>
-      <p className="mb-6 text-sm text-ink-soft">Drag activities to reorder them or move them to another day.</p>
+      <p className="mb-6 text-sm text-ink-soft">
+        Drag activities to reorder them or move them to another day.
+        {!trip.startDate && ' Add a start date to see the weather for each day.'}
+        {weatherFailed && ' Some weather couldn’t be loaded right now.'}
+      </p>
       <DndContext sensors={sensors} collisionDetection={closestCorners} onDragOver={onDragOver} onDragEnd={onDragEnd}>
         <ol className="space-y-6">
           {trip.days.map((day, i) => (
-            <DayCard key={day.id} trip={trip} day={day} index={i} />
+            <DayCard key={day.id} trip={trip} day={day} index={i} weather={weather[day.id]} />
           ))}
         </ol>
       </DndContext>
@@ -72,7 +79,7 @@ export default function Itinerary({ trip }: { trip: Trip }) {
   );
 }
 
-function DayCard({ trip, day, index }: { trip: Trip; day: Day; index: number }) {
+function DayCard({ trip, day, index, weather }: { trip: Trip; day: Day; index: number; weather?: DayWeather }) {
   const update = usePlanner((s) => s.updateTrip);
   const destinations = useDestinations();
   const { setNodeRef } = useDroppable({ id: day.id });
@@ -106,7 +113,8 @@ function DayCard({ trip, day, index }: { trip: Trip; day: Day; index: number }) 
             </select>
           </div>
         </div>
-        <div className="flex items-center gap-3 text-sm text-ink-soft">
+        <div className="flex flex-wrap items-center gap-3 text-sm text-ink-soft">
+          {weather && <WeatherChip w={weather} />}
           {dayCost > 0 && <span>{formatINR(dayCost)}</span>}
           {trip.days.length > 1 && (
             <button

@@ -16,6 +16,16 @@ credit:
   author: Ingo Mehling
   license: CC BY-SA 4.0
   source: https://commons.wikimedia.org/wiki/File:Hampi_-_Hemakuta_Hill,_Virupaksha_Temple.jpg
+gallery:
+  - src: ../../assets/destinations/gallery/hampi-1.jpg
+    alt: "Vittala Temple's pavilions reflected in a pool of rainwater"
+    credit: { author: "Basavaraj M", license: "CC BY-SA 4.0", source: "https://commons.wikimedia.org/wiki/File:Hampi_Vitthala_Temple_3465.jpg" }
+  - src: ../../assets/destinations/gallery/hampi-2.jpg
+    alt: "Giant round granite boulders resting on a rock slab in the evening light"
+    credit: { author: "Vyacheslav Argenberg", license: "CC BY 4.0", source: "https://commons.wikimedia.org/wiki/File:Hampi,_India,_Huge_granite_rock_boulders_in_Hampi_rocky_landscape.jpg" }
+  - src: ../../assets/destinations/gallery/hampi-3.jpg
+    alt: "The tall gopuram of Virupaksha Temple rising above the temple complex"
+    credit: { author: "iMahesh", license: "CC BY-SA 4.0", source: "https://commons.wikimedia.org/wiki/File:Complex_of_Virupaksha_Temple,_Hampi_(01).jpg" }
 ---
 
 Hampi was the capital of the Vijayanagara Empire, one of the richest cities in the world in the early 1500s, until it was sacked in 1565. What's left is a UNESCO World Heritage Site spread over dozens of square kilometres: temples, bazaars, stepwells and royal enclosures among granite boulders the size of houses.

@@ -1,5 +1,6 @@
 import { useId, useState } from 'react';
-import { ArrowLeft, Minus, Plus } from 'lucide-react';
+import { ArrowLeft, CalendarPlus, Minus, Plus, Printer } from 'lucide-react';
+import { downloadFile, fileSafe, tripToICS } from '../../lib/planner/export';
 import { usePlanner } from '../../lib/planner/store';
 import type { SyncStatus } from '../../lib/planner/sync';
 import { tripDateRange, type Trip } from '../../lib/planner/types';
@@ -7,9 +8,11 @@ import Bookings from './Bookings';
 import Budget from './Budget';
 import Itinerary from './Itinerary';
 import Packing from './Packing';
+import PrintView from './PrintView';
+import TripMap from './TripMap';
 import { inputClass, SyncBadge, useDestinations } from './ui';
 
-const TABS = ['Itinerary', 'Budget', 'Packing', 'Bookings'] as const;
+const TABS = ['Itinerary', 'Map', 'Budget', 'Packing', 'Bookings'] as const;
 type Tab = (typeof TABS)[number];
 
 export default function TripEditor({ trip, status, onBack }: { trip: Trip; status: SyncStatus; onBack: () => void }) {
@@ -23,16 +26,35 @@ export default function TripEditor({ trip, status, onBack }: { trip: Trip; statu
 
   const panels: Record<Tab, React.ReactNode> = {
     Itinerary: <Itinerary trip={trip} />,
+    Map: <TripMap trip={trip} />,
     Budget: <Budget trip={trip} />,
     Packing: <Packing trip={trip} />,
     Bookings: <Bookings trip={trip} />,
   };
 
   return (
-    <div>
-      <button type="button" onClick={onBack} className="eyebrow inline-flex items-center gap-2 hover:text-accent">
-        <ArrowLeft className="size-3.5" aria-hidden="true" /> All trips
-      </button>
+    <>
+    <PrintView trip={trip} />
+    <div className="print:hidden">
+      <div className="flex flex-wrap items-center justify-between gap-3">
+        <button type="button" onClick={onBack} className="eyebrow inline-flex items-center gap-2 hover:text-accent">
+          <ArrowLeft className="size-3.5" aria-hidden="true" /> All trips
+        </button>
+        <div className="flex flex-wrap gap-2">
+          <button
+            type="button"
+            className="btn-outline py-2"
+            disabled={!trip.startDate}
+            title={trip.startDate ? undefined : 'Add a start date first'}
+            onClick={() => downloadFile(`${fileSafe(trip.title)}.ics`, tripToICS(trip, destinations), 'text/calendar')}
+          >
+            <CalendarPlus className="size-4" aria-hidden="true" /> Add to calendar
+          </button>
+          <button type="button" className="btn-outline py-2" onClick={() => window.print()}>
+            <Printer className="size-4" aria-hidden="true" /> Print or save PDF
+          </button>
+        </div>
+      </div>
 
       <div className="mt-6 flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
         <div className="min-w-0 flex-1">
@@ -159,5 +181,6 @@ export default function TripEditor({ trip, status, onBack }: { trip: Trip; statu
         {panels[tab]}
       </div>
     </div>
+    </>
   );
 }

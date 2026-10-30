@@ -81,6 +81,19 @@
     @apply outline-2 outline-offset-4 outline-accent;
   }
 
+  /* Printing (e.g. a trip itinerary) shows just the page content in black on white. */
+  @media print {
+    body > header,
+    body > footer,
+    body > a[href='#main'] {
+      display: none !important;
+    }
+    html {
+      background: #fff;
+      color: #000;
+    }
+  }
+
   @media (prefers-reduced-motion: reduce) {
     *,
     *::before,

@@ -1,8 +1,10 @@
 ---
-import { Image } from 'astro:assets';
+import { getImage, Image } from 'astro:assets';
 import { getEntry, render } from 'astro:content';
 import Layout from '../../layouts/Layout.astro';
 import Card from '../../components/destinations/Card';
+import Gallery, { type GalleryPhoto } from '../../components/destinations/Gallery';
+import MapView from '../../components/destinations/MapView';
 import { getDestinations, toCard } from '../../lib/cards';
 import { distanceKm, formatBudget, formatDays, MONTHS, VIBE_LABELS } from '../../lib/destinations';
 
@@ -18,6 +20,15 @@ const nearby = (await getDestinations())
   .sort((a, b) => a.km - b.km)
   .slice(0, 3);
 const nearbyCards = await Promise.all(nearby.map(async ({ other, km }) => ({ card: await toCard(other), km })));
+
+// The hero leads the gallery so the lightbox shows every photo of the place.
+const photos: GalleryPhoto[] = await Promise.all(
+  [{ src: d.hero, alt: d.heroAlt, credit: d.credit }, ...d.gallery].map(async (p) => {
+    const thumb = await getImage({ src: p.src, widths: [480, 800, 1200], width: 800, format: 'webp' });
+    const full = await getImage({ src: p.src, width: 1920, format: 'webp' });
+    return { thumb: thumb.src, thumbSrcset: thumb.srcSet.attribute, full: full.src, alt: p.alt, credit: p.credit };
+  }),
+);
 ---
 
 <Layout title={`${d.name}, ${d.state} · Goadi`} description={d.tagline}>
@@ -103,7 +114,37 @@ const nearbyCards = await Promise.all(nearby.map(async ({ other, km }) => ({ car
     </div>
   </article>
 
-  <section class="container-page mt-32" aria-labelledby="nearby-heading">
+  <section class="container-page mt-24" aria-labelledby="photos-heading">
+    <div class="mb-8 flex items-baseline justify-between border-b border-ink pb-3">
+      <h2 id="photos-heading" class="font-display text-3xl">Photos of {d.name}</h2>
+      <span class="text-sm text-ink-soft">{photos.length} photos · tap to enlarge</span>
+    </div>
+    <Gallery client:idle photos={photos} place={d.name} />
+  </section>
+
+  <section class="container-page mt-24" aria-labelledby="map-heading">
+    <div class="mb-8 flex items-baseline justify-between border-b border-ink pb-3">
+      <h2 id="map-heading" class="font-display text-3xl">Where it is</h2>
+      <span class="text-sm text-ink-soft">{d.state}</span>
+    </div>
+    <div class="h-[420px] overflow-hidden rounded-panel">
+      <MapView
+        client:visible
+        points={[
+          { id: entry.id, name: d.name, lat: d.coordinates.lat, lng: d.coordinates.lng, active: true },
+          ...nearby.map(({ other }) => ({
+            id: other.id,
+            name: other.data.name,
+            lat: other.data.coordinates.lat,
+            lng: other.data.coordinates.lng,
+          })),
+        ]}
+        focusId={entry.id}
+      />
+    </div>
+  </section>
+
+  <section class="container-page mt-24" aria-labelledby="nearby-heading">
     <div class="mb-10 flex items-baseline justify-between border-b border-ink pb-3">
       <h2 id="nearby-heading" class="font-display text-3xl">Closest to {d.name}</h2>
       <a href="/destinations" class="text-sm underline underline-offset-4 hover:text-accent">All destinations</a>

@@ -16,6 +16,16 @@ credit:
   author: Kuntal Narayan Chaudhuri
   license: CC BY-SA 4.0
   source: https://commons.wikimedia.org/wiki/File:Apatani_Rice_Paddies.jpg
+gallery:
+  - src: ../../assets/destinations/gallery/ziro-1.jpg
+    alt: "Flooded rice fields under a big summer sky in the Ziro valley"
+    credit: { author: "Arunachal2007", license: "CC BY-SA 4.0", source: "https://commons.wikimedia.org/wiki/File:Ziro_valley_of_Aruncahl_in_summer_season.jpg" }
+  - src: ../../assets/destinations/gallery/ziro-2.jpg
+    alt: "Ziro's green paddies and a village at the foot of forested hills"
+    credit: { author: "Arunachal2007", license: "CC BY-SA 4.0", source: "https://commons.wikimedia.org/wiki/File:A_section_of_Ziro_valley.jpg" }
+  - src: ../../assets/destinations/gallery/ziro-3.jpg
+    alt: "Bright green rice fields stretching across the Ziro valley"
+    credit: { author: "Arunachal2007", license: "CC BY-SA 4.0", source: "https://commons.wikimedia.org/wiki/File:Ziro_and_its_green_valley.jpg" }
 ---
 
 Ziro is a high, wide valley in Arunachal Pradesh and home to the Apatani people. They grow rice and raise fish in the same flooded fields, a sustainable system good enough to put the valley on UNESCO's tentative World Heritage list.

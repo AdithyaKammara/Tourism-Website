@@ -10,6 +10,7 @@ const monthParam = Number(Astro.url.searchParams.get('month'));
 const initialMonth = monthParam >= 1 && monthParam <= 12 ? monthParam : null;
 const vibeParam = Astro.url.searchParams.get('vibe');
 const initialVibe = vibeParam && vibeParam in VIBE_LABELS ? (vibeParam as Vibe) : null;
+const initialView = Astro.url.searchParams.get('view') === 'map' ? 'map' : 'grid';
 ---
 
 <Layout
@@ -25,6 +26,6 @@ const initialVibe = vibeParam && vibeParam in VIBE_LABELS ? (vibeParam as Vibe) 
       Pick when you can travel and what you're after. We only list a place in the months it's genuinely
       good to visit.
     </p>
-    <Browser client:load destinations={cards} initialMonth={initialMonth} initialVibe={initialVibe} />
+    <Browser client:load destinations={cards} initialMonth={initialMonth} initialVibe={initialVibe} initialView={initialView} />
   </section>
 </Layout>

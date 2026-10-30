@@ -43,11 +43,20 @@ The site runs without Supabase keys, but sign-in is disabled until you add them.
 - **Signed in:** trips are also saved to Supabase through the `trips.*` Astro actions. Each trip is stored as one JSON row, and the newest copy wins.
 - **First sign-in:** trips made as a guest move into the account.
 
+Each trip also has:
+
+- **A route map:** MapLibre GL with free [OpenFreeMap](https://openfreemap.org) tiles, so no API key is needed.
+- **Weather for each day** from [Open-Meteo](https://open-meteo.com): a forecast up to 16 days ahead, and the same dates last year for trips further out.
+- **Calendar export:** an `.ics` file for Google Calendar or Outlook.
+- **A print-friendly view:** use the browser's print dialog to save it as a PDF.
+
 To turn on cloud saving, run [`supabase/migrations/0001_trips.sql`](supabase/migrations/0001_trips.sql) once in the Supabase SQL Editor. It creates the `trips` table with row-level security, so each user only sees their own trips. Until then, the planner keeps working and says it's saving on this device.
 
 ## Content
 
 Destinations live in `src/content/destinations/*.md`, with the schema in `src/content.config.ts`. Each one has month-by-month seasons, a rough daily budget, how long to stay, coordinates and a hero photo.
+
+Each destination page has a photo gallery with a lightbox and a map of nearby places. The destinations list can switch between a grid and a map.
 
 Photos come from Wikimedia Commons under CC licences. Each photo's author, licence and source are stored in its file's frontmatter and credited wherever the photo appears.
 

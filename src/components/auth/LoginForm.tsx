@@ -59,17 +59,22 @@ export default function LoginForm({ next, notice }: { next?: string; notice?: st
         >
           {pending === 'link' ? 'Sending…' : 'Email me a sign-in link'}
         </SecondaryButton>
-        <SecondaryButton
-          busy={pending !== null}
-          onClick={() => run('google', () => actions.auth.google(formData()), (d) => window.location.assign(d.url))}
-        >
-          <GoogleMark />
-          {pending === 'google' ? 'Opening Google…' : 'Continue with Google'}
-        </SecondaryButton>
+        {GOOGLE_ENABLED && (
+          <SecondaryButton
+            busy={pending !== null}
+            onClick={() => run('google', () => actions.auth.google(formData()), (d) => window.location.assign(d.url))}
+          >
+            <GoogleMark />
+            {pending === 'google' ? 'Opening Google…' : 'Continue with Google'}
+          </SecondaryButton>
+        )}
       </div>
     </form>
   );
 }
+
+// Only show Google sign-in once the provider is switched on in Supabase.
+const GOOGLE_ENABLED = import.meta.env.PUBLIC_GOOGLE_AUTH_ENABLED === 'true';
 
 function GoogleMark() {
   return (

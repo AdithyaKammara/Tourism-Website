@@ -4,6 +4,12 @@ import { z } from 'astro/zod';
 
 export const VIBES = ['hills', 'water', 'heritage', 'desert', 'mountains', 'culture'] as const;
 
+const credit = z.object({
+  author: z.string(),
+  license: z.string(),
+  source: z.url(),
+});
+
 const destinations = defineCollection({
   loader: glob({ pattern: '**/*.md', base: './src/content/destinations' }),
   schema: ({ image }) =>
@@ -23,11 +29,8 @@ const destinations = defineCollection({
       order: z.number().default(99),
       hero: image(),
       heroAlt: z.string(),
-      credit: z.object({
-        author: z.string(),
-        license: z.string(),
-        source: z.url(),
-      }),
+      credit,
+      gallery: z.array(z.object({ src: image(), alt: z.string(), credit })).default([]),
     }),
 });
 

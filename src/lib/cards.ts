@@ -20,6 +20,7 @@ export async function toCard(entry: CollectionEntry<'destinations'>): Promise<De
     bestMonths: d.bestMonths,
     budgetPerDay: d.budgetPerDay,
     daysNeeded: d.daysNeeded,
+    coordinates: d.coordinates,
     image: {
       src: img.src,
       srcset: img.srcSet.attribute,

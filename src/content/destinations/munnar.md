@@ -16,6 +16,13 @@ credit:
   author: Shino jacob koottanad
   license: CC BY-SA 4.0
   source: https://commons.wikimedia.org/wiki/File:Tea_plantation_munnar.jpg
+gallery:
+  - src: ../../assets/destinations/gallery/munnar-1.jpg
+    alt: "A road curving along a steep forested hillside under a blue sky near Munnar"
+    credit: { author: "Manukrishnan80", license: "CC BY-SA 3.0", source: "https://commons.wikimedia.org/wiki/File:Munnar_Road_and_Tea_Plantations.jpg" }
+  - src: ../../assets/destinations/gallery/munnar-3.jpg
+    alt: "Tea estates spreading across a valley ringed by hills at Lockhart, near Munnar"
+    credit: { author: "Ingo Mehling", license: "CC BY-SA 4.0", source: "https://commons.wikimedia.org/wiki/File:Munnar_-_Lockhart_tea_plantation.jpg" }
 ---
 
 Munnar sits around 1,600 metres up, where three rivers meet and the British planted tea in the 1880s. The estates are still working farms, so the hills look combed: tight green rows broken by silver oak and the odd red-roofed factory.

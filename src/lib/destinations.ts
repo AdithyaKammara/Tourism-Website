@@ -23,7 +23,8 @@ export type DestinationCard = {
   bestMonths: number[];
   budgetPerDay: { low: number; high: number };
   daysNeeded: { min: number; max: number };
-  image: { src: string; srcset: string; width: number; height: number; alt: string };
+  coordinates: { lat: number; lng: number };
+  image:{ src: string; srcset: string; width: number; height: number; alt: string };
 };
 
 export function matches(d: DestinationCard, month: number | null, vibe: Vibe | null) {
