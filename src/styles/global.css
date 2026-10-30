@@ -231,6 +231,10 @@ html.reveal-ready [data-reveal].is-revealed {
     }
     [data-parallax] {
       animation: drift linear both;
+    }
+    /* Kept in its own rule: the minifier would otherwise fold it into the shorthand,
+       which browsers reject, and the whole declaration would be dropped. */
+    [data-parallax][data-parallax] {
       animation-timeline: view();
     }
   }
