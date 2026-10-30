@@ -35,6 +35,16 @@ The site runs without Supabase keys, but sign-in is disabled until you add them.
 | `/auth/callback` | Where email links and Google send people back to |
 | `/auth/logout` | `POST` only; signs out and returns home |
 
+## Trip planner
+
+`/planner` is a React island (`src/components/planner/`) backed by a Zustand store (`src/lib/planner/`).
+
+- **Guests:** trips are saved in `localStorage`.
+- **Signed in:** trips are also saved to Supabase through the `trips.*` Astro actions. Each trip is stored as one JSON row, and the newest copy wins.
+- **First sign-in:** trips made as a guest move into the account.
+
+To turn on cloud saving, run [`supabase/migrations/0001_trips.sql`](supabase/migrations/0001_trips.sql) once in the Supabase SQL Editor. It creates the `trips` table with row-level security, so each user only sees their own trips. Until then, the planner keeps working and says it's saving on this device.
+
 ## Content
 
 Destinations live in `src/content/destinations/*.md`, with the schema in `src/content.config.ts`. Each one has month-by-month seasons, a rough daily budget, how long to stay, coordinates and a hero photo.

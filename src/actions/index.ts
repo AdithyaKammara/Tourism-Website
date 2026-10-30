@@ -1,6 +1,7 @@
 import { ActionError, defineAction, type ActionAPIContext } from 'astro:actions';
 import { z } from 'astro/zod';
 import { safeNext } from '../lib/supabase';
+import { trips } from './trips';
 
 // Astro sends empty form fields as null, so each required field sets its own "missing" message.
 const required = (message: string) => z.string({ error: message }).trim().min(1, message);
@@ -28,6 +29,7 @@ function callbackUrl(context: ActionAPIContext, next: string) {
 }
 
 export const server = {
+  trips,
   auth: {
     login: defineAction({
       accept: 'form',
