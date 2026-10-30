@@ -1,0 +1,122 @@
+---
+import { Image } from 'astro:assets';
+import { getEntry, render } from 'astro:content';
+import Layout from '../../layouts/Layout.astro';
+import Card from '../../components/destinations/Card';
+import { getDestinations, toCard } from '../../lib/cards';
+import { distanceKm, formatBudget, formatDays, MONTHS, VIBE_LABELS } from '../../lib/destinations';
+
+const entry = await getEntry('destinations', Astro.params.id ?? '');
+if (!entry) return new Response(null, { status: 404, statusText: 'Not found' });
+
+const d = entry.data;
+const { Content } = await render(entry);
+
+const nearby = (await getDestinations())
+  .filter((other) => other.id !== entry.id)
+  .map((other) => ({ other, km: distanceKm(d.coordinates, other.data.coordinates) }))
+  .sort((a, b) => a.km - b.km)
+  .slice(0, 3);
+const nearbyCards = await Promise.all(nearby.map(async ({ other, km }) => ({ card: await toCard(other), km })));
+---
+
+<Layout title={`${d.name}, ${d.state} · Goadi`} description={d.tagline}>
+  <article>
+    <header class="container-page pt-14 md:pt-20">
+      <a href="/destinations" class="eyebrow hover:text-accent">← All destinations</a>
+      <p class="eyebrow mt-10">{d.state} · {d.vibes.map((v) => VIBE_LABELS[v]).join(' · ')}</p>
+      <h1 class="mt-4 font-display text-display">{d.name}</h1>
+      <p class="mt-6 max-w-2xl text-xl text-ink-soft">{d.tagline}</p>
+    </header>
+
+    <figure class="container-page mt-12">
+      <Image
+        src={d.hero}
+        alt={d.heroAlt}
+        widths={[800, 1280, 1920]}
+        sizes="(min-width: 1408px) 1312px, 100vw"
+        loading="eager"
+        fetchpriority="high"
+        class="aspect-[16/10] w-full object-cover md:aspect-[21/9]"
+      />
+      <figcaption class="mt-3 text-xs text-ink-soft">
+        Photo: <a href={d.credit.source} class="underline underline-offset-2" rel="noopener">{d.credit.author}</a>, {d.credit.license}, via Wikimedia Commons
+      </figcaption>
+    </figure>
+
+    <div class="container-page mt-16 grid gap-16 md:grid-cols-12">
+      <aside class="md:order-2 md:col-span-4 md:col-start-9" aria-label="Trip facts">
+        <div class="md:sticky md:top-24">
+          <p class="eyebrow mb-3">Best months</p>
+          <ol class="grid grid-cols-12 gap-1" aria-label="Months of the year">
+            {
+              MONTHS.map((m, i) => {
+                const good = d.bestMonths.includes(i + 1);
+                return (
+                  <li class="text-center">
+                    <span
+                      class:list={['block h-10 rounded-sm', good ? 'bg-moss' : 'bg-paper-deep']}
+                      title={`${m}: ${good ? 'good time to go' : 'not ideal'}`}
+                    />
+                    <span class="mt-1 block text-[10px] text-ink-soft">
+                      {m[0]}
+                      <span class="sr-only">
+                        {m.slice(1)} {good ? '(good time to go)' : '(not ideal)'}
+                      </span>
+                    </span>
+                  </li>
+                );
+              })
+            }
+          </ol>
+
+          <dl class="mt-8 divide-y divide-line border-y border-line">
+            <div class="flex justify-between gap-4 py-3">
+              <dt class="eyebrow pt-0.5">Daily spend</dt>
+              <dd>{formatBudget(d.budgetPerDay)}</dd>
+            </div>
+            <div class="flex justify-between gap-4 py-3">
+              <dt class="eyebrow pt-0.5">Time needed</dt>
+              <dd>{formatDays(d.daysNeeded)}</dd>
+            </div>
+            <div class="py-3">
+              <dt class="eyebrow">Getting there</dt>
+              <dd class="mt-2 text-sm text-ink-soft">{d.gettingThere}</dd>
+            </div>
+          </dl>
+
+          <a
+            href={`/planner?add=${entry.id}`}
+            class="mt-8 block rounded-full bg-ink px-6 py-3.5 text-center text-sm font-medium text-paper transition-colors hover:bg-accent hover:text-accent-ink"
+          >
+            Add {d.name} to a trip
+          </a>
+          <p class="mt-3 text-xs text-ink-soft">Budgets are rough per-person figures, excluding travel to get there.</p>
+        </div>
+      </aside>
+
+      <div
+        class="prose-goadi md:order-1 md:col-span-7"
+      >
+        <Content />
+      </div>
+    </div>
+  </article>
+
+  <section class="container-page mt-32" aria-labelledby="nearby-heading">
+    <div class="mb-10 flex items-baseline justify-between border-b border-ink pb-3">
+      <h2 id="nearby-heading" class="font-display text-3xl">Closest to {d.name}</h2>
+      <a href="/destinations" class="text-sm underline underline-offset-4 hover:text-accent">All destinations</a>
+    </div>
+    <div class="grid gap-10 sm:grid-cols-2 lg:grid-cols-3">
+      {
+        nearbyCards.map(({ card, km }) => (
+          <div>
+            <Card d={card} />
+            <p class="mt-2 text-xs text-ink-soft">About {Math.round(km / 10) * 10} km away as the crow flies</p>
+          </div>
+        ))
+      }
+    </div>
+  </section>
+</Layout>

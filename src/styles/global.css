@@ -81,6 +81,38 @@
   @apply mx-auto w-full max-w-[88rem] px-4 sm:px-8 lg:px-12;
 }
 
+/* Long-form copy rendered from Markdown. */
+@utility prose-goadi {
+  @apply text-lg leading-relaxed;
+
+  & > p:first-child {
+    @apply font-display text-2xl leading-snug md:text-3xl;
+  }
+  & p + p,
+  & ul + p {
+    @apply mt-5;
+  }
+  & h2 {
+    @apply mt-14 mb-5 border-t border-line pt-6 font-display text-3xl;
+  }
+  & ul {
+    @apply mt-5 space-y-4;
+  }
+  & li {
+    @apply relative pl-6 text-ink-soft;
+  }
+  & li::before {
+    content: '';
+    @apply absolute top-[0.7em] left-0 h-px w-3 bg-accent;
+  }
+  & strong {
+    @apply font-semibold text-ink;
+  }
+  & > p:not(:first-child) {
+    @apply mt-5 text-ink-soft;
+  }
+}
+
 @utility eyebrow {
   @apply font-sans text-xs font-medium uppercase tracking-[0.18em] text-ink-soft;
 }

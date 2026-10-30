@@ -35,6 +35,12 @@ The site runs without Supabase keys, but sign-in is disabled until you add them.
 | `/auth/callback` | Where email links and Google send people back to |
 | `/auth/logout` | `POST` only; signs out and returns home |
 
+## Content
+
+Destinations live in `src/content/destinations/*.md`, with the schema in `src/content.config.ts`. Each one has month-by-month seasons, a rough daily budget, how long to stay, coordinates and a hero photo.
+
+Photos come from Wikimedia Commons under CC licences. Each photo's author, licence and source are stored in its file's frontmatter and credited wherever the photo appears.
+
 ## Commands
 
 | Command | Action |
