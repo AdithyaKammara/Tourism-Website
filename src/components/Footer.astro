@@ -1,0 +1,40 @@
+---
+import { PlaneTakeoff } from 'lucide-react';
+import { SITE } from '../lib/site';
+
+const year = new Date().getFullYear();
+---
+
+<footer class="mt-8 px-3 pb-3 md:px-4 md:pb-4">
+  <div class="rounded-panel bg-forest text-cream">
+    <div class="grid gap-10 px-6 py-14 md:grid-cols-12 md:px-12">
+      <div class="md:col-span-6">
+        <p class="flex items-center gap-2 font-display text-2xl">
+          <PlaneTakeoff className="size-5" strokeWidth={1.8} aria-hidden="true" /> {SITE.name}
+        </p>
+        <p class="mt-6 font-display text-4xl leading-tight md:text-5xl">
+          Go slower. <span class="text-sage-light">See more.</span>
+        </p>
+      </div>
+      <div class="md:col-span-3">
+        <p class="eyebrow mb-4 text-cream/60">Explore</p>
+        <ul class="space-y-2 text-sm">
+          <li><a class="hover:text-sage-light" href="/destinations">Destinations</a></li>
+          <li><a class="hover:text-sage-light" href="/planner">Trip planner</a></li>
+          <li><a class="hover:text-sage-light" href="/journal">Journal</a></li>
+        </ul>
+      </div>
+      <div class="md:col-span-3">
+        <p class="eyebrow mb-4 text-cream/60">Account</p>
+        <ul class="space-y-2 text-sm">
+          <li><a class="hover:text-sage-light" href="/login">Log in</a></li>
+          <li><a class="hover:text-sage-light" href="/signup">Create an account</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="flex flex-wrap justify-between gap-2 border-t border-cream/10 px-6 py-5 text-xs text-cream/60 md:px-12">
+      <p>© {year} {SITE.name}. Built by Adithya Kammara.</p>
+      <p>Photos from Wikimedia Commons, credited where they appear.</p>
+    </div>
+  </div>
+</footer>

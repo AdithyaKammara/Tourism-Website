@@ -1,0 +1,77 @@
+---
+import '../styles/global.css';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import { SITE } from '../lib/site';
+
+interface Props {
+  /** Page title without the site name; the site name is added automatically. */
+  title?: string;
+  description?: string;
+  /** Float the header over the page's first section (used by the home hero). */
+  headerOverlay?: boolean;
+}
+
+const { description = `${SITE.tagline}.`, headerOverlay = false } = Astro.props;
+const title = Astro.props.title ? `${Astro.props.title} · ${SITE.name}` : `${SITE.name}: ${SITE.tagline}`;
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="generator" content={Astro.generator} />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <!-- Set the theme before first paint to avoid a flash of the wrong colours. -->
+    <script is:inline>
+      (() => {
+        let theme;
+        try {
+          theme = localStorage.getItem('theme');
+        } catch {}
+        if (theme !== 'light' && theme !== 'dark') {
+          theme = matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+        }
+        document.documentElement.dataset.theme = theme;
+      })();
+    </script>
+    <!-- Scroll reveal: fade [data-reveal] elements in as they scroll into view. Skipped for reduced motion. -->
+    <script is:inline>
+      (() => {
+        if (!('IntersectionObserver' in window) || matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+        document.documentElement.classList.add('reveal-ready');
+        const io = new IntersectionObserver(
+          (entries) => {
+            for (const entry of entries) {
+              if (!entry.isIntersecting) continue;
+              entry.target.classList.add('is-revealed');
+              io.unobserve(entry.target);
+            }
+          },
+          { rootMargin: '0px 0px -8% 0px', threshold: 0.12 },
+        );
+        const start = () => document.querySelectorAll('[data-reveal]').forEach((el) => io.observe(el));
+        if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', start);
+        else start();
+      })();
+    </script>
+  </head>
+  <body class="flex min-h-dvh flex-col">
+    <a
+      href="#main"
+      class="sr-only focus:not-sr-only focus:fixed focus:top-3 focus:left-3 focus:z-50 focus:bg-ink focus:px-4 focus:py-2 focus:text-paper"
+    >
+      Skip to content
+    </a>
+    <Header overlay={headerOverlay} />
+    <main id="main" class:list={['flex-1', headerOverlay && 'relative']}>
+      <slot />
+    </main>
+    <Footer />
+  </body>
+</html>

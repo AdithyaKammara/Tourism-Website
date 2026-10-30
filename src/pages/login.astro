@@ -1,0 +1,26 @@
+---
+import AuthLayout from '../layouts/AuthLayout.astro';
+import LoginForm from '../components/auth/LoginForm';
+import { safeNext } from '../lib/supabase';
+
+const next = safeNext(Astro.url.searchParams.get('next'));
+if (Astro.locals.user) return Astro.redirect(next);
+
+const notices: Record<string, string> = {
+  'link-expired': 'That link has expired or was already used. Log in, or request a new link.',
+  'not-configured': 'Sign-in is not set up yet.',
+};
+const notice = notices[Astro.url.searchParams.get('error') ?? ''];
+---
+
+<AuthLayout
+  title="Log in"
+  eyebrow="Welcome back"
+  heading="Pick up where you <em class='text-accent'>left off</em>."
+  intro="Your saved trips, packing lists and bookings are waiting."
+>
+  <LoginForm client:load next={next} notice={notice} />
+  <p slot="footer">
+    New here? <a href="/signup" class="text-ink underline underline-offset-4 hover:text-accent">Create an account</a>
+  </p>
+</AuthLayout>

@@ -1,0 +1,19 @@
+---
+import AuthLayout from '../layouts/AuthLayout.astro';
+import SignupForm from '../components/auth/SignupForm';
+import { SITE } from '../lib/site';
+
+if (Astro.locals.user) return Astro.redirect('/account');
+---
+
+<AuthLayout
+  title="Create an account"
+  eyebrow={`Join ${SITE.name}`}
+  heading="Keep every trip in <em class='text-accent'>one place</em>."
+  intro="Free, and it takes a minute. Save itineraries, budgets and packing lists, and share them with whoever's coming along."
+>
+  <SignupForm client:load />
+  <p slot="footer">
+    Already have an account? <a href="/login" class="text-ink underline underline-offset-4 hover:text-accent">Log in</a>
+  </p>
+</AuthLayout>

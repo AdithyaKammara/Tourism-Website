@@ -1,0 +1,258 @@
+@import "@fontsource-variable/plus-jakarta-sans/wght.css";
+@import "@fontsource-variable/plus-jakarta-sans/wght-italic.css";
+@import "@fontsource-variable/instrument-sans/index.css";
+@import "tailwindcss";
+
+/* Dark mode follows the data-theme attribute set by ThemeToggle (or the OS default). */
+@custom-variant dark (&:where([data-theme="dark"], [data-theme="dark"] *));
+
+/*
+ * Raw palette: sea-glass paper, deep-lagoon ink and teal.
+ * (Token names like "sage" and "moss" are kept from the earlier palette; they now hold mint and teal.)
+ */
+:root {
+  --paper: #f5faf9;
+  --paper-deep: #e4f1ee;
+  --card: #ffffff;
+  --ink: #0f2a2e;
+  --ink-soft: #4e6a6d;
+  --line: #d2e4e0;
+  --accent: #23938b;
+  --accent-ink: #ffffff;
+  --moss: #16706a;
+  --sage-soft: #dcefea;
+  color-scheme: light;
+}
+
+:root[data-theme="dark"] {
+  --paper: #0b1a1c;
+  --paper-deep: #102528;
+  --card: #13292c;
+  --ink: #e4f2f0;
+  --ink-soft: #98b5b2;
+  --line: #20393c;
+  --accent: #4cc3b7;
+  --accent-ink: #0b1a1c;
+  --moss: #4cc3b7;
+  --sage-soft: #12302f;
+  color-scheme: dark;
+}
+
+@theme inline {
+  --color-paper: var(--paper);
+  --color-paper-deep: var(--paper-deep);
+  --color-card: var(--card);
+  --color-ink: var(--ink);
+  --color-ink-soft: var(--ink-soft);
+  --color-line: var(--line);
+  --color-accent: var(--accent);
+  --color-accent-ink: var(--accent-ink);
+  --color-moss: var(--moss);
+  --color-sage-soft: var(--sage-soft);
+
+  --font-display: "Plus Jakarta Sans Variable", system-ui, sans-serif;
+  --font-display--font-variation-settings: "wght" 700;
+  --font-sans: "Instrument Sans Variable", system-ui, sans-serif;
+}
+
+@theme {
+  /* Fixed colours that stay the same in light and dark mode (text on photos, the dark lagoon panel). */
+  --color-forest: #0c3337;
+  --color-cream: #f7fcfb;
+  --color-sage-light: #9be3d8;
+
+  --text-display: clamp(2.6rem, 6vw, 5.25rem);
+  --text-display--line-height: 1.05;
+  --text-display--letter-spacing: -0.03em;
+  --radius-panel: 1.75rem;
+  --shadow-soft: 0 1px 2px rgb(12 51 55 / 0.06), 0 12px 32px -8px rgb(12 51 55 / 0.18);
+  --ease-out-quint: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+@layer base {
+  html {
+    @apply bg-paper text-ink font-sans antialiased;
+    text-rendering: optimizeLegibility;
+  }
+
+  ::selection {
+    @apply bg-accent text-accent-ink;
+  }
+
+  :focus-visible {
+    @apply outline-2 outline-offset-4 outline-accent;
+  }
+
+  /* Printing (e.g. a trip itinerary) shows just the page content in black on white. */
+  @media print {
+    body > header,
+    body > footer,
+    body > a[href='#main'] {
+      display: none !important;
+    }
+    html {
+      background: #fff;
+      color: #000;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
+}
+
+@utility container-page {
+  @apply mx-auto w-full max-w-[88rem] px-4 sm:px-8 lg:px-12;
+}
+
+/* Long-form copy rendered from Markdown. */
+@utility prose-guide {
+  @apply text-lg leading-relaxed;
+
+  & > p:first-child {
+    @apply text-2xl leading-snug font-medium md:text-3xl;
+  }
+  & p + p,
+  & ul + p {
+    @apply mt-5;
+  }
+  & h2 {
+    @apply mt-14 mb-5 border-t border-line pt-6 font-display text-3xl;
+  }
+  & ul {
+    @apply mt-5 space-y-4;
+  }
+  & li {
+    @apply relative pl-6 text-ink-soft;
+  }
+  & li::before {
+    content: '';
+    @apply absolute top-[0.7em] left-0 h-px w-3 bg-accent;
+  }
+  & strong {
+    @apply font-semibold text-ink;
+  }
+  & > p:not(:first-child) {
+    @apply mt-5 text-ink-soft;
+  }
+}
+
+@utility eyebrow {
+  @apply font-sans text-[11px] font-medium uppercase tracking-[0.2em] text-ink-soft;
+}
+
+/* Pill buttons. */
+@utility btn {
+  @apply inline-flex items-center justify-center gap-2 rounded-full px-6 py-3 text-sm font-medium transition-[color,background-color,border-color,transform] duration-200 active:scale-[0.98];
+}
+@utility btn-dark {
+  @apply btn bg-forest text-cream hover:bg-accent dark:bg-cream dark:text-forest dark:hover:bg-sage-light;
+}
+@utility btn-sage {
+  @apply btn bg-accent text-accent-ink hover:bg-moss dark:hover:bg-sage-light;
+}
+@utility btn-outline {
+  @apply btn border border-ink/25 text-ink hover:border-ink hover:bg-ink hover:text-paper;
+}
+
+/* Organic pebble shape used to frame photos. */
+@utility blob {
+  border-radius: 58% 42% 46% 54% / 52% 44% 56% 48%;
+}
+
+/* ---------- Motion ----------
+ * Everything here is either CSS-only or progressive: with JavaScript off, or with
+ * "reduce motion" set, content simply appears in place.
+ */
+
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translateY(18px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes pop-in {
+  from {
+    opacity: 0;
+    transform: translateY(-10px) scale(0.6);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* Staggered entrance for the hero copy: set --delay per element. */
+@utility animate-rise {
+  animation: rise 700ms var(--ease-out-quint) var(--delay, 0ms) both;
+}
+
+/* Map markers drop in one after another; set --delay per marker. */
+@utility animate-pop {
+  animation: pop-in 450ms var(--ease-out-quint) var(--delay, 0ms) both;
+}
+
+/* Scroll reveal: elements start hidden only once the reveal script has opted the page in. */
+html.reveal-ready [data-reveal] {
+  opacity: 0;
+  transform: translateY(28px);
+  transition:
+    opacity 600ms var(--ease-out-quint),
+    transform 600ms var(--ease-out-quint);
+  transition-delay: var(--delay, 0ms);
+}
+html.reveal-ready [data-reveal].is-revealed {
+  opacity: 1;
+  transform: none;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  /* Parallax: the photo drifts a little slower than the page. CSS scroll timelines only,
+     so browsers without support just show a still image. The photo's frame must use
+     overflow: clip, not hidden, or it becomes the scroll container and the timeline stalls. */
+  @supports (animation-timeline: view()) {
+    @keyframes drift {
+      from {
+        transform: translateY(-6%) scale(1.12);
+      }
+      to {
+        transform: translateY(6%) scale(1.12);
+      }
+    }
+    [data-parallax] {
+      animation: drift linear both;
+    }
+    /* Kept in its own rule: the minifier would otherwise fold it into the shorthand,
+       which browsers reject, and the whole declaration would be dropped. */
+    [data-parallax][data-parallax] {
+      animation-timeline: view();
+    }
+  }
+
+  /* Cross-page transitions (Chrome, Edge and Safari 18.2+; other browsers navigate normally). */
+  @view-transition {
+    navigation: auto;
+  }
+  ::view-transition-group(*) {
+    animation-duration: 400ms;
+    animation-timing-function: var(--ease-out-quint);
+  }
+}
+
+@media print {
+  html.reveal-ready [data-reveal] {
+    opacity: 1;
+    transform: none;
+  }
+}

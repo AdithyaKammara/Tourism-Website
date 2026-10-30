@@ -1,0 +1,89 @@
+---
+import { PlaneTakeoff } from 'lucide-react';
+import ThemeToggle from './ThemeToggle';
+import MobileMenu from './MobileMenu';
+import { SITE } from '../lib/site';
+
+interface Props {
+  /** Float the header over a full-bleed hero (light text, no background). */
+  overlay?: boolean;
+}
+
+const { overlay = false } = Astro.props;
+
+const links = [
+  { href: '/', label: 'Home' },
+  { href: '/destinations', label: 'Destinations' },
+  { href: '/planner', label: 'Trip planner' },
+  { href: '/journal', label: 'Journal' },
+];
+
+const path = Astro.url.pathname;
+const isActive = (href: string) => (href === '/' ? path === '/' : path.startsWith(href));
+const user = Astro.locals.user;
+const account = user
+  ? { href: '/account', label: 'Account' }
+  : { href: `/login?next=${encodeURIComponent(path)}`, label: 'Log in' };
+---
+
+<header
+  data-overlay={overlay || undefined}
+  class:list={[
+    'z-30',
+    overlay
+      ? // Sits inside the hero card's inset; turns dark when the mobile menu covers the photo.
+        'absolute inset-x-0 top-0 px-3 pt-3 text-cream md:px-4 md:pt-4 [html[data-menu=open]_&]:text-ink'
+      : 'sticky top-0 border-b border-line bg-paper/90 backdrop-blur-sm',
+  ]}
+>
+  <div class:list={['flex h-18 items-center justify-between gap-6', overlay ? 'px-5 md:px-8' : 'container-page']}>
+    <a href="/" class="flex items-center gap-2 font-display text-xl tracking-tight" aria-label={`${SITE.name}, home`}>
+      <PlaneTakeoff className="size-5" strokeWidth={1.8} aria-hidden="true" />
+      {SITE.name}
+    </a>
+
+    <nav aria-label="Main" class="hidden lg:block">
+      <ul class="flex items-center gap-1 text-sm font-medium">
+        {
+          links.map((link) => (
+            <li>
+              <a
+                href={link.href}
+                aria-current={isActive(link.href) ? 'page' : undefined}
+                class:list={[
+                  'block rounded-full px-4 py-2 transition-colors',
+                  overlay
+                    ? 'text-cream/80 hover:text-cream aria-[current=page]:text-cream aria-[current=page]:underline aria-[current=page]:decoration-2 aria-[current=page]:underline-offset-8'
+                    : 'text-ink-soft hover:text-ink aria-[current=page]:text-accent',
+                ]}
+              >
+                {link.label}
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </nav>
+
+    <div class="flex items-center gap-2 sm:gap-3">
+      {
+        user ? (
+          <a href="/account" class="btn-sage hidden py-2.5 md:inline-flex">
+            Account
+          </a>
+        ) : (
+          <>
+            <a href={account.href} class="hidden px-2 text-sm font-medium hover:underline hover:underline-offset-4 md:inline">
+              Log in
+            </a>
+            <a href="/signup" class="btn-sage hidden py-2.5 md:inline-flex">
+              Sign up
+            </a>
+          </>
+        )
+      }
+      <ThemeToggle client:load />
+      <MobileMenu client:media="(max-width: 1023px)" links={links} account={account} />
+    </div>
+  </div>
+</header>

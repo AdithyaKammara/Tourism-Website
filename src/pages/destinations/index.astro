@@ -1,0 +1,32 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import Browser from '../../components/destinations/Browser';
+import { getDestinations, toCard } from '../../lib/cards';
+import { VIBE_LABELS, type Vibe } from '../../lib/destinations';
+
+const cards = await Promise.all((await getDestinations()).map(toCard));
+
+const monthParam = Number(Astro.url.searchParams.get('month'));
+const initialMonth = monthParam >= 1 && monthParam <= 12 ? monthParam : null;
+const vibeParam = Astro.url.searchParams.get('vibe');
+const initialVibe = vibeParam && vibeParam in VIBE_LABELS ? (vibeParam as Vibe) : null;
+const initialView = Astro.url.searchParams.get('view') === 'map' ? 'map' : 'grid';
+const initialQuery = (Astro.url.searchParams.get('q') ?? '').slice(0, 80);
+---
+
+<Layout
+  title="Destinations"
+  description="Every place we've written up, filterable by when you can go and what you're in the mood for."
+>
+  <section class="container-page pt-14 pb-24 md:pt-24">
+    <p class="eyebrow mb-6">Destinations</p>
+    <h1 class="max-w-[16ch] font-display text-5xl leading-[0.95] tracking-tight md:text-8xl">
+      Somewhere for <em class="text-accent">every</em> month.
+    </h1>
+    <p class="mt-6 mb-16 max-w-lg text-lg text-ink-soft">
+      Pick when you can travel and what you're after. We only list a place in the months it's genuinely
+      good to visit.
+    </p>
+    <Browser client:load destinations={cards} initialMonth={initialMonth} initialVibe={initialVibe} initialView={initialView} initialQuery={initialQuery} />
+  </section>
+</Layout>
